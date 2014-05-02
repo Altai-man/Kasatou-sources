@@ -1,0 +1,8 @@
+#+STARTUP: showall
+#+STARTUP: hidestars
+#+STARTUP: logdone
+#+TAGS: JS(j) BACKEND(b)
+#+SEQ_TODO: TODO(t) STARTED(s) WAITING(w) APPT(a) | DONE(d) CANCELLED(c) DEFERRED(f)
+
+* Work
+** TODO Hide threads via cookie.
