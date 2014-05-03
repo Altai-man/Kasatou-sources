@@ -7,7 +7,7 @@ from django.utils.translation import ugettext
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils import simplejson
-from models import Invitation, InviteRequest
+from invite_registration.models import Invitation, InviteRequest
 from invite_registration.forms import InvitationForm
 from invite_registration.invite_registration_settings import REDIRECT_URL
 
