@@ -129,9 +129,9 @@ class Post(models.Model):
             [r'https?:\/\/', r''],
 
             # link
-            [r'(?P<link>(https?)?:?\/?\/?(www)?\.?[-A-Za-z]+\.[a-z]+(\/[\.\+-_&\?=/A-Za-z0-9]*)?)', r'<a href="http://\g<link>">\g<link></a>'],
-
+            [r'(?P<link>https?://[^\s<>"]+|www\.[^\s<>"]+)\|\|(?P<text>\w+)', r'<a href="http://\g<link>">\g<text></a>'],
         ]
+
         for one_markup in markups:
             string = re.sub(one_markup[0], one_markup[1], string)
         return string
