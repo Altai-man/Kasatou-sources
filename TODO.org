@@ -6,3 +6,5 @@
 
 * Work
 ** TODO Hide threads via cookie.
+** TODO To write template for index page.
+** TODO To write view for index page and test app.

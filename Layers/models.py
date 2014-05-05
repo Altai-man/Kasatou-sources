@@ -94,7 +94,8 @@ class Post(models.Model):
         string = escape(string)
         markups = [
             # quote
-            [r'(?P<text>(?<!(&gt;))&gt;(?!(&gt;)).+)', r'<span class="quote">\g<text></span>'],
+            [r'(?P<text>(?<!(&gt;))&gt;(?!(&gt;)).+)',
+             r'<span class="quote">\g<text></span>'],
 
             # bold **b**
             [r'\*\*(?P<text>[^*%]+)\*\*', r'<b>\g<text></b>'],
@@ -112,7 +113,8 @@ class Post(models.Model):
             [r'\[code\](?P<text>.+)\[\/code\]', r'<code>\g<text></code>'],
 
             #spoiler %%s%%
-            [r'\%\%(?P<text>[^*%]+)\%\%', r'<span class="spoiler">\g<text></span>'],
+            [r'\%\%(?P<text>[^*%]+)\%\%',
+             r'<span class="spoiler">\g<text></span>'],
 
             # link to thread >t14
             [r'\&gt;\&gt;t(?P<id>[0-9]+)',
@@ -126,10 +128,12 @@ class Post(models.Model):
             [r'\n', r'<br>'],
 
             # link with http-prefix.
-            [r'https?:\/\/', r''],
+            # [r'https?:\/\/', r''],
+            # TODO: Delete this latter after text testing.
 
-            # link
-            [r'(?P<link>https?://[^\s<>"]+|www\.[^\s<>"]+)\|\|(?P<text>\w+)', r'<a href="http://\g<link>">\g<text></a>'],
+            # link||text -> <link>text</link>
+            [r'(?P<link>https?://[^\s<>"]+|www\.[^\s<>"]+)\|\|(?P<text>\w+)',
+             r'<a href="http://\g<link>">\g<text></a>'],
         ]
 
         for one_markup in markups:
