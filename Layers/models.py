@@ -46,6 +46,14 @@ class Thread(models.Model):
     post_count = models.IntegerField(default=0)
     topic = models.CharField(max_length=40)
     update_time = models.DateTimeField('%Y-%m-%d %H:%M:%S', auto_now_add=True)
+    # Post attributes.
+    topic = models.CharField(max_length=40, blank=True)
+    text = models.TextField(max_length=3000, blank=True)
+    date = models.DateTimeField('%Y-%m-%d %H:%M:%S', auto_now_add=True)
+    image1 = models.ImageField(upload_to='.', blank=True)
+    image2 = models.ImageField(upload_to='.', blank=True)
+    archive = models.FileField(upload_to='documents', blank=True)
+
     board_id = models.ForeignKey(Board)
 
     def latest_posts(self, count=5):
@@ -58,18 +66,13 @@ class Thread(models.Model):
         return ''.join()
 
 
-class PostForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(PostForm, self).__init__(*args, **kwargs)
-        self.fields['topic'].label = 'Topic'
-        self.fields['image1'].label = 'Pic'
-        self.fields['image2'].label = 'Pic'
-        self.fields['image3'].label = 'Pic'
-        self.fields['archive'].label = 'Archive'
+class ThreadForm(forms.ModelForm):
+    def __init__(self, *args, **Kwargs):
+        super(ThreadForm, self).__init__(*args, *kwargs)
 
     class Meta:
-        model = Post
-        fields = ['topic', 'text', 'image1', 'image2', 'image3', 'archive']
+        model = Thread
+        fields = ['topic', 'text', 'image1', 'image2', 'archive']
 
 
 class Post(models.Model):
@@ -160,3 +163,17 @@ class Post(models.Model):
 
     def __str__(self):
         return ''.join([self.board_id, ': ', self.text[:40], ', ', str(self.date)])
+
+
+class PostForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(PostForm, self).__init__(*args, **kwargs)
+        self.fields['topic'].label = 'Topic'
+        self.fields['image1'].label = 'Pic'
+        self.fields['image2'].label = 'Pic'
+        self.fields['image3'].label = 'Pic'
+        self.fields['archive'].label = 'Archive'
+
+    class Meta:
+        model = Post
+        fields = ['topic', 'text', 'image1', 'image2', 'image3', 'archive']
