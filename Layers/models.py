@@ -58,6 +58,12 @@ class Thread(models.Model):
         return ''.join()
 
 
+class PostForm():
+    def __init__(self, *args, **kwargs):
+        super(PostForm, self).__init__(*args, **kwargs)
+        
+
+
 class Post(models.Model):
     text = models.TextField(max_length=5000, blank=True)
     date = models.DateTimeField('%Y-%m-%d %H:%M:%S', auto_now_add=True)

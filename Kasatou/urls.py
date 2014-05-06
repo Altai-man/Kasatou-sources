@@ -10,7 +10,7 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
 
     # Index.
-#    url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^$', views.IndexView.as_view(), name='index'),
 
     # Board
 #    url(r'^(?P<board_name>[a-z]{1,3})/(?P<page>[1-9]?)$',views.BoardView.as_view(),name='board_view'),
