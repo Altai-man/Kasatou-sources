@@ -61,6 +61,7 @@ class Thread(models.Model):
 class PostForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
+        self.fields['topic'].label = 'Topic'
         self.fields['image1'].label = 'Pic'
         self.fields['image2'].label = 'Pic'
         self.fields['image3'].label = 'Pic'
@@ -72,6 +73,7 @@ class PostForm(forms.ModelForm):
 
 
 class Post(models.Model):
+    topic = models.CharField(max_length=40, blank=True)
     text = models.TextField(max_length=5000, blank=True)
     date = models.DateTimeField('%Y-%m-%d %H:%M:%S', auto_now_add=True)
     image1 = models.ImageField(upload_to='.', blank=True)
