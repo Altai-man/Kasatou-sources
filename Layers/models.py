@@ -69,7 +69,7 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-#        fields = ['']
+        fields = ['topic', 'text', 'image1', 'image2', 'image3', 'archive']
 
 
 class Post(models.Model):
