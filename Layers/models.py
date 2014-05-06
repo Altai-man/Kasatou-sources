@@ -58,10 +58,17 @@ class Thread(models.Model):
         return ''.join()
 
 
-class PostForm():
+class PostForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
-        
+        self.fields['image1'].label = 'Pic'
+        self.fields['image2'].label = 'Pic'
+        self.fields['image3'].label = 'Pic'
+        self.fields['archive'].label = 'Archive'
+
+    class Meta:
+        model = Post
+#        fields = ['']
 
 
 class Post(models.Model):
