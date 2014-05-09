@@ -6,5 +6,11 @@
 
 * Work
 ** TODO Hide threads via cookie.
-** TODO To write template for index page.
-** TODO To write view for index page and test app.
+** DONE To write template for index page.
+   CLOSED: [2014-05-09 Пт 17:43]
+** DONE To write view for index page and test app.
+   CLOSED: [2014-05-09 Пт 17:43]
+** DONE Adapt board template.
+   CLOSED: [2014-05-09 Пт 19:17]
+** TODO Adapt login page.
+** APPT Needed templates: profile page, search page, thread page, invite pages.

@@ -13,7 +13,7 @@ urlpatterns = patterns(
     url(r'^$', views.IndexView.as_view(), name='index'),
 
     # Board
-#    url(r'^(?P<board_name>[a-z]{1,3})/(?P<page>[1-9]?)$',views.BoardView.as_view(),name='board_view'),
+    url(r'^(?P<board_name>[a-z]{1,3})/(?P<page>[1-9]?)$',views.BoardView.as_view(),name='board_view'),
 
     # Thread
 #    url(r'^(?P<board_name>[a-z]{1,3})/thread/(?P<pk>[0-9]+)/$',views.ThreadView.as_view(),name='thread_view'),

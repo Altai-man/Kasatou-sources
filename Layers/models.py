@@ -35,6 +35,7 @@ class Board(models.Model):
     board_name = models.CharField(max_length=3)
     thread_max_post = models.IntegerField(default=500)
 
+
     def get_board_view(self):
         threads = Thread.objects.filter(board_id=self).order_by('-update_time')
         return [dict(thread=th, posts=th.latest_posts()) for th in threads]
@@ -163,7 +164,7 @@ class Post(models.Model):
     objects = SearchManager()
 
     def __str__(self):
-        return ''.join([self.board_id, ': ', self.text[:40], ', ', str(self.date)])
+        return ''.join([self.text[:40], ', ', str(self.date)])
 
 
 class PostForm(forms.ModelForm):
