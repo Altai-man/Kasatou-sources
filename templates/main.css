@@ -1,0 +1,308 @@
+html{
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 14;
+    font-family: Verdana, Geneva, Arial, sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+textarea {
+    resize: none;
+    padding: 5px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-size: 14px;
+}
+
+
+textarea:focus {
+    outline: none;
+}
+
+hr {
+    border:0px none; height:1px; /* высота 1px IE, Firefox, Opera, Safari */ 
+    clear:both; /* для очистки, если тег идет после float елемента */ 
+}
+
+ul {
+    list-style: square outside;
+}
+
+#loginform {
+    padding: 8px;
+    width:400px;
+    height:210px;
+    position: absolute;
+    top: 50%;  
+    left: 50%;        
+    margin: -105px 0 0 -200px;
+    border-radius: 5px 5px 5px 5px;
+    webkit-border-radius: 5px 5px 5px 5px; //(Google Chrome)
+   -moz-border-radius: 5px 5px 5px 5px; // (FireFox)
+   -khtml-border-radius: 5px 5px 5px 5px; //(Safari)
+}
+
+#mainform {
+    margin: 10px 0 0 250px;
+    vertical-align: top;
+}
+
+.mformfield {
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.formrow {
+    margin-bottom: 5px;
+}
+
+#lftitle {
+    font-weight: bold;
+    font-size:22;
+    padding: 5px 5px 5px 10px;        
+}
+
+#lfcontent {
+    color: #cccccc;
+    margin: 10px 0 0 0px;
+    padding: 5px;
+    font-size: 14;
+    font-weight: bold;
+}
+
+.lfelement {
+    margin-bottom: 5px;
+
+}
+
+
+#main {
+    width: 930px; 
+    margin: 0  auto;
+}
+
+#content {
+    padding: 10px;
+    border-radius: 0px 0px 5px 5px;
+    position: relative;
+    webkit-border-radius: 0px 0px 5px 5px; //(Google Chrome)
+   -moz-border-radius: 0px 0px 5px 5px; // (FireFox)
+   -khtml-border-radius: 0px 0px 5px 5px; //(Safari)
+}
+
+#copyright {
+    padding-top: 5px;
+    font-size: 11;
+    font-weight: bold;
+}
+
+#links {
+    height: 20px;
+    padding: 15px 10px 10px 20px; 
+}
+
+.link {
+    display: block;
+    margin-bottom: 1px; 
+}
+
+.linkbot {
+   
+    margin-right: 10px;
+}
+
+.threads {
+    display:inline-block;
+}
+
+.thread {
+    padding-top:3px;
+}
+
+.message {
+    padding: 5px 5px 5px 10px;
+}
+
+.details {
+    padding: 3px;
+    margin: 0 10px 0 10px;
+    font-size: 11;
+    position: relative;
+    display: inline-block;
+}
+
+.pdetails {
+    width: 820px;
+}
+
+.tdetails {
+    width: 870px;
+}
+
+.post {
+    width: 94%;
+    margin: 5px 3px 10px 40px;
+    border-radius: 5px 5px 5px 5px;
+    webkit-border-radius: 5px 5px 5px 5px; //(Google Chrome)
+   -moz-border-radius: 5px 5px 5px 5px; // (FireFox)
+   -khtml-border-radius: 5px 5px 5px 5px; //(Safari)
+}
+
+.edit {
+    padding: 5px;
+    height: 28px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-size: 14px;
+}
+
+.edit:focus {
+    outline: none;
+}
+
+.button {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    padding: 5px 10px 6px;
+    font-size: 12;
+
+    text-decoration: none;
+    font-weight: bold;
+    line-height: 1;
+    position: relative;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.title {
+    padding: 5px;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.btitle {
+    border-bottom: none;
+    font-size: 20px;
+    margin: 0px;
+}
+
+.reply {
+    position: absolute;
+    right: 20px;
+    padding-top: 2px;
+    font-weight: bold;
+    font-size: 12;
+    display: inline-block;
+}
+
+.threadbar {
+    display: inline-block;
+    padding: 10px 0px 10px 20px;
+}
+
+/* Index style */
+
+#logo {
+    text-align: center;
+    font-size: 64;
+    margin: 0 auto;
+    width: 500px;
+    height: 100px;
+    margin-top: 10px;
+
+}
+
+#slogan {
+    text-align: center;
+    position: relative;
+    font-size: 22;
+    left:50%;
+    padding-top: 10px;
+    margin-left:-250px;
+    width: 500px;
+    height: 50px;
+}
+
+.indexbox {
+    position: relative;
+    left:50%;
+    margin-left: -350px;
+    margin-bottom: 25px;
+    width: 700px;
+    border-bottom: none;
+    min-height: 100px;
+}
+
+.indexmsgbox {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    display: inline-block;
+    vertical-align:top;
+    top: 0px;
+    width: 470px;
+    right: 15px;
+}
+
+.indexmsg {
+    padding: 5px 2px 0 5px;
+    font-size:13;
+}
+
+.indeximg {
+    background-size: cover;
+    width: 205px;
+    display: inline-block;
+}
+
+.imggrad {
+    background: linear-gradient(to top, #999999 0%, rgba(255, 255, 255, 0)  35%);
+    position: absolute;
+    display: block;
+    width: 205px;
+    height: 100%;
+    filter:progid:DXImageTransform.Microsoft.Alpha(opacity=25); /* IE 5.5+*/
+    -moz-opacity: 0.25; /* Mozilla 1.6 и ниже */
+    -khtml-opacity: 0.25; /* Konqueror 3.1, Safari 1.1 */
+    opacity: 0.25; 
+}
+
+.imggrad:hover {
+    background: linear-gradient(to top, #595959 0%, rgba(255, 255, 255, 0)  35%);
+}
+
+
+.indextitle {
+    font-weight: bold;
+    font-size:13;
+    top: 0px;
+    padding: 5px 0px 3px 10px;        
+}
+
+.inthread {
+    position: absolute;
+    right: 20px;
+    bottom: 5px;
+    font-size: 12px;
+    font-weight: bold
+}
+
+input[type=file] {
+    background: #ffffff;
+    color: #ffff00;
+    border: 1px solid #cccccc;
+}
+

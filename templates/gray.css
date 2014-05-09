@@ -1,0 +1,159 @@
+body {
+   
+    background: url('back.png') #1E1E1E;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: #D0D0D0;
+
+}
+
+a {
+    color: #CCCCCC;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #CCCCCC;
+    text-decoration: underline;
+}
+
+textarea {
+    border:1px solid #595959;
+    color: #D0D0D0;
+    background: #2E2E2E;
+}
+
+textarea:hover {
+    border: 1px solid #777777;
+
+}
+
+textarea:focus {
+    border: 1px solid #3399CC;
+}
+
+hr {
+    color: #cccccc; /*для IE */ 
+    background-color:#cccccc; /*для Firefox, Opera, Safari*/ 
+
+}
+
+#loginform {
+    background: #272727 ;
+   background: linear-gradient(to top, #1E1E1E 0%, #272727  15%);
+    box-shadow: 0px 3px 5px #272727; 
+    border: 1px solid #404040;
+}
+
+.mformfield {
+    color: #cccccc;
+}
+
+#lftitle {
+    color: #D0D0D0;
+    border-bottom: 1px solid #595959;
+}
+
+#lfcontent {
+    font-size:12;
+    color: #999999;
+}
+
+#content {
+    background: #272727;
+    border: 1px solid #404040;
+    border-top: 2px solid #404040;
+    box-shadow: 0px 3px 5px #272727;
+}
+
+#copyright {
+    color: #777777;
+}
+
+.thread {
+    border-top: 1px solid #595959;
+    border-bottom: 1px solid #595959;
+}
+
+.details {
+    border-bottom: 1px solid #595959;
+    color: #999999;
+}
+
+.post {
+    border: 1px solid #595959;
+    background: #2E2E2E;
+}
+
+.edit {
+    background: #2E2E2E;
+    border:1px solid #595959;
+    color: #D0D0D0;
+}
+
+.edit:hover {
+    border: 1px solid #777777;
+
+}
+
+.edit:focus {
+    border: 1px solid #3399CC;
+}
+
+.button {
+    background: #2e2e2e;
+    background: linear-gradient(to top, #2e2e2e 0%, #404040 75%);
+    color: #cccccc;
+    border: 1px solid #595959;
+}
+
+.button:hover {
+    background: #272727;
+    background: linear-gradient(to top, #272727 0%, #404040 75%);
+}
+
+.title {
+    color: #cccccc;
+    border-bottom: 1px solid #595959;
+}
+
+.btitle {
+    color: #3399CC;
+    border-bottom: none;
+}
+
+/* Index style */
+
+#logo, #slogan {
+    color: #F19F00;
+    text-shadow: -1px -1px 1px #272727;
+}
+
+
+.indexbox {
+    background: #272727;
+    border: 1px solid #353535;
+    box-shadow: 0px 2px 3px #272727; 
+    background: linear-gradient(to top, #1E1E1E 0%, #272727 50%);
+    
+    border-bottom: none;
+
+}
+
+.indeximg {
+    border-right: 1px solid #353535;
+}
+
+.indextitle {
+    color: #D0D0D0;
+    border-bottom: 1px solid #595959;
+}
+
+.inthread a {
+    color: #708090;
+}
+
+.inthread a:hover{
+    color: #3399CC;
+}
+
