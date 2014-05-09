@@ -3,7 +3,7 @@ Django settings for Kasatou project.
 """
 
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+BASE_DIR = "/home/sena/Devel/Kasatou"
 
 SECRET_KEY = '3%dyqozgd4l)yheblv=-^lhbn1$js6uv5$7rh6r-qyi7gx88bf'
 
@@ -29,6 +29,20 @@ INSTALLED_APPS = (
     'Layers',  # boards.
 )
 
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+#     'django.template.loaders.eggs.Loader',
+)
+
+TEMPLATE_DIRS = (
+    BASE_DIR+'/templates',
+)
+
+STATICFILES_DIRS = (
+    '/home/sena/Devel/Kasatou/static',
+)
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -39,6 +53,7 @@ MIDDLEWARE_CLASSES = (
 #    'invite_registration.middleware.PrivateBetaMiddleware',
 # TODO: uncomment when beta is on.
 )
+
 
 ROOT_URLCONF = 'Kasatou.urls'
 
@@ -63,9 +78,10 @@ USE_L10N = True
 USE_TZ = True
 
 
+# Static
 STATIC_URL = '/static/'
 
 
-MEDIA_ROOT = os.path.join(os.getcwd(), 'media/database.sqlite3')
-
+# Media
+MEDIA_ROOT = os.path.join(os.getcwd(), 'media/')
 MEDIA_URL = '/media/'

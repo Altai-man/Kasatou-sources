@@ -5,6 +5,7 @@ from PIL import Image
 import re
 
 # Django
+from django import forms
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -47,10 +48,10 @@ class Thread(models.Model):
     topic = models.CharField(max_length=40)
     update_time = models.DateTimeField('%Y-%m-%d %H:%M:%S', auto_now_add=True)
     # Post attributes.
-    topic = models.CharField(max_length=40, blank=True)
+    topic = models.CharField(max_length=40, blank=False)
     text = models.TextField(max_length=3000, blank=True)
     date = models.DateTimeField('%Y-%m-%d %H:%M:%S', auto_now_add=True)
-    image1 = models.ImageField(upload_to='.', blank=True)
+    image1 = models.ImageField(upload_to='.', blank=False)
     image2 = models.ImageField(upload_to='.', blank=True)
     archive = models.FileField(upload_to='documents', blank=True)
 
@@ -63,12 +64,12 @@ class Thread(models.Model):
         super(Thread, self).save(*args, **kwargs)
 
     def __str__(self):
-        return ''.join()
+        return '%s' % (self.topic)
 
 
 class ThreadForm(forms.ModelForm):
     def __init__(self, *args, **Kwargs):
-        super(ThreadForm, self).__init__(*args, *kwargs)
+        super(ThreadForm, self).__init__(*args, **kwargs)
 
     class Meta:
         model = Thread

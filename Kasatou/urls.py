@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url
-
+from Layers import views
 from django.contrib import admin
 admin.autodiscover()
 
@@ -37,8 +37,8 @@ urlpatterns = patterns(
 #    url(r'^(?P<board_name>[a-z]{1,3})/thread/(?P<thread_id>[0-9]+)/add_post$',views.PostAddView.as_view(),name='post_add'),
 
     # Invites.
-    url(r'^invite/', include('invite_registration.urls')),
+#    url(r'^invite/', include('invite_registration.urls')),
 
     # Accounts.
-    url(r'^accounts/', include('invite_registration.backends.invite_only.urls')),
+#    url(r'^accounts/', include('invite_registration.backends.invite_only.urls')),
 )

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 {% load i18n %}
+{% load staticfiles %}
 {% autoescape off %}
 <head>
 <title>Kasatou - Main</title>
@@ -15,22 +16,25 @@
 <body>
 
 <div id="logo">Kasatou </div>
-
+{% if threads %}
+{% for thread in threads %}
 <div class="indexbox">
-<div class="indeximg">
-<a href="#">
-<span class="imggrad"></span>
-<img src="img.jpg" class="indeximg" /></a>
+  <div class="indeximg">
+    <a href="/{{thread.board_id}}/thread/{{thread.id}}">
+      <span class="imggrad"></span>
+      <img src="/media/1.jpg" class="indeximg" /></a>
+  </div>
+
+  <div class="indexmsgbox">
+    <div class="indextitle">{{thread.topic}}</div>
+    <div class="indexmsg">{{thread.text|truncatechars:6}}</div>
+  </div>
+  <div class="inthread"><a href="/{{thread.board_id}}/thread/{{thread.id}}">Перейти</a></div>
 </div>
-
-<div class="indexmsgbox"> 
-<div class="indextitle">Пилигрим-тред.</div>
-<div class="indexmsg"> Почитывааю статейки в интернете, скоро спать пойду уже. А как ваша ночь проходит? </div>
-</div>
-<div class="inthread"><a href="#">Перейти</a></div>
-</div> 
-
-
+{% endfor %}
+{% else %}
+<div align="center" class="indexbox">No threads.</div>
+{% endif %}
 <div id="slogan">Yet Another Pointless Imageboard</div>
 
 </body>
