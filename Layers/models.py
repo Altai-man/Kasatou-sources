@@ -150,7 +150,7 @@ class Post(models.Model):
             # TODO: Delete this latter after text testing.
 
             # link||text -> <link>text</link>
-            [r'(?P<link>https?://[^\s<>"]+|www\.[^\s<>"]+)\|\|(?P<text>\w+)',
+            [r'(?P<link>(https?://)?[^\s<>"]+|www\.[^\s<>"]+)\|\|(?P<text>\w+)',
              r'<a href="http://\g<link>">\g<text></a>'],
         ]
 
