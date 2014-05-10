@@ -20,7 +20,7 @@
 {% for thread in threads %}
 <div class="indexbox">
   <div class="indeximg">
-    <a href="/{{thread.board_id}}/thread/{{thread.id}}">
+    <a href="{{thread.board_id}}thread/{{thread.id}}">
       <span class="imggrad"></span>
       <img src="/media/1.jpg" class="indeximg" /></a>
   </div>
@@ -29,7 +29,7 @@
     <div class="indextitle">{{thread.topic}}</div>
     <div class="indexmsg">{{thread.text|truncatechars:6}}</div>
   </div>
-  <div class="inthread"><a href="/{{thread.board_id}}/thread/{{thread.id}}">Перейти</a></div>
+  <div class="inthread"><a href="{{thread.board_id}}thread/{{thread.id}}">Перейти</a></div>
 </div>
 {% endfor %}
 {% else %}

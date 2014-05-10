@@ -13,4 +13,4 @@
 ** DONE Adapt board template.
    CLOSED: [2014-05-09 Пт 19:17]
 ** TODO Adapt login page.
-** APPT Needed templates: profile page, search page, thread page, invite pages.
+** APPT Needed templates: profile page, search page, invite pages.
