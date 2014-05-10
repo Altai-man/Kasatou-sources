@@ -11,7 +11,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -66,8 +66,15 @@ USE_TZ = True
 
 # Static
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(os.getcwd(), 'static')
 STATICFILES_DIRS = (
-    '/home/sena/Devel/Kasatou/static',
+#    '/home/sena/Devel/Kasatou/static',
+)
+
+STATICFILES_FINDERS = ( 
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 

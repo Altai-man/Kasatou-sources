@@ -1,36 +1,37 @@
 <!DOCTYPE html>
 <html>
-{% load i18n %}
-{% autoescape off %}
-<head>
-<title>Kasatou - Login</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="stylesheet" type="text/css" href="static/main.css">
-<link rel="stylesheet" type="text/css" href="static/light.css">
-<!--
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.2/jquery.cookie.min.js"></script>
--->
-</head>
-<body>
-
-<div id="logo">Kasatou</div>
-
-<div id="loginform">
-<div id="lftitle">Login</div>
-<div id="lfcontent">
-<form>
-<div class="lfelement">login:<br/> <input class="edit" type="text" size="35" maxlength="35"></div>
-<div class="lfelement">pass:<br/>  <input class="edit" type="password" size="35" maxlength="35"/></div>
-<div class="lfelement">
-<input class="button" type="submit" value="Login" />
-<input class="button" type="reset" value="Reset"/>
-
-</div>
-</form>
-</div>
-</div>
-
-</body>
+  {% load i18n %}
+  {% autoescape off %}
+  <head>
+    <title>Kasatou - Login</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="/static/main.css">
+    <link rel="stylesheet" type="text/css" href="/static/light.css">
+    <!--
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.2/jquery.cookie.min.js"></script>
+        -->
+  </head>
+  <body>
+    
+    <div id="logo">Kasatou</div>
+    
+    <div id="loginform">
+      <div id="lftitle">Login</div>
+      <div id="lfcontent">
+        <form id="login_form" method="post" action="/login/">
+          {% csrf_token %}
+          <div class="lfelement">login:<br/> <input class="edit" name="username" type="text" size="35" maxlength="35"></div>
+          <div class="lfelement">pass:<br/>  <input class="edit" name="password" type="password" size="35" maxlength="35"/></div>
+          <div class="lfelement">
+            <input class="button" type="submit" value="Login" />
+            <input class="button" type="reset" value="Reset"/>
+            
+          </div>
+        </form>
+      </div>
+    </div>
+    
+  </body>
 </html>
 {% endautoescape %}

@@ -24,7 +24,7 @@ class SearchManager(models.Manager):
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
 
-    theme = models.CharField(max_length=10)
+    theme = models.CharField(max_length=10, default="white")
     username = models.CharField(max_length=14, default='Anonymous')
     thread_per_page = models.IntegerField(default=8)
 
@@ -42,7 +42,7 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('theme', 'username', 'thread_per_page')
+        fields = ('username', 'thread_per_page')
 
 
 class Board(models.Model):
