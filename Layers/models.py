@@ -4,6 +4,7 @@ import os
 from PIL import Image
 import re
 
+
 # Django
 from django import forms
 from django.db import models
@@ -21,7 +22,6 @@ class SearchManager(models.Manager):
 
 
 class User(models.Model):
-
     theme = models.CharField(max_length=10)
     name = models.CharField(max_length=14, default='Anonymous')
     thread_per_page = models.IntegerField(default=8)
@@ -70,7 +70,7 @@ class Thread(models.Model):
 
 
 class ThreadForm(forms.ModelForm):
-    def __init__(self, *args, **Kwargs):
+    def __init__(self, *args, **kwargs):
         super(ThreadForm, self).__init__(*args, **kwargs)
 
     class Meta:

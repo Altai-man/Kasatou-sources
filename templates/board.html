@@ -7,6 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" type="text/css" href="/../static/main.css">
     <link rel="stylesheet" type="text/css" href="/../static/light.css">
+	<script src="/../static/script.js"></script>
     <!--
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.2/jquery.cookie.min.js"></script>
@@ -28,11 +29,12 @@
 
         <div class="title">New thread</div>
         <div id="mainform">
-          <form>
+          <form action='/board/thread_add.html' method='post'>
+            {% csrf_token %}
             <div class="formrow"><div class="mformfield">Topic:</div> <input class="edit" type="text" size="53" maxlength="53"/></div>
             <div class="formrow"><div class="mformfield">Text: </div><textarea rows="10" cols="60" name="text"></textarea> </div>
             <div class="formrow">
-              <input class="button" type="submit" value="Send" />  
+              <input class="button" id="send_thread" type="submit" value="Send" />  
               <input class="button" type="reset" value="Clear"/>  
             </div>
           </form>

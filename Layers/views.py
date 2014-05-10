@@ -5,13 +5,15 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import RedirectView, ListView, DetailView
 from django.views.generic.base import TemplateView, ContextMixin
+
 from django.conf import settings
 
 # Kasatou modules
 from Layers.models import Thread
 from Layers.models import Post
 from Layers.models import Board
-
+from Layers.models import PostForm
+from Layers.models import ThreadForm
 
 class IndexView(TemplateView):
     template_name = "index.html"
@@ -50,6 +52,7 @@ class BoardView(ListView, BaseBoardClass):
 
     def get_context_data(self, **kwargs):
         context = super(BoardView, self).get_context_data(**kwargs)
+        context['thread_form'] = ThreadForm()
         context['threads_menu'] = Thread.objects.all().order_by('-update_time')[:6]
         return context
 
@@ -60,10 +63,7 @@ class ThreadView(DetailView, BaseBoardClass):
 
     def get_context_data(self, **kwargs):
         context = super(ThreadView,self).get_context_data(**kwargs)
-#        context['post_form'] = PostForm()
+        context['post_form'] = PostForm()
         context['posts'] = Post.objects.filter(thread_id=context['object'])
-
-        # Hide "Answer" button
-        context['thread_hide_answer'] = True
 
         return context

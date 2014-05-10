@@ -25,6 +25,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'invitation',  # invites.
     'Layers',  # boards.
 )
 
@@ -82,3 +83,11 @@ STATIC_URL = '/static/'
 # Media
 MEDIA_ROOT = os.path.join(os.getcwd(), 'media')
 MEDIA_URL = '/media/'
+
+
+# Invites.
+INVITE_MODE = True
+INVITE_MODE_STRICT = True
+ACCOUNT_INVITATION_DAYS = 3
+INVITATIONS_PER_USER = 3
+

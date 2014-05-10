@@ -18,8 +18,9 @@ urlpatterns = patterns(
     # Thread
     url(r'^(?P<board_name>[a-z]{1,3})/thread/(?P<pk>[0-9]+)/$',views.ThreadView.as_view(),name='thread_view'),
 
+
     # Add thread
-#    url(r'^(?P<board_name>[a-z]{1,3})/add_thread',views.ThreadAddView.as_view(),name='thread_add'),
+    #    url(r'^(?P<board_name>[a-z]{1,3})/add_thread',views.ThreadAddView.as_view(),name='thread_add'),
 
     # Move to post
 #    url(r'^post/(?P<pk>[0-9]+)/$',views.PostView.as_view(),name='post_view'),
