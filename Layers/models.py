@@ -35,7 +35,6 @@ class Board(models.Model):
     board_name = models.CharField(max_length=3)
     thread_max_post = models.IntegerField(default=500)
 
-
     def get_board_view(self):
         threads = Thread.objects.filter(board_id=self).order_by('-update_time')
         return [dict(thread=th, posts=th.latest_posts()) for th in threads]
@@ -58,8 +57,10 @@ class Thread(models.Model):
 
     board_id = models.ForeignKey(Board)
 
-    def latest_posts(self, count=5):
-        posts = reversed(Post.objects.filter(thread_id=self).order_by('-id')[:count])
+
+    def latest_posts(self, count=3):
+        posts = reversed(Post.objects.filter(thread_id=self).order_by('-id')[:count])  # 9,8,7
+        return posts
 
     def save(self, *args, **kwargs):
         super(Thread, self).save(*args, **kwargs)

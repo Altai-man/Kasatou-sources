@@ -3,7 +3,7 @@
   {% load i18n %}
   {% autoescape off %}
   <head>
-    <title>Kasatou - {{board}}</title>
+    <title>Kasatou - {{thread}}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" type="text/css" href="/../static/main.css">
     <link rel="stylesheet" type="text/css" href="/../static/light.css">
@@ -19,14 +19,14 @@
       <div class="threadbar">
         {% for thread in threads_menu %}
         <div class="threads">
-          <span class="link"><a href="{{thread.board_id}}thread/{{thread.id}}">{{thread.topic|truncatechars:15}} </a></span>
+          <span class="link"><a href="{{thread.board_id}}thread/{{thread.id}}">{{thread.topic|truncatechars:10}} </a></span>
         </div>
         {% endfor %}
       </div>
 
       <div id="content">
 
-        <div class="title">New thread</div>
+        <div class="title">New post</div>
         <div id="mainform">
           <form>
             <div class="formrow"><div class="mformfield">Topic:</div> <input class="edit" type="text" size="53" maxlength="53"/></div>
@@ -35,9 +35,6 @@
             <input class="button" type="reset" value="Clear"/>
           </form>
         </div>
-        {% for bundle in threads %}
-        {% with thread=bundle.thread %}
-        {{thread.posts}}
         <div class="thread">
           <div class="title btitle">{{thread.topic}}</div>
 
@@ -48,17 +45,20 @@
           <div class="message">
             {{thread.text}}
           </div>
-          {% endwith %}
-          {% for post in bundle.posts %}
+          {% for post in posts %}
           <div class="post">
             <div class="details pdetails">
-              Anonymous <a href="{{post.board_id}}thread/{{post.thread_id.id}}">{{post.id}}</a> {{post.date}}
+              {% if post.topic %}
+              <b>{{post.topic}}</b>
+              {% else %}
+              Anonymous 
+              {% endif %}
+<a href="{{post.board_id}}thread/{{post.thread_id.id}}">{{post.id}}</a> {{post.date}}
             </div>
             <div class="message">
               {{post.text}}
             </div>
           </div>
-          {% endfor %}
           {% endfor %}
         </div>
         <div align="center" id="copyright"> Kasatou. Yet Another Pointless Imageboard. </div>
