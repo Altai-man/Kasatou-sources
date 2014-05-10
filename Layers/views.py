@@ -6,7 +6,7 @@ from django.shortcuts import render, get_object_or_404, render_to_response
 from django.views.generic import RedirectView, ListView, DetailView
 from django.views.generic.base import TemplateView, ContextMixin
 from django.template import RequestContext
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.conf import settings
 
 # Kasatou modules
@@ -126,3 +126,10 @@ def user_login(request):
 
     else:
         return render_to_response('login.html', {}, context)
+
+
+@login_required
+def user_logout(request):
+    logout(request)
+
+    return HttpResponseRedirect('/')

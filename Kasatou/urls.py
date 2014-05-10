@@ -23,6 +23,8 @@ urlpatterns = patterns(
 
     url(r'^login/$', views.user_login, name='login'),
 
+    url(r'^logout/$', views.user_logout, name='logout'),
+
     # Add thread
     #    url(r'^(?P<board_name>[a-z]{1,3})/add_thread',views.ThreadAddView.as_view(),name='thread_add'),
 
