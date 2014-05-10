@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Kasatou</title>
+    </head>
+
+    <body>
+        <h1>Register</h1>
+
+        {% if registered %}
+        <a href="">Return to the homepage.</a><br />
+        {% else %}
+
+        <form id="user_form" method="post" action="/register/"
+                enctype="multipart/form-data">
+
+          {% csrf_token %}
+
+          {% for field in user_form %}
+          {{field.label}} <!-- Шаблонная магия делается здесь. -->
+          {{field}}
+          {% endfor %} <br> <br>
+          {% for field in profile_form %}
+          <!--Если тебе нужны какие-то особые отличия для какого-то поля, делай так:
+              {*знак процента* if field.label = '*имя*' %}
+              *как это выглядит для определенного поля*
+              {*знак процента* else %}
+              *как выглядит для остальных полей.* -->
+          {{field.label}}
+          {{field}}
+          {% endfor %} <br> <br>
+
+          <input type="submit" name="submit" value="Register" />
+        </form>
+        {% endif %}
+    </body>
+</html>

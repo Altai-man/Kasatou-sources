@@ -21,14 +21,28 @@ class SearchManager(models.Manager):
         return query
 
 
-class User(models.Model):
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+
     theme = models.CharField(max_length=10)
-    name = models.CharField(max_length=14, default='Anonymous')
+    username = models.CharField(max_length=14, default='Anonymous')
     thread_per_page = models.IntegerField(default=8)
-    rank = models.IntegerField(default=1)
 
     def __str__(self):
-        return '%s, with %s rank.' % (self.name, self.rank)
+        return '%s' % (self.name)
+
+
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+
+    class Meta:
+        model = User
+        fields = ('email', 'password')
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('theme', 'username', 'thread_per_page')
 
 
 class Board(models.Model):

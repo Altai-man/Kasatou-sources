@@ -7,7 +7,6 @@ BASE_DIR = "/home/sena/Devel/Kasatou"
 
 SECRET_KEY = '3%dyqozgd4l)yheblv=-^lhbn1$js6uv5$7rh6r-qyi7gx88bf'
 
-# TODO: Change this in production.
 DEBUG = True
 
 TEMPLATE_DEBUG = True
@@ -25,22 +24,16 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'invitation',  # invites.
     'Layers',  # boards.
 )
 
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
 )
 
 TEMPLATE_DIRS = (
     BASE_DIR+'/templates',
-)
-
-STATICFILES_DIRS = (
-    '/home/sena/Devel/Kasatou/static',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -52,11 +45,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-
 ROOT_URLCONF = 'Kasatou.urls'
 
 WSGI_APPLICATION = 'Kasatou.wsgi.application'
-
 
 DATABASES = {
     'default': {
@@ -65,29 +56,21 @@ DATABASES = {
     }
 }
 
+# Land & time.
 LANGUAGE_CODE = 'ru-ru'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 
 # Static
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    '/home/sena/Devel/Kasatou/static',
+)
 
 
 # Media
 MEDIA_ROOT = os.path.join(os.getcwd(), 'media')
 MEDIA_URL = '/media/'
-
-
-# Invites.
-INVITE_MODE = True
-INVITE_MODE_STRICT = True
-ACCOUNT_INVITATION_DAYS = 3
-INVITATIONS_PER_USER = 3
-
