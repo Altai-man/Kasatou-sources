@@ -30,6 +30,10 @@ textarea, .edit, .dropdown select, input[type="number"] {
 }
 
 
+.error-block {
+	border-left: 1px solid #D9C6C2;
+}
+
 textarea, .edit, .button, .dropdown select { 
     border: 1px solid #D9C6C2;
 }

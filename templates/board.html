@@ -49,7 +49,7 @@
         {% with thread=bundle.thread %}
         {{thread.posts}}
         <div class="thread">
-          <div class="title btitle">{{thread.topic}}</div>
+          <div class="title btitle"><a href="#">/b/</a>{{thread.topic}}</div>
 
           <div class="details tdetails">
             Anonymous <a href="{{thread.board_id}}thread/{{thread.id}}">№{{thread.id}}</a> {{thread.date}}

@@ -25,6 +25,10 @@ textarea, .edit, .dropdown select, input[type="number"] {
     border-bottom: 1px solid #595959;
 }
 
+.error-block {
+    border-left: 1px solid #595959;
+}
+
 .thread {
     border-top: 1px solid #595959;
 }
