@@ -1,93 +1,112 @@
 body {
-   
     background: url('back.png') #FEFFEF;
     background-repeat: no-repeat;
     background-position: center center;
     color: #681715;
-
 }
 
-a {
+
+
+/* Background style */
+
+textarea, .edit, .dropdown select, input[type="number"] {
+    background: #F1E0D6;
+} 
+
+
+
+/* Borders style */
+
+#content, input[type="number"], #loginform, .post, .indexbox {
+    border: 1px solid #D9C6C2;
+}
+
+#lftitle, .indextitle, .title, .details, .thread, .search-title {
+    border-bottom: 1px solid #D9C6C2;
+}
+
+.thread {
+    border-top: 1px solid #D9C6C2;
+}
+
+
+textarea, .edit, .button, .dropdown select { 
+    border: 1px solid #D9C6C2;
+}
+
+
+
+/* Text style */
+
+.mformfield, #lftitle, #lfcontent, #copyright, .title, .indextitle, .search-title {
+    color: #A5A69B;
+}
+
+
+
+/* Links style */
+
+a, a:hover {
     color: #0B7A45;
+}
+
+
+a {
     text-decoration: none;
 }
 
 a:hover {
-    color: #0B7A45;
     text-decoration: underline;
 }
 
-textarea {
-    border:1px solid #D9C6C2;
+.inthread a {
+    color: #708090;
+}
+
+.inthread a:hover {
+    color: #0B7A45;
+}
+
+hr {
+    color: #D9C6C2; /*для IE */ 
+    background-color:#D9C6C2; /*для Firefox, Opera, Safari*/ 
+
+}
+
+
+/* Forms style */
+
+input[type="number"]{
     color: #681715;
-    background: #F1E0D6;
+}
+
+.dropdown select {
+    color: #681715;
+}
+
+textarea {
+    color: #681715;
 }
 
 textarea:hover {
     border: 1px solid #999999;
-
 }
 
 textarea:focus {
     border: 1px solid #0B7A45;
 }
 
-hr {
-    color: #cccccc; /*для IE */ 
-    background-color:#cccccc; /*для Firefox, Opera, Safari*/ 
-
+input[type="number"]{
+    outline: none;
+    padding: 3px 0 2px 5px;
 }
 
-#loginform {
-    background: #F1E0D6 ;
-    background: linear-gradient(to top, #d9c4b8 0%, #F1E0D6 15%);
-    box-shadow: 0px 3px 5px #D6D9AD; 
-    border: 1px solid #D9C6C2;
-}
-
-.mformfield {
-    color: #A5A69B;
-}
-
-#lftitle {
-    color: #A5A69B;
-    border-bottom: 1px solid #D9C6C2;
-}
-
-#lfcontent {
-    font-size:12;
-    color: #A5A69B;
-}
-
-#content {
-    background: #F1E0D6;
-    border: 1px solid #D9C6C2;
-    border-top: 2px solid #D9C6C2;
-    box-shadow: 0px 3px 5px #D6D9AD;
-}
-
-#copyright {
-    color: #A5A69B;
-}
-
-.thread {
-    border-top: 1px solid #D9C6C2;
-    border-bottom: 1px solid #D9C6C2;
-}
-
-.details {
-    border-bottom: 1px solid #D9C6C2;
-    color: #999999;
-}
-
-.post {
-    border: 1px solid #D9C6C2;
-    background: #e6d4cb;
+input[type="number"]:focus {
+    outline: none;
+    border: 1px solid #0B7A45;
 }
 
 .edit {
-    background: #F1E0D6;
-    border:1px solid #D9C6C2;
     color: #681715;
 }
 
@@ -97,30 +116,57 @@ hr {
 }
 
 .edit:focus {
-    border: 1px solid #0B7A45;
+    border: 1px solid  #0B7A45;
 }
 
-.button {
+#loginform {
+    background: #F1E0D6 ;
+    background: linear-gradient(to top, #d9c4b8 0%, #F1E0D6 15%);
+    box-shadow: 0px 3px 5px #D6D9AD; 
+    border: 1px solid #D9C6C2;
+}
+
+
+
+/* Buttons style */
+
+.button, .file-button {
     background: #F1E0D6;
     background: linear-gradient(to top, #F1E0D6 0%, #FFE7D9 75%);
     color: #681715;
     border: 1px solid #D9C6C2;
 }
 
-.button:hover {
-    background: #272727;
+.button:hover, .file-button:hover{
+    background: #FFD7BF;
     background: linear-gradient(to top, #FFD7BF 0%, #FFE7D9 75%);
 }
 
-.title {
-    color: #a5a69b;
-    border-bottom: 1px solid #D9C6C2;
+
+
+/* Board style */
+
+#content {
+    background: #F1E0D6;
+    border: 1px solid #D9C6C2;
+    border-top: 2px solid #D9C6C2;
+    box-shadow: 0px 3px 5px #D6D9AD;
 }
+
+.details {
+    color: #a5a69b;
+}
+
 
 .btitle {
     color: #3399CC;
     border-bottom: none;
 }
+
+.post {
+    background: #e6d4cb;
+}
+
 
 /* Index style */
 
@@ -130,30 +176,15 @@ hr {
 }
 
 
-.indexbox {
+.indexbox, .search-box {
     background: #F1E0D6;
     border: 1px solid #D9C6C2;
     box-shadow: 0px 2px 3px #D6D9AD; 
     background: linear-gradient(to top, #d9c4b8 0%, #F1E0D6 50%);
-    
     border-bottom: none;
-
 }
 
 .indeximg {
-    border-right: 1px solid #D9C6C2;
-}
-
-.indextitle {
-    color: #A5A69B;
-    border-bottom: 1px solid #D9C6C2;
-}
-
-.inthread a {
-    color: #708090;
-}
-
-.inthread a:hover{
-    color: #0B7A45;
+    border-right: 1px solid #E6E6fA;
 }
 

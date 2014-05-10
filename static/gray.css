@@ -1,93 +1,112 @@
 body {
-   
     background: url('back.png') #1E1E1E;
     background-repeat: no-repeat;
     background-position: center center;
     color: #D0D0D0;
-
 }
 
-a {
+
+
+/* Background style */
+
+textarea, .edit, .dropdown select, input[type="number"] {
+    background: #2E2E2E;
+} 
+
+
+
+/* Borders style */
+
+#content, input[type="number"], #loginform, .post, .indexbox {
+    border: 1px solid #595959;
+}
+
+#lftitle, .indextitle, .title, .details, .thread, .search-title {
+    border-bottom: 1px solid #595959;
+}
+
+.thread {
+    border-top: 1px solid #595959;
+}
+
+
+textarea, .edit, .button, .dropdown select, input[type="number"] { 
+    border: 1px solid #595959;
+}
+
+
+
+/* Text style */
+
+.mformfield, #lftitle, #lfcontent, #copyright, .title, .indextitle, .search-title {
+    color: #D0D0D0;
+}
+
+
+
+/* Links style */
+
+a, a:hover {
     color: #CCCCCC;
+}
+
+
+a {
     text-decoration: none;
 }
 
 a:hover {
-    color: #CCCCCC;
     text-decoration: underline;
 }
 
-textarea {
-    border:1px solid #595959;
+.inthread a {
+    color: #708090;
+}
+
+.inthread a:hover {
+    color: #3399CC;
+}
+
+hr {
+    color: #595959; /*для IE */ 
+    background-color:#595959; /*для Firefox, Opera, Safari*/ 
+
+}
+
+
+/* Forms style */
+
+input[type="number"]{
     color: #D0D0D0;
-    background: #2E2E2E;
+}
+
+.dropdown select {
+    color: #D0D0D0;
+}
+
+textarea {
+    color: #D0D0D0;
 }
 
 textarea:hover {
     border: 1px solid #777777;
-
 }
 
 textarea:focus {
     border: 1px solid #3399CC;
 }
 
-hr {
-    color: #cccccc; /*для IE */ 
-    background-color:#cccccc; /*для Firefox, Opera, Safari*/ 
-
+input[type="number"]{
+    outline: none;
+    padding: 3px 0 2px 5px;
 }
 
-#loginform {
-    background: #272727 ;
-   background: linear-gradient(to top, #1E1E1E 0%, #272727  15%);
-    box-shadow: 0px 3px 5px #272727; 
-    border: 1px solid #404040;
-}
-
-.mformfield {
-    color: #cccccc;
-}
-
-#lftitle {
-    color: #D0D0D0;
-    border-bottom: 1px solid #595959;
-}
-
-#lfcontent {
-    font-size:12;
-    color: #999999;
-}
-
-#content {
-    background: #272727;
-    border: 1px solid #404040;
-    border-top: 2px solid #404040;
-    box-shadow: 0px 3px 5px #272727;
-}
-
-#copyright {
-    color: #777777;
-}
-
-.thread {
-    border-top: 1px solid #595959;
-    border-bottom: 1px solid #595959;
-}
-
-.details {
-    border-bottom: 1px solid #595959;
-    color: #999999;
-}
-
-.post {
-    border: 1px solid #595959;
-    background: #2E2E2E;
+input[type="number"]:focus {
+    outline: none;
+    border: 1px solid #3399CC;
 }
 
 .edit {
-    background: #2E2E2E;
-    border:1px solid #595959;
     color: #D0D0D0;
 }
 
@@ -97,29 +116,56 @@ hr {
 }
 
 .edit:focus {
-    border: 1px solid #3399CC;
+    border: 1px solid  #3399CC;
 }
 
-.button {
+#loginform {
+    background: #272727;
+    background: linear-gradient(to top, #1E1E1E 0%, #272727  15%);
+    box-shadow: 0px 3px 5px #272727; 
+    border: 1px solid #404040;
+}
+
+
+
+/* Buttons style */
+
+.button, .file-button {
     background: #2e2e2e;
     background: linear-gradient(to top, #2e2e2e 0%, #404040 75%);
     color: #cccccc;
     border: 1px solid #595959;
 }
 
-.button:hover {
+.button:hover, .file-button:hover {
     background: #272727;
     background: linear-gradient(to top, #272727 0%, #404040 75%);
 }
 
-.title {
-    color: #cccccc;
-    border-bottom: 1px solid #595959;
+
+
+/* Board style */
+
+#content {
+    background: #272727;
+    border: 1px solid #404040;    
+    border-top: 2px solid #404040;
+    box-shadow: 0px 3px 5px #272727;
 }
+
+.details {
+    color: #999999;
+}
+
 
 .btitle {
     color: #3399CC;
     border-bottom: none;
+}
+
+
+.post {
+    background: #2E2E2E;
 }
 
 /* Index style */
@@ -130,30 +176,15 @@ hr {
 }
 
 
-.indexbox {
+.indexbox, .search-box {
     background: #272727;
     border: 1px solid #353535;
     box-shadow: 0px 2px 3px #272727; 
     background: linear-gradient(to top, #1E1E1E 0%, #272727 50%);
-    
     border-bottom: none;
-
 }
 
 .indeximg {
-    border-right: 1px solid #353535;
-}
-
-.indextitle {
-    color: #D0D0D0;
-    border-bottom: 1px solid #595959;
-}
-
-.inthread a {
-    color: #708090;
-}
-
-.inthread a:hover{
-    color: #3399CC;
+    border-right: 1px solid #E6E6fA;
 }
 
