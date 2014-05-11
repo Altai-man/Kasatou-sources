@@ -1,53 +1,50 @@
 <!DOCTYPE html>
-<html> 
-<head>
-<title>Kasatou - Поиск</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="stylesheet" type="text/css" href="main.css">
-<link rel="stylesheet" type="text/css" href="wakaba.css">
-</head>
-<body>
+<html>
+  <head>
+    <title>Kasatou - Поиск</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}main.css">
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}light.css">
+  </head>
+  <body>
 
-<div id="logo">Kasatou </div>
+    <div id="logo">Kasatou </div>
 
-<div id="search">
-<div class="formrow"><input class="edit" size="53" maxlength="53"> <input type="submit" class="button" value="Поиск"></div>
-<div>"Найдено $count результатов: <br> "$query query query query query query query query query query"
-$query query query query query query query query query query"
- </div>
+    <div id="search">
+      <form id="search", method="post" action="/search/">
+        {% csrf_token %}
+      <div class="formrow">
+        <input name="search_text" class="edit" size="53" maxlength="53">
+        <input type="submit" class="button" value="Поиск"></div>
+      </form>
+      {% if posts %}
+      {% if posts.count == 1 %}
+      <div>Found {{posts.count}} result: </div>
+      {% else %}
+      <div>Found {{posts.count}} results: </div>
+      {% endif %}
+      {% endif %}
+    </div>
 
-</div>
+    {% for post in posts %}
+    <div class="search-box">
+      <div class="search-title">
+        {{post.thread}}
+      </div>
 
-<div class="search-box">
-<div class="search-title">
-$name_thread
-</div>
+      <div class="search-result">
 
-<div class="search-result">
+        {{post.text}}
 
-Исходя из того, что такового тредика тут ещё нет, я создаю его во славу Сатане Сато.
-Я вообще мало уверен в том, что этот тред будет использоваться по назначению, или использоваться вообще. Однако не теряя оптимизма, я всё-таки делаю тред! 
+      </div>
+      <div class="inthread"><a href="{{post.board_id}}thread/{{post.thread_id.id}}">Перейти</a></div>
+    </div>
+    {% empty %}
+    <div id="search">I found nothing.</div>
+    {% endfor %}
 
-</div>
-<div class="inthread"><a href="#">Перейти</a></div>
-</div> 
+    <div id="slogan">Yet Another Pointless Imageboard</div>
 
-<div class="search-box">
-<div class="search-title">
-$name_thread
-</div>
-
-<div class="search-result">
-
-Исходя из того, что такового тредика тут ещё нет, я создаю его во славу Сатане Сато.
-Я вообще мало уверен в том, что этот тред будет использоваться по назначению, или использоваться вообще. Однако не теряя оптимизма, я всё-таки делаю тред! 
-
-</div>
-<div class="inthread"><a href="#">Перейти</a></div>
-</div> 
-
-<div id="slogan">Yet Another Pointless Imageboard</div>
-
-</body>
+  </body>
 
 </html>

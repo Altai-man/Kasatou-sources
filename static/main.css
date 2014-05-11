@@ -307,6 +307,10 @@ ul {
     margin-bottom: 5px;
 }
 
+.title-center {
+    text-align: center;
+}
+
 .btitle {
     border-bottom: none;
     font-size: 20px;

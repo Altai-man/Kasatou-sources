@@ -7,6 +7,8 @@ from django.views.generic import RedirectView, ListView, DetailView
 from django.views.generic.base import TemplateView, ContextMixin
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+
 from django.conf import settings
 
 # Kasatou modules
@@ -133,3 +135,18 @@ def user_logout(request):
     logout(request)
 
     return HttpResponseRedirect('/')
+
+
+def search(request):
+    context = RequestContext(request)
+
+    if request.method == 'POST':
+        search_text = request.POST['search_text']
+
+        context.update({
+            'posts': Post.objects.search(search_text),
+        })
+        return render_to_response('search.html', {}, context)
+
+    else:
+        return render_to_response("search.html", {}, context)

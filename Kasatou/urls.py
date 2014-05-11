@@ -18,12 +18,13 @@ urlpatterns = patterns(
     # Thread
     url(r'^(?P<board_name>[a-z]{1,3})/thread/(?P<pk>[0-9]+)/$',views.ThreadView.as_view(),name='thread_view'),
 
-
     url(r'^register/$', views.register, name='register'),
 
     url(r'^login/$', views.user_login, name='login'),
 
     url(r'^logout/$', views.user_logout, name='logout'),
+
+    url(r'^search/$', views.search, name='search'),
 
     # Add thread
     #    url(r'^(?P<board_name>[a-z]{1,3})/add_thread',views.ThreadAddView.as_view(),name='thread_add'),
