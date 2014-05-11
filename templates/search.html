@@ -17,10 +17,12 @@
         <input name="search_text" class="edit" size="53" maxlength="53">
         <input type="submit" class="button" value="Поиск"></div>
       </form>
-      {% if posts %}
       {% if posts.count == 1 %}
       <div>Found {{posts.count}} result: </div>
+      {% elif posts.count == 0 %}
+      <div id="search">I found nothing.</div>
       {% else %}
+      {% if posts %}
       <div>Found {{posts.count}} results: </div>
       {% endif %}
       {% endif %}
@@ -39,8 +41,6 @@
       </div>
       <div class="inthread"><a href="{{post.board_id}}thread/{{post.thread_id.id}}">Перейти</a></div>
     </div>
-    {% empty %}
-    <div id="search">I found nothing.</div>
     {% endfor %}
 
     <div id="slogan">Yet Another Pointless Imageboard</div>
