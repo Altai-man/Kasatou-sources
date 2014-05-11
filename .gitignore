@@ -1,1 +1,4 @@
 *.pyc
+#*#
+media/*
+__pycache__/*
