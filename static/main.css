@@ -88,7 +88,7 @@ textarea:focus {
 }
 
 .edit {
-    padding: 5px;
+    padding: 3px 0px 0px 3px; 
     height: 28px;
     margin-top: 2px;
     margin-bottom: 2px;

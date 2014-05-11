@@ -150,3 +150,18 @@ def search(request):
 
     else:
         return render_to_response("search.html", {}, context)
+
+
+def thread_creation(request):
+    context = RequestContext(request)
+
+    if request.method == 'POST':
+        thread_form = ThreadForm(data=request.POST)
+
+        if thread_form.is_valid():
+            thread = thread_form.save()
+            return HttpResponseRedirect("/b/")
+
+
+    else:
+        return HttpResponseRedirect('/')

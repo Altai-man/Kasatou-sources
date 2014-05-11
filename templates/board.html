@@ -29,7 +29,7 @@
 
         <div class="title">New thread</div>
         <div id="mainform">
-          <form action='/board/thread_add.html' method='post'>
+          <form action="/board/thread_add" method="post">
             {% csrf_token %}
             <div class="formrow"><div class="mformfield">Topic:</div> <input class="edit" type="text" size="53" maxlength="53"/></div>
             <div class="formrow"><div class="mformfield">Text: </div><textarea rows="10" cols="60" name="text"></textarea> </div>
