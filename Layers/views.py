@@ -152,16 +152,28 @@ def search(request):
         return render_to_response("search.html", {}, context)
 
 
-def thread_creation(request):
+def thread_creation(request, **kwargs):
     context = RequestContext(request)
 
+    if 'board_name' in kwargs.keys():
+        board = get_object_or_404(Board.objects, board_name=kwargs['board_name'])
+    else:
+        board = None
+
     if request.method == 'POST':
-        thread_form = ThreadForm(data=request.POST)
+        print(board)
+        thread_form = ThreadForm(request.POST, request.FILES)
+        topic = request.POST['topic']
+        text = request.POST['text']
 
         if thread_form.is_valid():
             thread = thread_form.save()
-            return HttpResponseRedirect("/b/")
 
+            thread.save()
+            return HttpResponseRedirect("/b/")
+        else:
+            print(thread_form.errors)
+            return HttpResponse("Invalid thread details supplied.")
 
     else:
         return HttpResponseRedirect('/')

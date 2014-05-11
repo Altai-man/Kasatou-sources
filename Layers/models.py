@@ -90,7 +90,7 @@ class ThreadForm(forms.ModelForm):
 
     class Meta:
         model = Thread
-        fields = ['topic', 'text', 'image1', 'image2', 'archive']
+        fields = ['topic', 'text', 'image1', 'image2', 'archive', 'board_id']
 
 
 class Post(models.Model):
