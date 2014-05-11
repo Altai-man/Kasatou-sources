@@ -174,7 +174,7 @@ input[type="number"]:focus {
 
 /* Index style */
 
-#logo, #slogan, #footer-search {
+#logo, #slogan {
     color: #F19F00;
     text-shadow: -1px -1px 1px #272727;
 }
