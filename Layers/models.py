@@ -10,6 +10,8 @@ from django import forms
 from django.db import models
 from django.utils.html import escape
 from django.contrib.auth.models import User
+from django.db.models.signals import pre_delete, post_save, pre_save
+from django.dispatch import receiver
 
 
 class SearchManager(models.Manager):
@@ -71,6 +73,55 @@ class Thread(models.Model):
     archive = models.FileField(upload_to='documents', blank=True)
 
     board_id = models.ForeignKey(Board)
+
+
+    @staticmethod
+    def markup(string):
+        """ Makes markup for post and thread text. Strings will be safe. """
+        string = escape(string)
+        markups = [
+            # quote
+            [r'(?P<text>(?<!(&gt;))&gt;(?!(&gt;)).+)', r'<span class="quote">\g<text></span>'],
+
+            # bold **b**
+            [r'\*\*(?P<text>[^*%]+)\*\*', r'<b>\g<text></b>'],
+
+            # cursive *i*
+            [r'\*(?P<text>[^*%]+)\*', r'<i>\g<text></i>'],
+
+            # underline
+            [r'\[m\](?P<text>.+)\[\/m\]', r'<u>\g<text></u>'],
+
+            # deleted [s]s[/s]
+            [r'\[s\](?P<text>.+)\[\/s\]', r'<del>\g<text></del>'],
+
+            # monospace [code]code[/code]
+            [r'\[code\](?P<text>.+)\[\/code\]', r'<code>\g<text></code>'],
+
+            #spoiler %%s%%
+            [r'\%\%(?P<text>[^*%]+)\%\%', r'<span class="spoiler">\g<text></span>'],
+
+            # link to thread >t14
+            [r'\&gt;\&gt;t(?P<id>[0-9]+)',
+             r'<div class="link_to_content"><a class="link_to_post" href="/thread/\g<id>">&gt;&gt;t\g<id></a><div class="post_quote"></div></div>'],
+
+            # link to post >p88
+            [r'\&gt;\&gt;p(?P<id>[0-9]+)',
+             r'<div class="link_to_content"><a class="link_to_post" href="/post/\g<id>">&gt;&gt;p\g<id></a><div class="post_quote"></div></div>'],
+
+            # new line
+            [r'\n', r'<br>'],
+
+            # link with http-prefix.
+            [r'https?:\/\/', r''],
+
+            # link
+            [r'(?P<link>(https?)?:?\/?\/?(www)?\.?[-A-Za-z]+\.[a-z]+(\/[\.\+-_&\?=/A-Za-z0-9]*)?)', r'<a href="http://\g<link>">\g<link></a>'],
+
+        ]
+        for one_markup in markups:
+            string = re.sub(one_markup[0], one_markup[1], string)
+        return string
 
 
     def latest_posts(self, count=3):
@@ -195,3 +246,18 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['topic', 'text', 'image1', 'image2', 'image3', 'archive']
+
+
+# Signals
+
+# Callbacks here because save does not always mean new object
+@receiver(pre_save, sender=Post)
+@receiver(pre_save, sender=Thread)
+def pre_save_callback(sender, instance, **kwargs):
+    # is it update for something or new object? If it is new, id is None
+    if instance.id is None:
+        # Topic must be safe
+        instance.topic = escape(instance.topic)
+
+        # Markup
+        instance.text = instance.markup(instance.text)

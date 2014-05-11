@@ -155,16 +155,8 @@ def search(request):
 def thread_creation(request, **kwargs):
     context = RequestContext(request)
 
-    if 'board_name' in kwargs.keys():
-        board = get_object_or_404(Board.objects, board_name=kwargs['board_name'])
-    else:
-        board = None
-
     if request.method == 'POST':
-        print(board)
         thread_form = ThreadForm(request.POST, request.FILES)
-        topic = request.POST['topic']
-        text = request.POST['text']
 
         if thread_form.is_valid():
             thread = thread_form.save()
