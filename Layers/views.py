@@ -174,20 +174,22 @@ def create_thread(request, **kwargs):
 
 def post_adding(request, **kwargs):
     context = RequestContext(request)
-    if 'board_name' in kwargs.keys():
-        board = get_object_or_404(Board.objects, board_name=kwargs['board_name'])
-    else:
-        board = None
 
     if request.method == 'POST':
         post_form = PostForm(request.POST, request.FILES)
+        thread_id = request.POST.get('thread_id')
+        boardId = request.POST.get('board_id')
+        board_list = Board.objects.filter(id=boardId).values('board_name').values_list()
+        board_name = board_list[0][1]
 
         if post_form.is_valid():
             post = post_form.save()
 
             post.save()
-            return HttpResponseRedirect('/b/')
+            addr = "/" + board_name + "/thread/" + thread_id
+            return HttpResponseRedirect(addr)
         else:
+            print(post_form.errors)
             return HttpResponseRedirect('/b/')
     else:
         return HttpResponseRedirect('/b/')
