@@ -103,8 +103,8 @@ textarea:focus {
 .button {
     display: inline-block;
     width: 100px;
-    height: 30px;
-    padding: 5px 10px 5px 6px;
+    height: 28px;
+    padding: 3px 10px 2px 6px;
     font-size: 12px;
     text-align: center;
     text-decoration: none;
@@ -311,6 +311,11 @@ ul {
     border-bottom: none;
     font-size: 20px;
     margin: 0px;
+}
+
+.thread_name {
+    font-size: 18px;
+    font-weight: normal;
 }
 
 .reply {
