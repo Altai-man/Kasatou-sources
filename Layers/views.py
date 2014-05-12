@@ -8,6 +8,8 @@ from django.views.generic.base import TemplateView, ContextMixin
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.sessions.models import Session
 
 from django.conf import settings
 
@@ -193,3 +195,26 @@ def post_adding(request, **kwargs):
             return HttpResponseRedirect('/b/')
     else:
         return HttpResponseRedirect('/b/')
+
+
+def post_deleting(request, p_id):
+    board_name = str(Post.objects.get(id=p_id).board_id)
+    thread_name = Post.objects.get(id=p_id).thread_id
+    thread_id = str(Thread.objects.get(topic=thread_name).id)
+    addr = "" + board_name + "thread/" + thread_id
+
+    if request.method == 'GET':
+        session_key = request.session.session_key
+
+        session = Session.objects.get(session_key=session_key)
+        uid = session.get_decoded().get('_auth_user_id')
+        user = User.objects.get(pk=uid)
+
+        if user:
+            if user.is_superuser:
+                Post.objects.filter(id=p_id).delete()
+                return HttpResponseRedirect(addr)
+            else:
+                return HttpResponseRedirect(addr)
+    else:
+        return HttpResponseRedirect(addr)
