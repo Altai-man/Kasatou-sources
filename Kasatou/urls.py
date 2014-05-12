@@ -22,7 +22,7 @@ urlpatterns = patterns(
     url(r'^search/$', views.search, name='search'),
 
     # Add thread
-    url(r'^thread_add/$', views.thread_creation, name='thread_add'),
+    url(r'^thread_add/$', views.create_thread, name='thread_add'),
 
     # Add post
     url(r'^(?P<board_name>[a-z]{1,3})/thread/(?P<thread_id>[0-9]+)/add_post$',views.post_adding, name='post_add'),

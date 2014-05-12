@@ -153,7 +153,7 @@ def search(request):
         return render_to_response("search.html", {}, context)
 
 
-def thread_creation(request, **kwargs):
+def create_thread(request, **kwargs):
     context = RequestContext(request)
 
     if request.method == 'POST':
@@ -170,3 +170,4 @@ def thread_creation(request, **kwargs):
 
     else:
         return HttpResponseRedirect('/')
+
