@@ -31,7 +31,7 @@ class IndexView(TemplateView):
 
 class BaseBoardClass(ContextMixin):
     def dispatch(self, *args, **kwargs):
-        # Current board. Doing it here because sometimes I need it before get_context_data
+        # Current board.
         if 'board_name' in kwargs.keys():
             self.board = get_object_or_404(Board.objects, board_name=kwargs['board_name'])
         else:
@@ -39,8 +39,8 @@ class BaseBoardClass(ContextMixin):
 
         return super(BaseBoardClass, self).dispatch(*args, **kwargs)
 
-    def get_context_data(self,**kwargs):
-        context = super(BaseBoardClass,self).get_context_data(**kwargs)
+    def get_context_data(self, **kwargs):
+        context = super(BaseBoardClass, self).get_context_data(**kwargs)
         context['board'] = self.board
         context['boards'] = Board.objects.all
         return context
@@ -51,7 +51,6 @@ class BoardView(ListView, BaseBoardClass):
     template_name = "board.html"
     context_object_name = "threads"
 
-
     def get_queryset(self):
         return self.board.get_board_view()
 
@@ -61,17 +60,19 @@ class BoardView(ListView, BaseBoardClass):
         context['threads_menu'] = Thread.objects.all().order_by('-update_time')[:6]
         return context
 
+
 class ThreadView(DetailView, BaseBoardClass):
     model = Thread
     template_name = 'thread.html'
     context_object_name = 'thread'
 
     def get_context_data(self, **kwargs):
-        context = super(ThreadView,self).get_context_data(**kwargs)
+        context = super(ThreadView, self).get_context_data(**kwargs)
         context['post_form'] = PostForm()
         context['posts'] = Post.objects.filter(thread_id=context['object'])
 
         return context
+
 
 def register(request):
     context = RequestContext(request)
@@ -103,8 +104,8 @@ def register(request):
 
     return render_to_response(
         'register.html',
-        {'user_form': user_form, 'profile_form': profile_form, 'registered': registered},
-        context)
+        {'user_form': user_form, 'profile_form': profile_form,
+         'registered': registered}, context)
 
 
 def user_login(request):
@@ -121,7 +122,7 @@ def user_login(request):
                 login(request, user)
                 return HttpResponseRedirect('/')
             else:
-                return HttpResponse("Your Kasatou account is disabled or you are banned. You can write at @gmail.com.")
+                return HttpResponse("You are banned.")
         else:
             print("Invalid login details: {0}, {1}".format(username, password))
             return HttpResponse("Invalid login details supplied.")
