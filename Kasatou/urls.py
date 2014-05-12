@@ -28,7 +28,7 @@ urlpatterns = patterns(
     url(r'^(?P<board_name>[a-z]{1,3})/thread/(?P<thread_id>[0-9]+)/add_post/$',views.post_adding, name='post_add'),
 
     # Remove post
-    url(r'post_deleting/(?P<id>[0-9]+)', views.post_deleting, name='post_deleting'),
+    url(r'post_deleting/(?P<p_id>[0-9]+)', views.post_deleting, name='post_deleting'),
 
     # Urls for auth pages
     url(r'^register/$', views.register, name='register'),
