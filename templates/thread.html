@@ -1,7 +1,7 @@
+{% autoescape off %}
 <!DOCTYPE html>
 <html>
   {% load i18n %}
-  {% autoescape off %}
   <head>
     <title>Kasatou - {{thread}}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -32,11 +32,11 @@
             {% csrf_token %}
             <div class="formrow"><div class="mformfield">Topic:</div> <input name="topic" class="edit" type="text" size="53" maxlength="53"/></div>
             <div class="formrow"><div class="mformfield">Text: </div><textarea name="text" rows="10" cols="60" name="text"></textarea> </div>
-			<input type="hidden" name="thread_id" value="{{thread.id}}"></input>
-			<input type="hidden" name="board_id" value="{{board.id}}"></input>
+                        <input type="hidden" name="thread_id" value="{{thread.id}}"></input>
+                        <input type="hidden" name="board_id" value="{{board.id}}"></input>
             <div class="formrow">
-              <input class="button" type="submit" value="Send" />  
-              <input class="button" type="reset" value="Clear"/>  
+              <input class="button" type="submit" value="Send" />
+              <input class="button" type="reset" value="Clear"/>
             </div>
           </form>
         </div>
@@ -47,11 +47,12 @@
             Anonymous <a href="{{thread.board_id}}thread/{{thread.id}}">№{{thread.id}}</a> {{thread.date}}
           </div>
           <div class="reply"><a href="{{thread.board_id}}thread/{{thread.id}}">Reply</a></div>
+          <div class="delete_post"><a href="#">x</a></div>
           <div class="message">
             <div>
               <a href="/media/{{thread.image1.name}}">{{thread.image1.name|slice:"2:"|truncatechars:20}}</a>
             </div>
-            <img class='post_img' src='/images/thumbnails/{{thread.image1.name}}' data-alt_name='/images/{{thread.image1.name}}' alt='{{post.image1.name|slice:"2:"}}'>            
+            <img class='post_img' src='/images/thumbnails/{{thread.image1.name}}' data-alt_name='/images/{{thread.image1.name}}' alt='{{post.image1.name|slice:"2:"}}'>
             {{thread.text}}
           </div>
           {% for post in posts %}
@@ -60,7 +61,7 @@
               {% if post.topic %}
               <b>{{post.topic}}</b>
               {% else %}
-              Anonymous 
+              Anonymous
               {% endif %}
 <a href="{{post.board_id}}thread/{{post.thread_id.id}}">{{post.id}}</a> {{post.date}}
             </div>
