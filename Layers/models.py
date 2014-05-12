@@ -42,6 +42,7 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('email', 'password')
 
+
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
@@ -73,7 +74,6 @@ class Thread(models.Model):
     archive = models.FileField(upload_to='documents', blank=True)
 
     board_id = models.ForeignKey(Board)
-
 
     @staticmethod
     def markup(string):
@@ -123,9 +123,8 @@ class Thread(models.Model):
             string = re.sub(one_markup[0], one_markup[1], string)
         return string
 
-
     def latest_posts(self, count=3):
-        posts = reversed(Post.objects.filter(thread_id=self).order_by('-id')[:count])  # 9,8,7
+        posts = reversed(Post.objects.filter(thread_id=self).order_by('-id')[:count])
         return posts
 
     def save(self, *args, **kwargs):
