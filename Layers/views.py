@@ -163,11 +163,31 @@ def create_thread(request, **kwargs):
             thread = thread_form.save()
 
             thread.save()
-            return HttpResponseRedirect("/b/")
+            return HttpResponseRedirect('/b/')
         else:
             print(thread_form.errors)
             return HttpResponse("Invalid thread details supplied.")
 
     else:
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/b/')
 
+
+def post_adding(request, **kwargs):
+    context = RequestContext(request)
+    if 'board_name' in kwargs.keys():
+        board = get_object_or_404(Board.objects, board_name=kwargs['board_name'])
+    else:
+        board = None
+
+    if request.method == 'POST':
+        post_form = PostForm(request.POST, request.FILES)
+
+        if post_form.is_valid():
+            post = post_form.save()
+
+            post.save()
+            return HttpResponseRedirect('/b/')
+        else:
+            return HttpResponseRedirect('/b/')
+    else:
+        return HttpResponseRedirect('/b/')
