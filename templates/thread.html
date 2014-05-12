@@ -28,9 +28,12 @@
 
         <div class="title">New post</div>
         <div id="mainform">
-          <form>
-            <div class="formrow"><div class="mformfield">Topic:</div> <input class="edit" type="text" size="53" maxlength="53"/></div>
-            <div class="formrow"><div class="mformfield">Text: </div><textarea rows="10" cols="60" name="text"></textarea> </div>
+          <form method="post" action="{{thread.board_id}}thread/{{thread.id}}/add_post/">
+            {% csrf_token %}
+            <div class="formrow"><div class="mformfield">Topic:</div> <input name="topic" class="edit" type="text" size="53" maxlength="53"/></div>
+            <div class="formrow"><div class="mformfield">Text: </div><textarea name="text" rows="10" cols="60" name="text"></textarea> </div>
+			<input type="hidden" name="thread_id" value="{{thread.id}}"></input>
+			<input type="hidden" name="board_id" value="{{board.id}}"></input>
             <div class="formrow">
               <input class="button" type="submit" value="Send" />  
               <input class="button" type="reset" value="Clear"/>  
