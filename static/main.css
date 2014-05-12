@@ -103,8 +103,8 @@ textarea:focus {
 .button {
     display: inline-block;
     width: 100px;
-    height: 30px;
-    padding: 5px 10px 5px 6px;
+    height: 28px;
+    padding: 3px 10px 2px 6px;
     font-size: 12px;
     text-align: center;
     text-decoration: none;
@@ -313,9 +313,23 @@ ul {
     margin: 0px;
 }
 
+.thread_name {
+    font-size: 18px;
+    font-weight: normal;
+}
+
 .reply {
     position: absolute;
     right: 20px;
+    padding-top: 2px;
+    font-weight: bold;
+    font-size: 12px;
+    display: inline-block;
+}
+
+.delete_post {
+    position: absolute;
+    right: 30px;
     padding-top: 2px;
     font-weight: bold;
     font-size: 12px;

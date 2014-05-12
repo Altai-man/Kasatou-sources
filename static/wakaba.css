@@ -46,6 +46,19 @@ textarea, .edit, .button, .dropdown select {
     color: #A5A69B;
 }
 
+.spoiler {
+        background-color: #D9C6C2;
+        color: #D9C6C2;
+}
+
+.spoiler:hover {
+    color: inherit;
+}
+
+.post_quote {
+    color: #555555;
+}
+
 
 
 /* Links style */
@@ -189,6 +202,6 @@ input[type="number"]:focus {
 }
 
 .indeximg {
-    border-right: 1px solid #E6E6fA;
+    border-right: 1px solid #D9C6C2;
 }
 

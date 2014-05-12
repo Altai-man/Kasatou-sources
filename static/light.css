@@ -45,6 +45,19 @@ textarea, .edit, .button, .dropdown select {
     color: #cccccc;
 }
 
+.spoiler {
+        background-color: #E6E6FA;
+        color: #E6E6FA;
+}
+
+.spoiler:hover {
+    color: inherit;
+}
+
+.post_quote {
+    color: #708090;
+}
+
 
 
 /* Links style */
