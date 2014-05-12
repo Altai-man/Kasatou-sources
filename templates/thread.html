@@ -47,7 +47,6 @@
             Anonymous <a href="{{thread.board_id}}thread/{{thread.id}}">№{{thread.id}}</a> {{thread.date}}
           </div>
           <div class="reply"><a href="{{thread.board_id}}thread/{{thread.id}}">Reply</a></div>
-          <div class="delete_post"><a href="#">x</a></div>
           <div class="message">
             <div>
               <a href="/media/{{thread.image1.name}}">{{thread.image1.name|slice:"2:"|truncatechars:20}}</a>
@@ -65,6 +64,7 @@
               {% endif %}
 <a href="{{post.board_id}}thread/{{post.thread_id.id}}">{{post.id}}</a> {{post.date}}
             </div>
+            <div class="delete_post"><a href="/post_deleting/{{post.id}}">x</a></div>
             <div class="message">
               {{post.text}}
             </div>
