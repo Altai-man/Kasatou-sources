@@ -29,7 +29,10 @@ urlpatterns = patterns(
     # Add thread
     url(r'^thread_add/$', views.thread_creation, name='thread_add'),
 
-    # Move to post
+    # Add post
+    url(r'^(?P<board_name>[a-z]{1,3})/thread/(?P<thread_id>[0-9]+)/add_post$',views.post_adding, name='post_add'),
+
+   # Move to post
 #    url(r'^post/(?P<pk>[0-9]+)/$',views.PostView.as_view(),name='post_view'),
 
     # Get single post
@@ -41,8 +44,7 @@ urlpatterns = patterns(
     # Update thread
 #    url(r'^(?P<board_name>[a-z]{1,3})/thread/update/(?P<thread_id>[0-9]+)/(?P<posts_numb>[0-9]+)$',views.ThreadUpdateView.as_view(),name='thread_update'),
 
-    # Add post
-#    url(r'^(?P<board_name>[a-z]{1,3})/thread/(?P<thread_id>[0-9]+)/add_post$',views.PostAddView.as_view(),name='post_add'),
+ 
 
     # Invites.
 #    url(r'^invite/', include('invite_registration.urls')),
