@@ -130,12 +130,14 @@ def user_login(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-
+        print(username)
+        print(password)
         user = authenticate(username=username, password=password)
-
+        print(user)
         if user:
             if user.is_active:
                 login(request, user)
+                print(username, password)
                 return HttpResponseRedirect('/')
             else:
                 return HttpResponse("You are banned.")
