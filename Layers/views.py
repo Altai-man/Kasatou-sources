@@ -10,6 +10,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 from django.conf import settings
 
@@ -19,15 +21,23 @@ from Layers.models import Post
 from Layers.models import Board
 from Layers.models import PostForm
 from Layers.models import ThreadForm
-from Layers.models import UserForm, UserProfileForm
+from Layers.models import UserForm
 
 
 class IndexView(TemplateView):
     template_name = "index.html"
 
+
+
     def get_context_data(self, **kwargs):
+        session_key = self.request.session.session_key
+        session = Session.objects.get(session_key=session_key)
+        uid = session.get_decoded().get('_auth_user_id')
+        user = User.objects.get(pk=uid)
+
         context = super(IndexView, self).get_context_data(**kwargs)
         context['threads'] = Thread.objects.all()[:5]
+        context['user'] = user
         return context
 
 
@@ -218,3 +228,30 @@ def post_deleting(request, p_id):
                 return HttpResponseRedirect(addr)
     else:
         return HttpResponseRedirect(addr)
+
+
+def profile(request):
+    context = RequestContext(request)
+
+    session_key = request.session.session_key
+    session = Session.objects.get(session_key=session_key)
+    uid = session.get_decoded().get('_auth_user_id')
+    user = User.objects.get(pk=uid)
+    
+    if request.method == 'GET':
+        context.update({
+            'user': user,
+        })
+
+        return render_to_response("profile.html", {}, context)
+    else:
+        name = request.POST.get('name')
+        theme = request.POST.get('theme')
+        thread_per_page = request.POST.get('thread_per_page')
+        user.name = name
+        user.theme = theme
+        user.thread_per_page = thread_per_page
+
+        user.save()
+
+        return render_to_response("profile.html", {}, context)

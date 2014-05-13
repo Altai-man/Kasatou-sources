@@ -1,32 +1,42 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<html> 
+<html>
 <head>
 <title>Kasatou - Настройки</title>
-<link rel="stylesheet" type="text/css" href="main.css">
-<link rel="stylesheet" type="text/css" href="wakaba.css">
+<link rel="stylesheet" type="text/css" href="/static/main.css">
+<link rel="stylesheet" type="text/css" href="static/{{user.theme|lower}}.css">
 </head>
 <body>
 
 <div id="logo">Kasatou</div>
 <div id="profile">
 <div class="title">Настройки</div>
-
-<div id="profileform"> 
-<form>
-<div class="formrow"><div class="mformfield">Имя: </div> <input class="edit" type="text" size="53" maxlength="53"/></div>
+<div id="profileform">
+<form method="post" action="/profile/">
+  {% csrf_token %}
+<div class="formrow"><div class="mformfield">Имя: </div> <input class="edit" name="name" type="text" size="53" maxlength="53" value="{{user.name}}"/></div>
 <div class="formrow"><div class="mformfield">Предпочитаемый тред: </div> <input class="edit" type="url" size="53" maxlength="53"/></div>
-<div class="formrow"><div class="mformfield">Число тредов на страницу:</div><input type="number" min="0" > </div> 
+<div class="formrow"><div class="mformfield">Число тредов на страницу:</div><input name="thread_per_page" type="number" min="0" value="{{user.thread_per_page}}"> </div>
 <div class="formrow"><div class="mformfield"> Цветовая схема:</div>
 <div class="dropdown">
-<select> 
-  <option> Light</option>
+<select name="theme">
+  {% if user.theme == "Light" %}
+  <option selected="selected">Light</option>
   <option>Gray</option>
   <option>Wakaba</option>
+  {% elif user.theme == "Gray" %}
+  <option>Light</option>
+  <option selected="selected">Gray</option>
+  <option>Wakaba</option>
+  {% elif user.theme == "Wakaba" %}
+  <option>Light</option>
+  <option>Gray</option>
+  <option selected="selected">Wakaba</option>
+  {% endif %}
 </select>
 </div>
-</div> 
-<input class="button" type="submit" value="Send" />  
-<input class="button" type="reset" value="Clear"/>  
+</div>
+<input class="button" type="submit" value="Send" />
+<input class="button" type="reset" value="Clear"/>
 </form>
 </div>
 

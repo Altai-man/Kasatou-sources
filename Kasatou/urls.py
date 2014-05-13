@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from Layers import views
 from django.contrib import admin
+from Kasatou import settings
 admin.autodiscover()
 
 urlpatterns = patterns(
@@ -37,6 +38,8 @@ urlpatterns = patterns(
 
     url(r'^logout/$', views.user_logout, name='logout'),
 
+    url(r'^profile/$', views.profile, name='profile'),
+
    # Move to post
 #    url(r'^post/(?P<pk>[0-9]+)/$',views.PostView.as_view(),name='post_view'),
 
@@ -56,4 +59,10 @@ urlpatterns = patterns(
 
     # Accounts.
 #    url(r'^accounts/', include('invite_registration.backends.invite_only.urls')),
+)
+urlpatterns += patterns(
+    '',
+    url(r'^media/(?P<path>.*)', 'django.views.static.serve', {
+        'document_root': getattr(settings, 'MEDIA_ROOT', ''),
+    }),
 )

@@ -7,7 +7,7 @@
 <title>Kasatou - Main</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="static/main.css">
-<link rel="stylesheet" type="text/css" href="static/light.css">
+<link rel="stylesheet" type="text/css" href="static/{{user.theme|lower}}.css">
 <!--
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.2/jquery.cookie.min.js"></script>
@@ -22,7 +22,7 @@
   <div class="indeximg">
     <a href="{{thread.board_id}}thread/{{thread.id}}">
       <span class="imggrad"></span>
-      <img src="/media/1.jpg" class="indeximg" /></a>
+      <img src="/media/{{thread.image1.name}}" class="indeximg" /></a>
   </div>
 
   <div class="indexmsgbox">

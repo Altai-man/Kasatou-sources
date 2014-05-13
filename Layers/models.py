@@ -9,7 +9,9 @@ import re
 from django import forms
 from django.db import models
 from django.utils.html import escape
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
 from django.db.models.signals import pre_delete, post_save, pre_save
 from django.dispatch import receiver
 
@@ -24,15 +26,54 @@ class SearchManager(models.Manager):
         return query
 
 
-class UserProfile(models.Model):
-    user = models.OneToOneField(User)
+class UserManager(BaseUserManager):
+    def create_user(self, email, password):
+        if not email:
+            raise ValueError('Users must have an email address')
 
-    theme = models.CharField(max_length=10, default="white")
-    username = models.CharField(max_length=14, default='Anonymous')
+        user = self.model(email=UserManager.normalize_email(email),)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password):
+        superuser = self.create_user(email, password)
+        superuser.is_admin = True
+        superuser.save(using=self._db)
+        return superuser
+
+
+class User(AbstractBaseUser, PermissionsMixin):
+    objects = UserManager()
+
+    email = models.EmailField(_('Email'), max_length=255, unique=True)
+    theme = models.CharField(max_length=10, default="White")
+    name = models.CharField(max_length=14, default='Anonymous')
     thread_per_page = models.IntegerField(default=8)
 
-    def __str__(self):
-        return '%s' % (self.name)
+    is_admin = models.BooleanField(_('Admin status'), default=False)
+    is_active = models.BooleanField(_('Active'), default=True)
+
+    date_joined = models.DateTimeField(_('Date joined'), default=timezone.now)
+
+    USERNAME_FIELD = 'email'
+
+    class Meta:
+        verbose_name = _('Anonymous')
+        verbose_name_plural = _('Anonymouses')
+
+    def get_short_name(self):
+        return self.name
+
+    def has_perm(self, perm, obj=None):
+        return True
+
+    def has_module_perms(self, app_label):
+        return True
+
+    @property
+    def is_staff(self):
+        return self.is_admin
 
 
 class UserForm(forms.ModelForm):
@@ -40,13 +81,7 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'password')
-
-
-class UserProfileForm(forms.ModelForm):
-    class Meta:
-        model = UserProfile
-        fields = ('username', 'thread_per_page')
+        fields = ('email', 'password', 'name', 'theme', 'thread_per_page')
 
 
 class Board(models.Model):

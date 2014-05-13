@@ -13,6 +13,8 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+AUTH_USER_MODEL = 'Layers.User'
+
 # Application definition
 
 INVITE_INITIAL_NUMBER_INVITATIONS = 3
