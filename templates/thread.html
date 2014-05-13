@@ -34,6 +34,7 @@
             <div class="formrow"><div class="mformfield">Text: </div><textarea name="text" rows="10" cols="60" name="text"></textarea> </div>
                         <input type="hidden" name="thread_id" value="{{thread.id}}"></input>
                         <input type="hidden" name="board_id" value="{{board.id}}"></input>
+				        <input type="hidden" name="user_id" value="{{user.id}}"></input>
             <div class="formrow">
               <input class="button" type="submit" value="Send" />
               <input class="button" type="reset" value="Clear"/>
@@ -60,7 +61,7 @@
               {% if post.topic %}
               <b>{{post.topic}}</b>
               {% else %}
-              Anonymous
+              {{user.name}}
               {% endif %}
 <a href="{{post.board_id}}thread/{{post.thread_id.id}}">{{post.id}}</a> {{post.date}}
             </div>
@@ -74,7 +75,7 @@
         <div align="center" id="copyright"> Kasatou. Yet Another Pointless Imageboard. </div>
       </div>
 
-      <div id="links"><span class="linkbot"><a href="/search/">Search</a></span>  <span class="linkbot"><a href="#">Profile</a></span>  <span class="linkbot"><a href="#">Invite</a></span> <span class="linkbot"><a href="#">/b/</a></span></div>
+      <div id="links"><span class="linkbot"><a href="/search/">Search</a></span>  <span class="linkbot"><a href="/profile/">Profile</a></span>  <span class="linkbot"><a href="#">Invite</a></span> <span class="linkbot"><a href="#">/b/</a></span></div>
   </body>
 
 

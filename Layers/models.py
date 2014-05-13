@@ -47,7 +47,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     email = models.EmailField(_('Email'), max_length=255, unique=True)
-    theme = models.CharField(max_length=10, default="White")
+    theme = models.CharField(max_length=10, default="Light")
     name = models.CharField(max_length=14, default='Anonymous')
     thread_per_page = models.IntegerField(default=8)
 
@@ -107,8 +107,8 @@ class Thread(models.Model):
     image1 = models.ImageField(upload_to='.', blank=False)
     image2 = models.ImageField(upload_to='.', blank=True)
     archive = models.FileField(upload_to='documents', blank=True)
-
     board_id = models.ForeignKey(Board)
+    user_id = models.ForeignKey(User)
 
     @staticmethod
     def markup(string):
@@ -175,7 +175,7 @@ class ThreadForm(forms.ModelForm):
 
     class Meta:
         model = Thread
-        fields = ['topic', 'text', 'image1', 'image2', 'archive', 'board_id']
+        fields = ['topic', 'text', 'image1', 'image2', 'archive', 'board_id', 'user_id']
 
 
 class Post(models.Model):
@@ -188,6 +188,8 @@ class Post(models.Model):
     archive = models.FileField(upload_to='documents', blank=True)
     thread_id = models.ForeignKey(Thread)
     board_id = models.ForeignKey('board')
+    user_id = models.ForeignKey(User)
+
 
     def make_thumbnail(self):
         if self.image1:
@@ -279,7 +281,7 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ['topic', 'text', 'image1', 'image2', 'image3', 'archive', 'thread_id', 'board_id']
+        fields = ['topic', 'text', 'image1', 'image2', 'image3', 'archive', 'thread_id', 'board_id', 'user_id']
 
 
 # Signals

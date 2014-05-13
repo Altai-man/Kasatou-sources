@@ -3,7 +3,7 @@
 <head>
 <title>Kasatou - Настройки</title>
 <link rel="stylesheet" type="text/css" href="/static/main.css">
-<link rel="stylesheet" type="text/css" href="static/{{user.theme|lower}}.css">
+<link rel="stylesheet" type="text/css" href="/static/{{user.theme|lower}}.css">
 </head>
 <body>
 
@@ -31,6 +31,10 @@
   <option>Light</option>
   <option>Gray</option>
   <option selected="selected">Wakaba</option>
+  {% else %}
+  <option>Light</option>
+  <option>Gray</option>
+  <option>Wakaba</option>
   {% endif %}
 </select>
 </div>

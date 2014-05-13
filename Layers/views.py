@@ -27,8 +27,6 @@ from Layers.models import UserForm
 class IndexView(TemplateView):
     template_name = "index.html"
 
-
-
     def get_context_data(self, **kwargs):
         session_key = self.request.session.session_key
         session = Session.objects.get(session_key=session_key)
@@ -52,9 +50,15 @@ class BaseBoardClass(ContextMixin):
         return super(BaseBoardClass, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
+        session_key = self.request.session.session_key
+        session = Session.objects.get(session_key=session_key)
+        uid = session.get_decoded().get('_auth_user_id')
+        user = User.objects.get(pk=uid)
+
         context = super(BaseBoardClass, self).get_context_data(**kwargs)
         context['board'] = self.board
         context['boards'] = Board.objects.all
+        context['user'] = user
         return context
 
 
@@ -168,6 +172,10 @@ def search(request):
 def create_thread(request, **kwargs):
     context = RequestContext(request)
 
+    boardId = request.POST.get('board_id')
+    board_list = Board.objects.filter(id=boardId).values('board_name').values_list()
+    board_name = board_list[0][1]
+
     if request.method == 'POST':
         thread_form = ThreadForm(request.POST, request.FILES)
 
@@ -175,7 +183,8 @@ def create_thread(request, **kwargs):
             thread = thread_form.save()
 
             thread.save()
-            return HttpResponseRedirect('/b/')
+            addr = "/" + board_name + "/"
+            return HttpResponseRedirect(addr)
         else:
             print(thread_form.errors)
             return HttpResponse("Invalid thread details supplied.")
