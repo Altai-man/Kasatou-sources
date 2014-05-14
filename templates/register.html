@@ -1,37 +1,44 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Kasatou</title>
-    </head>
-
-    <body>
-        <h1>Register</h1>
-
-        {% if registered %}
-        <a href="">Return to the homepage.</a><br />
-        {% else %}
-
-        <form id="user_form" method="post" action="/register/"
-                enctype="multipart/form-data">
-
+  {% load i18n %}
+  {% autoescape off %}
+  <head>
+    <title>Kasatou - Registration</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="/static/main.css">
+    <link rel="stylesheet" type="text/css" href="/static/light.css">
+    <!--
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.2/jquery.cookie.min.js"></script>
+        -->
+  </head>
+  <body>
+    <div id="logo">Kasatou</div>
+    <div id="profile">
+      <div class="title">Регистрация</div>
+      <div id="profileform">
+        <form method="post" action="/register/">
           {% csrf_token %}
-
-          {% for field in user_form %}
-          {{field.label}} <!-- Шаблонная магия делается здесь. -->
-          {{field}}
-          {% endfor %} <br> <br>
-          {% for field in profile_form %}
-          <!--Если тебе нужны какие-то особые отличия для какого-то поля, делай так:
-              {*знак процента* if field.label = '*имя*' %}
-              *как это выглядит для определенного поля*
-              {*знак процента* else %}
-              *как выглядит для остальных полей.* -->
-          {{field.label}}
-          {{field}}
-          {% endfor %} <br> <br>
-
-          <input type="submit" name="submit" value="Register" />
+          <div class="formrow"><div class="mformfield">E-mail: </div> <input class="edit" name="email" type="text" size="53" maxlength="53"/></div>
+          <div class="formrow"><div class="mformfield">Password: </div> <input class="edit" name="password" type="password" size="53" maxlength="53"/></div>
+          <div class="formrow"><div class="mformfield">Имя: </div> <input class="edit" name="name" type="text" size="53" maxlength="53" value="Anonymous"/></div>
+          <div class="formrow"><div class="mformfield">Число тредов на страницу:</div><input name="thread_per_page" type="number" min="0" value=8> </div>
+          <div class="formrow"><div class="mformfield"> Цветовая схема:</div>
+            <div class="dropdown">
+              <select name="theme">
+                <option selected="selected">Light</option>
+                <option>Gray</option>
+                <option>Wakaba</option>
+              </select>
+            </div>
+          </div>
+          <input class="button" type="submit" value="Register" />
+          <input class="button" type="reset" value="Clear"/>
         </form>
-        {% endif %}
-    </body>
+      </div>
+    </div>
+</div>
+</div>
+</body>
 </html>
+{% endautoescape %}
