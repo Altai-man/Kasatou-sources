@@ -14,7 +14,7 @@
 -->
 </head>
 <body>
-
+{{version}}
 <div id="logo">Kasatou </div>
 {% if threads %}
 {% for thread in threads %}
@@ -22,7 +22,7 @@
   <div class="indeximg">
     <a href="{{thread.board_id}}thread/{{thread.id}}">
       <span class="imggrad"></span>
-      <img src="/media/{{thread.image1.name}}" class="indeximg" /></a>
+      <img src="/media/thumbnails/{{thread.image1.name}}" class="indeximg" /></a>
   </div>
 
   <div class="indexmsgbox">

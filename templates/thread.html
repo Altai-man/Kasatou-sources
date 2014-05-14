@@ -25,13 +25,16 @@
       </div>
 
       <div id="content">
-
         <div class="title">New post</div>
         <div id="mainform">
-          <form method="post" action="{{thread.board_id}}thread/{{thread.id}}/add_post/">
+          <form action="{{thread.board_id}}thread/{{thread.id}}/add_post/" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="formrow"><div class="mformfield">Topic:</div> <input name="topic" class="edit" type="text" size="53" maxlength="53"/></div>
             <div class="formrow"><div class="mformfield">Text: </div><textarea name="text" rows="10" cols="60" name="text"></textarea> </div>
+            <div class="formrow">
+				<label for="upload" class="file-button" style="float:left;"> Img </label>
+				<input name="image1" id="upload" accept="image/jpeg,image/png,image/gif"
+                       type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></div>
                         <input type="hidden" name="thread_id" value="{{thread.id}}"></input>
                         <input type="hidden" name="board_id" value="{{board.id}}"></input>
 				        <input type="hidden" name="user_id" value="{{user.id}}"></input>
