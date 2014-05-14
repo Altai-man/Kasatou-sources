@@ -17,7 +17,7 @@ AUTH_USER_MODEL = 'Layers.User'
 
 # Application definition
 
-INVITE_INITIAL_NUMBER_INVITATIONS = 3
+PIC_SIZE = 180.0
 
 INSTALLED_APPS = (
     'django.contrib.admin',
