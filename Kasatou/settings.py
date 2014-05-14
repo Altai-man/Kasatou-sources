@@ -3,7 +3,7 @@ Django settings for Kasatou project.
 """
 
 import os
-BASE_DIR = "/home/me/dev/kasatou-engine/"
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 SECRET_KEY = '3%dyqozgd4l)yheblv=-^lhbn1$js6uv5$7rh6r-qyi7gx88bf'
 
