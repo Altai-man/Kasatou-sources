@@ -92,7 +92,6 @@ class ThreadView(DetailView, BaseBoardClass):
 
 def register(request):
     context = RequestContext(request)
-    session_key = request.session.session_key
 
     registered = False
 
@@ -128,14 +127,10 @@ def user_login(request):
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
-        print(username)
-        print(password)
         user = authenticate(email=email, password=password)
-        print(user)
         if user:
             if user.is_active:
                 login(request, user)
-                print(username, password)
                 return HttpResponseRedirect('/')
             else:
                 return HttpResponse("You are banned.")
@@ -207,7 +202,6 @@ def post_adding(request, **kwargs):
             post = post_form.save()
 
             post.save()
-            print(post.image1)
             addr = "/" + board_name + "/thread/" + thread_id
             return HttpResponseRedirect(addr)
         else:
