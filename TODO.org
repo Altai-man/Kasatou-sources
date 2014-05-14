@@ -15,4 +15,5 @@
 ** DONE Adapt login page.
    CLOSED: [2014-05-11 Вс 13:48]
 ** APPT Needed templates: invite pages.
-** TODO Image previews.
+** DONE Image previews.
+   CLOSED: [2014-05-14 Ср 18:34]
