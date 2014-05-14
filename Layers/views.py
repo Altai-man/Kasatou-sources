@@ -34,7 +34,7 @@ class IndexView(TemplateView):
         user = User.objects.get(pk=uid)
 
         context = super(IndexView, self).get_context_data(**kwargs)
-        context['threads'] = Thread.objects.all()[:5]
+        context['threads'] = Thread.objects.all()[:10]
         context['user'] = user
         return context
 
@@ -92,47 +92,45 @@ class ThreadView(DetailView, BaseBoardClass):
 
 def register(request):
     context = RequestContext(request)
+    session_key = request.session.session_key
 
     registered = False
 
-    if request.method == 'POST':
-        user_form = UserForm(data=request.POST)
-        profile_form = UserProfileForm(data=request.POST)
+    if request.user.is_authenticated():
+        return HttpResponseRedirect("/")
+    else:
+        if request.method == 'POST':
+            user_form = UserForm(data=request.POST)
 
-        if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
-            user.save()
-
-            profile = profile_form.save(commit=False)
-            profile.user = user
-
-            profile.save()
-
-            registered = True
+            if user_form.is_valid():
+                user = user_form.save()
+                user.set_password(user.password)
+                user.save()
+                email = request.POST['email']
+                password = request.POST['password']
+                user = authenticate(email=email, password=password)
+                login(request, user)
+                return HttpResponseRedirect("/")
+            else:
+                print(user_form.errors)
 
         else:
-            print(user_form.errors, profile_form.errors)
+            user_form = UserForm()
 
-    else:
-        user_form = UserForm()
-        profile_form = UserProfileForm()
-
-    return render_to_response(
-        'register.html',
-        {'user_form': user_form, 'profile_form': profile_form,
-         'registered': registered}, context)
+            return render_to_response(
+                'register.html',
+                {'user_form': user_form, 'registered': registered}, context)
 
 
 def user_login(request):
     context = RequestContext(request)
 
     if request.method == 'POST':
-        username = request.POST['username']
+        email = request.POST['email']
         password = request.POST['password']
         print(username)
         print(password)
-        user = authenticate(username=username, password=password)
+        user = authenticate(email=email, password=password)
         print(user)
         if user:
             if user.is_active:
@@ -209,6 +207,7 @@ def post_adding(request, **kwargs):
             post = post_form.save()
 
             post.save()
+            print(post.image1)
             addr = "/" + board_name + "/thread/" + thread_id
             return HttpResponseRedirect(addr)
         else:
