@@ -58,6 +58,11 @@ DATABASES = {
     }
 }
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
+    
+
 # Land & time.
 LANGUAGE_CODE = 'ru-ru'
 TIME_ZONE = 'UTC'
