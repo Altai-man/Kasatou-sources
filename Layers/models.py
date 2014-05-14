@@ -110,6 +110,21 @@ class Thread(models.Model):
     board_id = models.ForeignKey(Board)
     user_id = models.ForeignKey(User)
 
+    def make_thumbnail(self):
+        if self.image1:
+            ratio = min(settings.PIC_SIZE/self.image1.height, settings.PIC_SIZE/self.image1.width)
+            thumbnail = Image.open(self.image1.path)
+            thumbnail.thumbnail((int(self.image1.width*ratio), int(self.image1.height*ratio)), Image.ANTIALIAS)
+            thumbnail.save(''.join([settings.MEDIA_ROOT, '/thumbnails/', self.image1.name]), thumbnail.format)
+        if self.image2:
+            ratio = min(settings.PIC_SIZE/self.image2.height, settings.PIC_SIZE/self.image2.width)
+            thumbnail = Image.open(self.image2.path)
+            thumbnail.thumbnail((int(self.image2.width*ratio), int(self.image2.height*ratio)), Image.ANTIALIAS)
+            thumbnail.save(''.join([settings.MEDIA_ROOT, '/thumbnails/', self.image2.name]), thumbnail.format)
+            return True
+        else:
+            return False
+
     @staticmethod
     def markup(string):
         """ Makes markup for post and thread text. Strings will be safe. """
@@ -209,6 +224,7 @@ class Post(models.Model):
             thumbnail.save(''.join([settings.MEDIA_ROOT, '/thumbnails/', self.image3.name]), thumbnail.format)
             return True
         else:
+            print("NOPE")
             return False
 
     @staticmethod
@@ -297,3 +313,10 @@ def pre_save_callback(sender, instance, **kwargs):
 
         # Markup
         instance.text = instance.markup(instance.text)
+
+@receiver(post_save, sender=Thread)
+@receiver(post_save, sender=Post)
+def post_save_callback(sender, instance, **kwargs):
+    if kwargs['created']:
+        # Thumbnail
+        instance.make_thumbnail()
