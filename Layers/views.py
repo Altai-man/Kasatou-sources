@@ -12,31 +12,17 @@ from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 from django.contrib.auth import get_user_model
 User = get_user_model()
-
+from django.contrib import messages
 from django.conf import settings
 
 # Kasatou modules
+from Layers.snippets import get_obj_or_None
 from Layers.models import Thread
 from Layers.models import Post
 from Layers.models import Board
 from Layers.models import PostForm
 from Layers.models import ThreadForm
 from Layers.models import UserForm
-
-
-class IndexView(TemplateView):
-    template_name = "index.html"
-
-    def get_context_data(self, **kwargs):
-        session_key = self.request.session.session_key
-        session = Session.objects.get(session_key=session_key)
-        uid = session.get_decoded().get('_auth_user_id')
-        user = User.objects.get(pk=uid)
-
-        context = super(IndexView, self).get_context_data(**kwargs)
-        context['threads'] = Thread.objects.all()[:10]
-        context['user'] = user
-        return context
 
 
 class BaseBoardClass(ContextMixin):
@@ -51,14 +37,23 @@ class BaseBoardClass(ContextMixin):
 
     def get_context_data(self, **kwargs):
         session_key = self.request.session.session_key
-        session = Session.objects.get(session_key=session_key)
-        uid = session.get_decoded().get('_auth_user_id')
-        user = User.objects.get(pk=uid)
+        session = Session.objects.get(session_key=session_key).get_decoded().get('_auth_user_id')
+        user = User.objects.get(pk=session)
 
         context = super(BaseBoardClass, self).get_context_data(**kwargs)
         context['board'] = self.board
         context['boards'] = Board.objects.all
         context['user'] = user
+        return context
+
+
+
+class IndexView(TemplateView, BaseBoardClass):
+    template_name = "index.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context['threads'] = Thread.objects.all()[:10]
         return context
 
 
@@ -111,7 +106,8 @@ def register(request):
                 login(request, user)
                 return HttpResponseRedirect("/")
             else:
-                print(user_form.errors)
+                messages.error(request, user_form.errors)
+                return HttpResponseRedirect("/register/")
 
         else:
             user_form = UserForm()
@@ -128,16 +124,17 @@ def user_login(request):
         email = request.POST['email']
         password = request.POST['password']
         user = authenticate(email=email, password=password)
+
         if user:
             if user.is_active:
                 login(request, user)
                 return HttpResponseRedirect('/')
             else:
-                return HttpResponse("You are banned.")
+                messages.error(request, "You are banned. If you want to use imageboard - please, contact administrator.")
+                return HttpResponseRedirect("/login/")
         else:
-            print("Invalid login details: {0}, {1}".format(username, password))
-            return HttpResponse("Invalid login details supplied.")
-
+            messages.error(request, "Data is wrond. Are you registered?")
+            return HttpResponseRedirect("/login/")
     else:
         return render_to_response('login.html', {}, context)
 
@@ -145,8 +142,7 @@ def user_login(request):
 @login_required
 def user_logout(request):
     logout(request)
-
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect('login/')
 
 
 def search(request):
@@ -170,45 +166,55 @@ def create_thread(request, **kwargs):
     boardId = request.POST.get('board_id')
     board_list = Board.objects.filter(id=boardId).values('board_name').values_list()
     board_name = board_list[0][1]
+    addr = "/" + board_name + "/"
 
     if request.method == 'POST':
         thread_form = ThreadForm(request.POST, request.FILES)
 
         if thread_form.is_valid():
             thread = thread_form.save()
-
             thread.save()
-            addr = "/" + board_name + "/"
+
             return HttpResponseRedirect(addr)
         else:
-            print(thread_form.errors)
-            return HttpResponse("Invalid thread details supplied.")
+            messages.error(request, thread_form.errors)
+            return HttpResponseRedirect(addr)
 
     else:
-        return HttpResponseRedirect('/b/')
+        return HttpResponseRedirect(addr)
 
 
 def post_adding(request, **kwargs):
+    # Board name for redirect.
     context = RequestContext(request)
+    boardId = request.POST.get('board_id')
+    board_list = Board.objects.filter(id=boardId).values('board_name').values_list()
+    board_name = board_list[0][1]
 
     if request.method == 'POST':
+        text = request.POST.get('text')
+        topic = request.POST.get('topic')
+        image1 = request.FILES.get('image1')
+
         post_form = PostForm(request.POST, request.FILES)
         thread_id = request.POST.get('thread_id')
-        boardId = request.POST.get('board_id')
-        board_list = Board.objects.filter(id=boardId).values('board_name').values_list()
-        board_name = board_list[0][1]
+        addr = "/" + board_name + "/thread/" + thread_id
 
         if post_form.is_valid():
-            post = post_form.save()
+            if text or topic or image1:
+                post = post_form.save()
+                post.save()
+                return HttpResponseRedirect(addr)
+            else:
+                messages.error(request, "Message should have image or text or topic.")
+                return HttpResponseRedirect(addr)
 
-            post.save()
-            addr = "/" + board_name + "/thread/" + thread_id
-            return HttpResponseRedirect(addr)
         else:
-            print(post_form.errors)
-            return HttpResponseRedirect('/b/')
+            messages.error(request, thread_form.errors)
+            return HttpResponseRedirect(addr)
+
     else:
-        return HttpResponseRedirect('/b/')
+        return HttpResponseRedirect(addr)
 
 
 def post_deleting(request, p_id):
@@ -224,11 +230,16 @@ def post_deleting(request, p_id):
         uid = session.get_decoded().get('_auth_user_id')
         user = User.objects.get(pk=uid)
 
-        if user:
-            if user.is_superuser:
-                Post.objects.filter(id=p_id).delete()
+        post = get_obj_or_None(Post, id=p_id)
+        if user == post.user_id or user.is_superuser:
+            if post != None:
+                post.delete()
                 return HttpResponseRedirect(addr)
             else:
+                messages.error(request, "Sorry, but message with this id doesn't exist.")
+                return HttpResponseRedirect(addr)
+        else:
+                messages.error(request, "Sorry, but you have not enough permissions.")
                 return HttpResponseRedirect(addr)
     else:
         return HttpResponseRedirect(addr)
@@ -241,7 +252,7 @@ def profile(request):
     session = Session.objects.get(session_key=session_key)
     uid = session.get_decoded().get('_auth_user_id')
     user = User.objects.get(pk=uid)
-    
+
     if request.method == 'GET':
         context.update({
             'user': user,
