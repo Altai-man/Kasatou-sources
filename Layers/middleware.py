@@ -1,14 +1,17 @@
 #! -*- coding: utf-8 -*-
 from django.contrib.sessions.models import Session
 from Layers.snippets import get_obj_or_None
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from Layers.models import User
 
 class Invitation(object):
     def process_request(self, request):
-        session_key = request.session.session_key
-        session = Session.objects.get(session_key=session_key).get_decoded().get('_auth_user_id')
-        user = get_obj_or_None(User, pk=session)
+        try:
+            session_key = request.session.session_key
+            session = Session.objects.get(session_key=session_key).get_decoded().get('_auth_user_id')
+            user = get_obj_or_None(User, pk=session)
+        except:
+            user = None
 
         if user != None:
             return None
