@@ -12,8 +12,8 @@
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.2/jquery.cookie.min.js"></script>
         -->
   </head>
-
-
+  
+  
   <body>
     <div id="main">
       <div class="threadbar">
@@ -23,64 +23,71 @@
         </div>
         {% endfor %}
       </div>
-
+      
       <div id="content">
-        <div class="title">New post</div>
+        <div class="title">
+          New post
+        </div>
         <div id="mainform">
           <form action="{{thread.board_id}}thread/{{thread.id}}/add_post/" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="formrow"><div class="mformfield">Topic:</div> <input name="topic" class="edit" type="text" size="53" maxlength="53"/></div>
             <div class="formrow"><div class="mformfield">Text: </div><textarea name="text" rows="10" cols="60" name="text"></textarea> </div>
-            <div class="formrow">
-				<label for="upload" class="file-button" style="float:left;"> Img </label>
-				<input name="image1" id="upload" accept="image/jpeg,image/png,image/gif"
-                       type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></div>
-                        <input type="hidden" name="thread_id" value="{{thread.id}}"></input>
-                        <input type="hidden" name="board_id" value="{{board.id}}"></input>
-				        <input type="hidden" name="user_id" value="{{user.id}}"></input>
-            <div class="formrow">
-              <input class="button" type="submit" value="Send" />
-              <input class="button" type="reset" value="Clear"/>
-            </div>
-          </form>
+            <div class="formrow"><label for="upload" class="file-button" style="float:left;"> Img </label>
+              <input name="image1" id="upload" accept="image/jpeg,image/png,image/gif"
+                     type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></div>
+            <input type="hidden" name="thread_id" value="{{thread.id}}"></input>
+            <input type="hidden" name="board_id" value="{{board.id}}"></input>
+			<input type="hidden" name="user_id" value="{{user.id}}"></input>
         </div>
-        <div class="thread">
-          <div class="title btitle"><a href="{{thread.board_id}}">{{thread.board_id}}</a>{{thread.topic}}</div>
-
-          <div class="details tdetails">
-            Anonymous <a href="{{thread.board_id}}thread/{{thread.id}}">№{{thread.id}}</a> {{thread.date}}
-          </div>
-          <div class="reply"><a href="{{thread.board_id}}thread/{{thread.id}}">Reply</a></div>
-          <div class="message">
-            <div>
-              <a href="/media/{{thread.image1.name}}">{{thread.image1.name|slice:"2:"|truncatechars:20}}</a>
-            </div>
-            <img class='post_img' src='/images/thumbnails/{{thread.image1.name}}' data-alt_name='/images/{{thread.image1.name}}' alt='{{post.image1.name|slice:"2:"}}'>
-            {{thread.text}}
-          </div>
-          {% for post in posts %}
-          <div class="post">
-            <div class="details pdetails">
-              {% if post.topic %}
-              <b>{{post.topic}}</b>
-              {% else %}
-              {{user.name}}
-              {% endif %}
-<a href="{{post.board_id}}thread/{{post.thread_id.id}}">{{post.id}}</a> {{post.date}}
-            </div>
-            <div class="delete_post"><a href="/post_deleting/{{post.id}}">x</a></div>
-            <div class="message">
-              {{post.text}}
-            </div>
-          </div>
-          {% endfor %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="lfelemefnt">Errors in fields: {{message}}<br/></div>
+        {% endfor %}
+        {% endif %}
+        <div class="formrow">
+          <input class="button" type="submit" value="Send" />
+          <input class="button" type="reset" value="Clear"/>
         </div>
-        <div align="center" id="copyright"> Kasatou. Yet Another Pointless Imageboard. </div>
+        </form>
       </div>
-
-      <div id="links"><span class="linkbot"><a href="/search/">Search</a></span>  <span class="linkbot"><a href="/profile/">Profile</a></span>  <span class="linkbot"><a href="#">Invite</a></span> <span class="linkbot"><a href="#">/b/</a></span></div>
+      <div class="thread">
+        <div class="title btitle"><a href="{{thread.board_id}}">{{thread.board_id}}</a>{{thread.topic}}</div>
+        
+        <div class="details tdetails">
+          Anonymous <a href="{{thread.board_id}}thread/{{thread.id}}">№{{thread.id}}</a> {{thread.date}}
+        </div>
+        <div class="reply"><a href="{{thread.board_id}}thread/{{thread.id}}">Reply</a></div>
+        <div class="message">
+          <div>
+            <a href="/media/{{thread.image1.name}}">{{thread.image1.name|slice:"2:"|truncatechars:20}}</a>
+          </div>
+          <img class='post_img' src='/media/thumbnails/{{thread.image1.name}}' data-alt_name='/media/{{thread.image1.name}}' alt='{{post.image1.name|slice:"2:"}}'>
+          {{thread.text}}
+        </div>
+        {% for post in posts %}
+        <div class="post">
+          <div class="details pdetails">
+            {% if post.topic %}
+            <b>{{post.topic}}</b>
+            {% else %}
+            {{user.name}}
+            {% endif %}
+            <a href="{{post.board_id}}thread/{{post.thread_id.id}}">{{post.id}}</a> {{post.date}}
+          </div>
+          <div class="delete_post"><a href="/post_deleting/{{post.id}}">x</a></div>
+          <div class="message">
+            {{post.text}}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div align="center" id="copyright"> Kasatou. Yet Another Pointless Imageboard. </div>
+    </div>
+    
+    <div id="links"><span class="linkbot"><a href="/search/">Search</a></span>  <span class="linkbot"><a href="/profile/">Profile</a></span>  <span class="linkbot"><a href="#">Invite</a></span> <span class="linkbot"><a href="#">/b/</a></span></div>
   </body>
-
-
+  
+  
 </html>
 {% endautoescape %}
