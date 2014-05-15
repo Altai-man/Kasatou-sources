@@ -14,6 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.db.models.signals import pre_delete, post_save, pre_save
 from django.dispatch import receiver
+from django.conf import settings
 
 
 class SearchManager(models.Manager):
@@ -224,7 +225,6 @@ class Post(models.Model):
             thumbnail.save(''.join([settings.MEDIA_ROOT, '/thumbnails/', self.image3.name]), thumbnail.format)
             return True
         else:
-            print("NOPE")
             return False
 
     @staticmethod
