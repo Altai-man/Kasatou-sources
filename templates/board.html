@@ -40,7 +40,11 @@
 				<input type="hidden" name="board_id" value="{{board.id}}"></input>
 				<input type="hidden" name="user_id" value="{{user.id}}"></input>
 			</div> 
-
+            {% if messages %}
+            {% for message in messages %}
+            <div class="lfelemefnt">Errors in fields: {{message}}<br/></div>
+            {% endfor %}
+            {% endif %}
             <div class="formrow">
               <input class="button" id="send_thread" type="submit" value="Send" />  
               <input class="button" type="reset" value="Clear"/>  

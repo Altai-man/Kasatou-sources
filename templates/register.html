@@ -32,6 +32,11 @@
               </select>
             </div>
           </div>
+          {% if messages %}
+          {% for message in messages %}
+          <div class="lfelemefnt">Errors in fields: {{message}}<br/></div>
+          {% endfor %}
+          {% endif %}
           <input class="button" type="submit" value="Register" />
           <input class="button" type="reset" value="Clear"/>
         </form>
