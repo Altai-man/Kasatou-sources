@@ -38,6 +38,18 @@ TEMPLATE_DIRS = (
     BASE_DIR+'/templates',
 )
 
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.core.context_processors.tz",
+    "django.contrib.messages.context_processors.messages",
+)
+
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -45,6 +57,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'Layers.middleware.Invitation',
 )
 
 ROOT_URLCONF = 'Kasatou.urls'
@@ -64,7 +77,7 @@ AUTHENTICATION_BACKENDS = (
     
 
 # Land & time.
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = "en_US"
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
@@ -74,9 +87,7 @@ USE_TZ = True
 # Static
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(os.getcwd(), 'static')
-STATICFILES_DIRS = (
-#    '/home/sena/Devel/Kasatou/static',
-)
+
 
 STATICFILES_FINDERS = ( 
     'django.contrib.staticfiles.finders.FileSystemFinder',
