@@ -75,11 +75,10 @@
             {{user.name}}
             {% endif %}
             <a href="{{post.board_id}}thread/{{post.thread_id.id}}">{{post.id}}</a> {{post.date}}
-          </div>
           {% if board.is_moderated %}
           <div class="delete_post"><a href="/post_deleting/{{post.id}}">x</a></div>
           {% endif %}
-
+          </div>
           <div class="message">
             {{post.text}}
           </div>

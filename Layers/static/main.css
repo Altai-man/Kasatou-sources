@@ -330,7 +330,7 @@ ul {
 
 .delete_post {
     position: absolute;
-    right: 30px;
+    right: -8px;
     padding-top: 2px;
     font-weight: bold;
     font-size: 12px;
