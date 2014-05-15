@@ -7,6 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" type="text/css" href="/static/main.css">
     <link rel="stylesheet" type="text/css" href="/static/{{user.theme|lower}}.css">
+    <script src="/../static/script.js"></script>
     <!--
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.2/jquery.cookie.min.js"></script>
@@ -75,7 +76,10 @@
             {% endif %}
             <a href="{{post.board_id}}thread/{{post.thread_id.id}}">{{post.id}}</a> {{post.date}}
           </div>
+          {% if board.is_moderated %}
           <div class="delete_post"><a href="/post_deleting/{{post.id}}">x</a></div>
+          {% endif %}
+
           <div class="message">
             {{post.text}}
           </div>

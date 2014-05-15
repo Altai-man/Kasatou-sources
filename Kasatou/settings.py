@@ -86,7 +86,7 @@ USE_TZ = True
 
 # Static
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(os.getcwd(), 'static')
+STATIC_ROOT = os.path.join(os.getcwd(), 'Layers', 'static')
 
 
 STATICFILES_FINDERS = ( 
@@ -97,5 +97,5 @@ STATICFILES_FINDERS = (
 
 
 # Media
-MEDIA_ROOT = os.path.join(os.getcwd(), 'media')
+MEDIA_ROOT = os.path.join(os.getcwd(),'media')
 MEDIA_URL = '/media/'
