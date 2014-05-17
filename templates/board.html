@@ -71,7 +71,12 @@
           <div class="title btitle">{{thread.topic}}</div>
 
           <div class="details tdetails">
-            {{user.name}} <a href="{{thread.board_id}}thread/{{thread.id}}">№{{thread.id}}</a> {{thread.date}}
+            {% if post.topic %}
+            <b>{{post.topic}}</b>
+            {% else %}
+            Anonymous
+            {% endif %}
+            <a href="{{thread.board_id}}thread/{{thread.id}}">№{{thread.id}}</a> {{thread.date}}
           </div>
           <div class="reply"><a href="{{thread.board_id}}thread/{{thread.id}}">Reply</a></div>
           <div class="message">
@@ -81,7 +86,7 @@
           {% for post in bundle.posts %}
           <div class="post">
             <div class="details pdetails">
-              Anonymous <a href="{{post.board_id}}thread/{{post.thread_id.id}}">{{post.id}}</a> {{post.date}}
+              {{post.user_id.name}} <a href="{{post.board_id}}thread/{{post.thread_id.id}}">{{post.id}}</a> {{post.date}}
             </div>
             <div class="message">
               {{post.text}}
