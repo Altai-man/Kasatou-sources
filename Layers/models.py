@@ -212,6 +212,7 @@ class Post(BasePost):
     topic = models.CharField(max_length=40, blank=True)
     image1 = models.ImageField(upload_to='.', blank=True)
     image2 = models.ImageField(upload_to='.', blank=True)
+    image3 = models.ImageField(upload_to='.', blank=True)
     thread_id = models.ForeignKey(Thread)
 
     def get_id(self):
