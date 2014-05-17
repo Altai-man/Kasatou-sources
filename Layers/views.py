@@ -235,6 +235,17 @@ def post_adding(request, **kwargs):
         if post_form.is_valid():
             if text or topic or image1:  # We do not save empty posts.
                 post = post_form.save()
+
+                # Update thread attributes.
+                current_thread = get_object_or_404(Thread.objects, id=thread_id)
+                current_board = get_object_or_404(Board.objects, id=board_id)
+                if current_thread.post_count < current_board.thread_max_post:
+                    current_thread.update_time = post_form.instance.date
+                current_thread.post_count += 1
+
+                # Save thread.
+                current_thread.save()
+                # Save post.
                 post.save()
                 return HttpResponseRedirect(addr)
             else:
