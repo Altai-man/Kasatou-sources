@@ -15,8 +15,6 @@ class Invitation(object):
 
         if user != None:
             return None
-#        elif user == None and request.path == "/login/":
-#            return None
         elif user == None and request.path == "/login/":
             return None
         elif user == None and request.path == "/register/":
