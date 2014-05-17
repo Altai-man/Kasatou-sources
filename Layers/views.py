@@ -318,7 +318,7 @@ def invite(request):
         invite = Invite()
         invite.sender = user
         invite.generate_code()
-        link = 'http://127.0.0.1:8000/register/' + invite.code
+        link = 'http://python-altay.rhcloud.com/register/' + invite.code
         context['invite_link'] = link
         invite.save()
         user.invites_count -= 1
