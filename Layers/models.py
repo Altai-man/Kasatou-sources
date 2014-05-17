@@ -139,8 +139,7 @@ class BasePost(models.Model):
             thumbnail.thumbnail((int(self.image1.width*ratio),
                                  int(self.image1.height*ratio)),
                                 Image.ANTIALIAS)
-            thumbnail.save(''.join([MEDIA_ROOT, 'thumbnails/', self.image1.name]),
-                           thumbnail.format)
+            thumbnail.save(''.join([MEDIA_ROOT, '/thumbnails/', self.image1.name]), thumbnail.format)
         if self.image2:
             ratio = min(PIC_SIZE/self.image2.height,
                         PIC_SIZE/self.image2.width)
@@ -148,8 +147,7 @@ class BasePost(models.Model):
             thumbnail.thumbnail((int(self.image2.width*ratio),
                                  int(self.image2.height*ratio)),
                                 Image.ANTIALIAS)
-            thumbnail.save(''.join([MEDIA_ROOT, 'thumbnails/', self.image2.name]),
-                           thumbnail.format)
+            thumbnail.save(''.join([MEDIA_ROOT, '/thumbnails/', self.image2.name]), thumbnail.format)
             return True
         else:
             return False
