@@ -243,7 +243,7 @@ def post_adding(request, **kwargs):
                 return HttpResponseRedirect(addr)
 
         else:
-            messages.error(request, thread_form.errors)
+            messages.error(request, post_form.errors)
             return HttpResponseRedirect(addr)
 
     else:
