@@ -17,3 +17,9 @@
 ** APPT Needed templates: invite pages.
 ** DONE Image previews.
    CLOSED: [2014-05-14 Ср 18:34]
+** TODO Форма поста.
+** TODO Архивы.
+** TODO Переходы.
+** TODO Отображение имени автора поста.
+** TODO Цитирование поста.
+** TODO Количество пропущенных постов.

@@ -113,7 +113,7 @@ class BasePost(models.Model):
             thumbnail.thumbnail((int(self.image1.width*ratio),
                                  int(self.image1.height*ratio)),
                                 Image.ANTIALIAS)
-            thumbnail.save(''.join([MEDIA_ROOT, '/thumbnails/', self.image1.name]),
+            thumbnail.save(''.join([MEDIA_ROOT, 'thumbnails/', self.image1.name]),
                            thumbnail.format)
         if self.image2:
             ratio = min(PIC_SIZE/self.image2.height,
@@ -122,7 +122,7 @@ class BasePost(models.Model):
             thumbnail.thumbnail((int(self.image2.width*ratio),
                                  int(self.image2.height*ratio)),
                                 Image.ANTIALIAS)
-            thumbnail.save(''.join([MEDIA_ROOT, '/thumbnails/', self.image2.name]),
+            thumbnail.save(''.join([MEDIA_ROOT, 'thumbnails/', self.image2.name]),
                            thumbnail.format)
             return True
         else:
@@ -212,12 +212,9 @@ class Post(BasePost):
     topic = models.CharField(max_length=40, blank=True)
     image1 = models.ImageField(upload_to='.', blank=True)
     image2 = models.ImageField(upload_to='.', blank=True)
-    image3 = models.ImageField(upload_to='.', blank=True)
     thread_id = models.ForeignKey(Thread)
 
     def get_id(self):
-        print(self.thread_id)
-        print(self.thread_id.id)
         return self.thread_id.id
 
     def __str__(self):
