@@ -76,7 +76,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 class UserForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super(ThreadForm, self).__init__(*args, **kwargs)
+        super(UserForm, self).__init__(*args, **kwargs)
 
     class Meta:
         model = User
