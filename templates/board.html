@@ -68,7 +68,7 @@
         {% with thread=bundle.thread %}
         {{thread.posts}}
         <div class="thread">
-          <div class="title btitle">{{thread.topic}}</div>
+          <div class="title btitle">{{thread.topic}} ({{thread.post_count}} / {{board.thread_max_post}})</div>
 
           <div class="details tdetails">
             {% if post.topic %}
