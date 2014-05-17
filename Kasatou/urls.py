@@ -32,13 +32,18 @@ urlpatterns = patterns(
     url(r'post_deleting/(?P<p_id>[0-9]+)', views.post_deleting, name='post_deleting'),
 
     # Urls for auth pages
-    url(r'^register/$', views.register, name='register'),
+    url(r'^register/(?P<invite>.*)/$', views.register_get, name='register_get'),
+
+    url(r'^register/$', views.register_accept, name='register_accept'),
 
     url(r'^login/$', views.user_login, name='login'),
 
     url(r'^logout/$', views.user_logout, name='logout'),
 
     url(r'^profile/$', views.profile, name='profile'),
+
+    # Invites.
+    url(r'^invite/$', views.invite, name='invite'),
 
    # Move to post
 #    url(r'^post/(?P<pk>[0-9]+)/$',views.PostView.as_view(),name='post_view'),
@@ -51,15 +56,8 @@ urlpatterns = patterns(
 
     # Update thread
 #    url(r'^(?P<board_name>[a-z]{1,3})/thread/update/(?P<thread_id>[0-9]+)/(?P<posts_numb>[0-9]+)$',views.ThreadUpdateView.as_view(),name='thread_update'),
-
- 
-
-    # Invites.
-#    url(r'^invite/', include('invite_registration.urls')),
-
-    # Accounts.
-#    url(r'^accounts/', include('invite_registration.backends.invite_only.urls')),
 )
+
 urlpatterns += patterns(
     '',
     url(r'^media/(?P<path>.*)', 'django.views.static.serve', {
