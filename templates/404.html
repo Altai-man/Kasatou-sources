@@ -1,7 +1,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <html> 
 <head>
-<title>Kasatou - Страница не найдена</title>
+<title>Kasatou - Page not found</title>
 <link rel="stylesheet" type="text/css" href="/static/main.css">
 <link rel="stylesheet" type="text/css" href="/static/{{user.theme|lower}}.css">
 </head>
@@ -11,7 +11,11 @@
 
 <div id="errorbox" class="indexbox">
 <div id="etitle" class="title">
-Kasatou - Страница не найдена
+{% if text %}
+Kasatou - Invite key already in use
+{% else %}
+Kasatou - Page not found
+{% endif %}
 </div>
 
 
