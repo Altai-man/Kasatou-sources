@@ -3,7 +3,8 @@
 import os
 from PIL import Image
 import re
-
+import random
+import string
 
 # Django
 from django import forms
@@ -49,6 +50,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=14, default='Anonymous')
     thread_per_page = models.IntegerField(default=8)
     date_joined = models.DateTimeField(_('Date joined'), default=timezone.now)
+    invites_count = models.IntegerField(default=3)
 
     is_admin = models.BooleanField(_('Admin status'), default=False)
     is_active = models.BooleanField(_('Active'), default=True)
@@ -83,10 +85,34 @@ class UserForm(forms.ModelForm):
         fields = ('email', 'password', 'name', 'theme', 'thread_per_page')
 
 
+class Invite(models.Model):
+    is_active = models.BooleanField(default=True)
+    code = models.CharField(max_length=32)
+    sender = models.ForeignKey(User)
+
+    def generate_code(self):
+        self.code = ''.join(random.choice(string.ascii_letters + string.digits) for x in range(32))
+
+    def check(self, code):
+        try:
+            curr_invite = Invite.objects.get(code=code)
+        except:
+              curr_invite = None
+
+        if curr_invite is not None:
+            curr_invite.is_active = False
+            return True
+        else:
+            return False
+
+    def __str__(self):
+        return 'Invite№ %s.' % self.id
+
+
 class Board(models.Model):
     board_name = models.CharField(max_length=3)
     thread_max_post = models.IntegerField(default=500)
-    is_moderated = models.BooleanField(default=True)  # Can user delete his posts?
+    is_moderated = models.BooleanField(default=True)  # Can user delete posts?
 
     def get_board_view(self):
         threads = Thread.objects.filter(board_id=self).order_by('-update_time')
