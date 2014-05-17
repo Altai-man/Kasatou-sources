@@ -17,6 +17,7 @@ from django.views.generic.base import TemplateView, ContextMixin
 # Kasatou modules
 from Layers.models import BasePost
 from Layers.models import Board
+from Layers.models import Invite
 from Layers.models import Post
 from Layers.models import PostForm
 from Layers.models import Thread
@@ -86,36 +87,53 @@ class ThreadView(DetailView, BaseBoardClass):
         return context
 
 
-def register(request):
+def register_get(request, invite):
     context = RequestContext(request)
 
-    registered = False
+    try:
+        invite = Invite.objects.get(code=invite)
+    except:
+        invite = None
 
     if request.user.is_authenticated():
         return HttpResponseRedirect("/")
     else:
-        if request.method == 'POST':
-            user_form = UserForm(data=request.POST)
-
-            if user_form.is_valid():
-                user = user_form.save()
-                user.set_password(user.password)
-                user.save()
-                email = request.POST['email']
-                password = request.POST['password']
-                user = authenticate(email=email, password=password)
-                login(request, user)
-                return HttpResponseRedirect("/")
+        if request.method == 'GET':
+            if invite is None:
+                return render_to_response('404.html', context)
             else:
-                messages.error(request, user_form.errors)
-                return HttpResponseRedirect("/register/")
+                if invite.is_active:
+                    user_form = UserForm()
+                    invite.is_active = False
+                    invite.save()
 
+                    return render_to_response(
+                        'register.html',
+                        {'user_form': user_form}, context)
+                else:
+                    return render_to_response('404.html', {'text': 'Invite is outdated or already in use.'}, context)
         else:
-            user_form = UserForm()
+            HttpResponseRedirect("/")
 
-            return render_to_response(
-                'register.html',
-                {'user_form': user_form, 'registered': registered}, context)
+
+def register_accept(request):
+    context = RequestContext(request)
+
+    if request.method == "POST":
+        user_form = UserForm(data=request.POST)
+        if user_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+            email = request.POST['email']
+            password = request.POST['password']
+            user = authenticate(email=email, password=password)
+            login(request, user)
+            return HttpResponseRedirect("/")
+        else:
+            return render_to_response('404.html', {'text': "Sorry, but you have an errors in registration form."}, context)
+    else:
+        return HttpResponseRedirect("/login/")
 
 
 def profile(request):
@@ -288,3 +306,24 @@ def post_deleting(request, p_id):
                 return HttpResponseRedirect(addr)
     else:
         return HttpResponseRedirect(addr)
+
+def invite(request):
+    context = RequestContext(request)
+    session_key = request.session.session_key
+    session = Session.objects.get(session_key=session_key)
+    uid = session.get_decoded().get('_auth_user_id')
+    user = User.objects.get(pk=uid)
+
+    if user.invites_count > 0:
+        invite = Invite()
+        invite.sender = user
+        invite.generate_code()
+        link = 'http://127.0.0.1:8000/register/' + invite.code
+        context['invite_link'] = link
+        invite.save()
+        user.invites_count -= 1
+        user.save()
+    else:
+        context['invite_link'] = "Sorry, but you don't have any invites right now."
+
+    return render_to_response("profile.html", {}, context)
