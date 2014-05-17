@@ -17,7 +17,7 @@ class Invitation(object):
             return None
         elif user == None and request.path == "/login/":
             return None
-        elif user == None and request.path == "/register/":
+        elif user == None and "/register/" in request.path:
             return None
         elif user == None and request.path == "/bunny/":
             return None
