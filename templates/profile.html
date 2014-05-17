@@ -16,8 +16,10 @@
         <form method="post" action="/profile/">
           {% csrf_token %}
           <div class="formrow"><div class="mformfield">Имя: </div> <input class="edit" name="name" type="text" size="53" maxlength="53" value="{{user.name}}"/></div>
-          <div class="formrow"><div class="mformfield">Предпочитаемый тред: </div> <input class="edit" type="url" size="53" maxlength="53"/></div>
           <div class="formrow"><div class="mformfield">Число тредов на страницу:</div><input name="thread_per_page" type="number" min="0" value="{{user.thread_per_page}}"> </div>
+          {% if invite_link %}
+          <div class="formrow"><div class="mformfield">Ссылка регистрации: </div> <input value="{{invite_link}}" class="edit" type="url" size="53" maxlength="53"/></div>
+          {% endif %}
           <div class="formrow"><div class="mformfield"> Цветовая схема:</div>
             <div class="dropdown">
               <select name="theme">
@@ -43,6 +45,8 @@
           </div>
           <input class="button" type="submit" value="Send" />
           <input class="button" type="reset" value="Clear"/>
+          <a href="/invite/"><input class="button" type="button" value="Get invite"/></a>
+          <a href="/logout/"><input class="button" type="button" value="Logout"/></a>
         </form>
       </div>
     </div>
