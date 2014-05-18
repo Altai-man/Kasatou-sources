@@ -1,0 +1,19 @@
+{% autoescape off %}
+<div class="post">
+  <div class="details pdetails">
+    {% if post.topic %}
+    <b>{{post.topic}}</b>
+    {% else %}
+    {{post.user_id.name}}
+    {% endif %}
+    <span class="post_link">#p{{post.id}}</span>
+    {{post.date}}
+    {% if board.is_moderated %}
+    <div class="delete_post"><a href="/post_deleting/{{post.id}}">x</a></div>
+    {% endif %}
+  </div>
+  <div class="message">
+    {{post.text}}
+  </div>
+</div>
+{% endautoescape %}
