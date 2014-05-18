@@ -480,3 +480,8 @@ ul {
     font-weight: bold
 
 }
+
+span.post_link:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
