@@ -23,6 +23,7 @@ from Layers.models import PostForm
 from Layers.models import Thread
 from Layers.models import ThreadForm
 from Layers.models import UserForm
+from Layers.mixins import JsonMixin, JsonFormMixin
 from Layers.snippets import get_obj_or_None
 User = get_user_model()
 
@@ -85,6 +86,23 @@ class ThreadView(DetailView, BaseBoardClass):
         context['post_form'] = PostForm()
         context['posts'] = Post.objects.filter(thread_id=context['object'])
         return context
+
+
+class SingleThreadView(JsonMixin, DetailView):
+    model = Thread
+    context_object_name = 'thread'
+    template_name = 'parts/thread.html'
+
+    def render_to_response(self, context, **kwargs):
+        context.update(thread_hide_answer=True)
+        data = super(SingleThreadView, self).render_to_response(context, **kwargs)
+        response = dict(answer=data.rendered_content)
+        return self.render_json_answer(response)
+
+class SinglePostView(SingleThreadView):
+    model = Post
+    context_object_name = 'post'
+    template_name = 'parts/post.html'
 
 
 def register_get(request, invite):
