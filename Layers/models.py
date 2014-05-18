@@ -159,7 +159,7 @@ class BasePost(models.Model):
         markups = [
             # quote
             [r'(?P<text>(?<!(&gt;))&gt;(?!(&gt;)).+)',
-             r'<span class="quote">\g<text></span>'],
+             r'<span class="post_quote">\g<text></span>'],
 
             # bold **b**
             [r'\*\*(?P<text>[^*%]+)\*\*', r'<b>\g<text></b>'],
