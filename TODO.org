@@ -14,12 +14,16 @@
    CLOSED: [2014-05-09 Пт 19:17]
 ** DONE Adapt login page.
    CLOSED: [2014-05-11 Вс 13:48]
-** APPT Needed templates: invite pages.
+** DONE Needed templates: invite pages.
+   CLOSED: [2014-05-17 Сб 21:36]
 ** DONE Image previews.
    CLOSED: [2014-05-14 Ср 18:34]
-** TODO Форма поста.
-** TODO Архивы.
+** DONE Форма поста.
+   CLOSED: [2014-05-17 Сб 13:14]
+** APPT Архивы.
 ** TODO Переходы.
-** TODO Отображение имени автора поста.
+** DONE Отображение имени автора поста.
+   CLOSED: [2014-05-17 Сб 13:27]
 ** TODO Цитирование поста.
-** TODO Количество пропущенных постов.
+** DONE Количество пропущенных постов.
+   CLOSED: [2014-05-17 Сб 13:40]

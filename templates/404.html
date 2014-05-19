@@ -3,7 +3,8 @@
 <head>
 <title>Kasatou - Page not found</title>
 <link rel="stylesheet" type="text/css" href="/static/main.css">
-<link rel="stylesheet" type="text/css" href="/static/{{user.theme|lower}}.css">
+<!--<link rel="stylesheet" type="text/css" href="/static/{{user.theme|lower}}.css">-->
+<link rel="stylesheet" type="text/css" href="/static/gray.css">
 </head>
 <body>
 
@@ -13,12 +14,14 @@
 <div id="etitle" class="title">
 {% if text %}
 Kasatou - Invite key already in use
+{% elif soon %}
+Coming soon!
 {% else %}
 Kasatou - Page not found
 {% endif %}
 </div>
 
-
+<!--
 <div class="error-msg">
 <div class="error-block">
 
@@ -38,7 +41,7 @@ Kasatou - Page not found
 <span class="grad"></span>
 Поиск</a>
 </div>
-
+-->
 
 </div>
 </div> 
