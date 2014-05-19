@@ -11,8 +11,6 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.2/jquery.cookie.min.js"></script>
     <script src="/../static/script.js"></script>
   </head>
-  
-  
   <body>
     <div id="main">
       <div class="threadbar">
@@ -22,7 +20,6 @@
         </div>
         {% endfor %}
       </div>
-      
       <div id="content">
         <div class="title">
           New post
@@ -30,84 +27,112 @@
         <div id="mainform">
           <form action="{{thread.board_id}}thread/{{thread.id}}/add_post/" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="formrow"><div class="mformfield">Topic:</div> <input name="topic" class="edit" type="text" size="53" maxlength="53"/></div>
-            <div class="formrow"><div class="mformfield">Text: </div><textarea id="id_text" name="text" rows="10" cols="60" name="text"></textarea> </div>
-            <div class="formrow"><label for="upload" class="file-button" style="float:left;"> Img </label>
-              <input name="image1" id="upload" accept="image/jpeg,image/png,image/gif"
-                     type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></div>
+
+            <div class="formrow">
+              <div class="mformfield">Topic:</div>
+              <input name="topic" class="edit" type="text" size="53" maxlength="53"/>
+            </div>
+
+            <div class="formrow">
+              <div class="mformfield">Text: </div>
+              <textarea name="text" id="id_text" rows="10" cols="60"></textarea>
+            </div>
+            {% if messages %}
+            {% for message in messages %}
+            <div class="lfelemefnt mformfield">
+              {{message}}<br/>
+            </div>
+            {% endfor %}
+            {% endif %}
+            <div class="formrow">
+              <label for="upload1" class="file-button" style="float:left;"> Img </label>
+              <input name="image1" id="upload1" accept="image/jpeg,image/png,image/gif"
+                     type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></input>
             <input type="text" disabled="disabled" class="edit file-name"></input>
-            <div class="formrow"><label for="upload" class="file-button" style="float:left;"> Img </label>
-              <input name="image2" id="upload" accept="image/jpeg,image/png,image/gif"
-                     type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></div>
+            </div>
+
+            <div class="formrow">
+              <label for="upload2" class="file-button" style="float:left;"> Img </label>
+              <input name="image2" id="upload2" accept="image/jpeg,image/png,image/gif"
+                     type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></input>
             <input type="text" disabled="disabled" class="edit file-name"></input>
-            <div class="formrow"><label for="upload" class="file-button" style="float:left;"> Img </label>
-              <input name="image3" id="upload" accept="image/jpeg,image/png,image/gif"
-                     type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></div>
+            </div>
+
+            <div class="formrow">
+              <label for="upload3" class="file-button" style="float:left;"> Img </label>
+              <input name="image3" id="upload3" accept="image/jpeg,image/png,image/gif"
+                     type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></input>
             <input type="text" disabled="disabled" class="edit file-name"></input>
-            <div class="formrow"><label for="upload" class="file-button" style="float:left;"> Arch </label>
-              <input name="archive" id="upload"
-                     type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></div>
+            </div>
+
+            <div class="formrow">
+              <label for="upload4" class="file-button" style="float:left;"> Arch </label>
+              <input name="archive" id="upload4" accept="application/zip,application/gzip"
+                     type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></input>
             <input type="text" disabled="disabled" class="edit file-name"></input>
+            </div>
+
             <input type="hidden" name="thread_id" value="{{thread.id}}"></input>
             <input type="hidden" name="board_id" value="{{board.id}}"></input>
-			<input type="hidden" name="user_id" value="{{user.id}}"></input>
-        {% if messages %}
-        {% for message in messages %}
-        <div class="lfelemefnt">Errors in fields: {{message}}<br/></div>
-        {% endfor %}
-        {% endif %}
-        <div class="formrow">
-          <input class="button" type="submit" value="Send" />
-          <input class="button" type="reset" value="Clear"/>
+            <input type="hidden" name="user_id" value="{{user.id}}"></input>
+            <div class="formrow">
+              <input class="button" type="submit" value="Send" />
+              <input class="button" type="reset" value="Clear"/>
+            </div>
+          </form>
         </div>
-        </form>
-      </div>
-      <div class="thread">
-        <div class="title btitle"><a href="{{thread.board_id}}">{{thread.board_id}}</a>{{thread.topic}}</div>
-        
-        <div class="details tdetails">
-          Anonymous 
-          <span class="post_link">#t{{thread.id}}</span>
-          {{thread.date}}
-        <div class="reply"><a href="{{thread.board_id}}thread/{{thread.id}}">Reply</a></div>
-        </div>
-        <div class="message">
-          <div>
-            <a href="/media/{{thread.image1.name}}">{{thread.image1.name|slice:"2:"|truncatechars:20}}</a>
-          </div>
-          <img class='post_img' src='/media/thumbnails/{{thread.image1.name}}' data-alt_name='/media/{{thread.image1.name}}' alt='{{post.image1.name|slice:"2:"}}'>
-          {{thread.text}}
-        </div>
-        {% for post in posts %}
-        <div class="post">
-          <div class="details pdetails">
-            {% if post.topic %}
-            <b>{{post.topic}}</b>
-            {% else %}
-            {{post.user_id.name}}
-            {% endif %}
-            <span class="post_link">#p{{post.id}}</span>
-            {{post.date}}
-          {% if board.is_moderated %}
-            <div class="delete_post"><a href="/post_deleting/{{post.id}}">x</a></div>
-          {% endif %}
+        <div class="thread">
+          <div class="title btitle"><a href="{{thread.board_id}}">{{thread.board_id}}</a>{{thread.topic}}</div>
+
+          <div class="details tdetails">
+            Anonymous
+            <span class="post_link">#t{{thread.id}}</span>
+            {{thread.date}}
+            <div class="reply"><a href="{{thread.board_id}}thread/{{thread.id}}">Reply</a></div>
           </div>
           <div class="message">
-            {{post.text}}
+            <div>
+              <a href="/media/{{thread.image1.name}}">{{thread.image1.name|slice:"2:"|truncatechars:20}}</a>
+            </div>
+            <img class='post_img' src='/media/thumbnails/{{thread.image1.name}}' data-alt_name='/media/{{thread.image1.name}}' alt='{{post.image1.name|slice:"2:"}}'>
+            {{thread.text}}
           </div>
+          {% for post in posts %}
+          <div class="post">
+            <div class="details pdetails">
+              {% if post.topic %}
+              <b>{{post.topic}}</b>
+              {% else %}
+              {{post.user_id.name}}
+              {% endif %}
+              <span class="post_link">#p{{post.id}}</span>
+              {{post.date}}
+              {% if board.is_moderated %}
+              <div class="delete_post"><a href="/post_deleting/{{post.id}}">x</a></div>
+              {% endif %}
+            </div>
+            <div class="message">
+              {{post.text}}
+            </div>
+          </div>
+          {% endfor %}
         </div>
+        <div align="center" id="copyright"> Kasatou. Yet Another Pointless Imageboard. </div>
+      </div>
+
+      <div id="links"><span class="linkbot"><a href="/search/">Search</a></span>
+        <span class="linkbot"><a href="/profile/">Profile</a></span>
+        <span class="linkbot" id="options_button">Other<div id="options">
+            NSFW: <input type="checkbox" id='nsfw'>
+            Скрыть: <input type="checkbox" id='nsfw'>
+          </div>
+        </span>
+
+        <span class="linkbot"><a href="/">/</a></span>
+        {% for board in boards %}
+        <span class="linkbot"><a href="{{board}}">{{board}}</a></span>
         {% endfor %}
       </div>
-      <div align="center" id="copyright"> Kasatou. Yet Another Pointless Imageboard. </div>
-    </div>
-    
-    <div id="links"><span class="linkbot"><a href="/search/">Search</a></span>  <span class="linkbot"><a href="/profile/">Profile</a></span>  <span class="linkbot"><a href="#">Invite</a></span> 
-{% for board in boards %}
-<span class="linkbot"><a href="{{board}}">{{board}}</a></span>
-{% endfor %}
-</div>
   </body>
-  
-  
 </html>
 {% endautoescape %}

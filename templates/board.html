@@ -37,14 +37,14 @@
               <input type="text" disabled="disabled" class="edit file-name"></input>
             </div>
             <div class="formrow">
-              <label for="upload" class="file-button" style="float:left;"> Img </label>
-              <input name="image2" id="upload" accept="image/jpeg,image/png,image/gif"
+              <label for="upload1" class="file-button" style="float:left;"> Img </label>
+              <input name="image2" id="upload1" accept="image/jpeg,image/png,image/gif"
                      type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name">
               <input type="text" disabled="disabled" class="edit file-name"></input>
             </div>
             <div class="formrow">
-              <label for="upload" class="file-button" style="float:left;"> Arch </label>
-              <input name="archive" id="upload" accept="application/zip,application/gzip"
+              <label for="upload2" class="file-button" style="float:left;"> Arch </label>
+              <input name="archive" id="upload2" accept="application/zip,application/gzip"
                      type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name">
               <input type="text" disabled="disabled" class="edit file-name"></input>
             </div>
@@ -101,7 +101,10 @@
         <div align="center" id="copyright"> Kasatou. Yet Another Pointless Imageboard. </div>
       </div>
 
-      <div id="links"><span class="linkbot"><a href="/search/">Search</a></span>  <span class="linkbot"><a href="/profile/">Profile</a></span>  <span class="linkbot"><a href="#">Invite</a></span> <span class="linkbot"><a href="#">Other</a></span>
+      <div id="links">
+        <span class="linkbot"><a href="/search/">Search</a></span>
+        <span class="linkbot"><a href="/profile/">Profile</a></span>
+        <span class="linkbot"><a href="/">/</a></span>
 {% for board in boards %}
 <span class="linkbot"><a href="{{board}}">{{board}}</a></span>
 {% endfor %}
