@@ -65,6 +65,13 @@ $(document).ready(function() {
         $(this).attr('data-alt_name', temp);
     });
 
+    // Show/hide options
+    $('#options_button').click(function() {
+        $('#options').slideToggle();
+    }, function(){
+        $("#options").slideToggle();
+    });
+
     // Link to post/thread
     $('span.post_link').click(function() {
         var text_field = $('#id_text');

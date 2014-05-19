@@ -188,3 +188,6 @@ input[type="number"]:focus {
     border-right: 1px solid #E6E6fA;
 }
 
+#options {
+    background: #ffffff;
+}

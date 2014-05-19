@@ -205,3 +205,6 @@ input[type="number"]:focus {
     border-right: 1px solid #D9C6C2;
 }
 
+#options {
+    background: #e6d4cb;   
+}

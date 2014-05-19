@@ -169,9 +169,9 @@ ul {
     left: 50%;        
     margin: -200px 0 0 -300px;
     border-radius: 5px 5px 5px 5px;
-    webkit-border-radius: 5px 5px 5px 5px; //(Google Chrome)
-   -moz-border-radius: 5px 5px 5px 5px; // (FireFox)
-   -khtml-border-radius: 5px 5px 5px 5px; //(Safari)
+    webkit-border-radius: 5px 5px 5px 5px;
+   -moz-border-radius: 5px 5px 5px 5px;
+   -khtml-border-radius: 5px 5px 5px 5px;
 }
 
 #profileform {
@@ -190,9 +190,9 @@ ul {
     left: 50%;        
     margin: -105px 0 0 -200px;
     border-radius: 5px 5px 5px 5px;
-    webkit-border-radius: 5px 5px 5px 5px; //(Google Chrome)
-   -moz-border-radius: 5px 5px 5px 5px; // (FireFox)
-   -khtml-border-radius: 5px 5px 5px 5px; //(Safari)
+    webkit-border-radius: 5px 5px 5px 5px;
+   -moz-border-radius: 5px 5px 5px 5px;
+   -khtml-border-radius: 5px 5px 5px 5px;
 }
 
 #mainform {
@@ -238,9 +238,9 @@ ul {
     padding: 10px;
     border-radius: 0px 0px 5px 5px;
     position: relative;
-    webkit-border-radius: 0px 0px 5px 5px; //(Google Chrome)
-   -moz-border-radius: 0px 0px 5px 5px; // (FireFox)
-   -khtml-border-radius: 0px 0px 5px 5px; //(Safari)
+    webkit-border-radius: 0px 0px 5px 5px;
+   -moz-border-radius: 0px 0px 5px 5px;
+   -khtml-border-radius: 0px 0px 5px 5px;
 }
 
 #copyright {
@@ -296,9 +296,9 @@ ul {
     width: 94%;
     margin: 5px 3px 10px 40px;
     border-radius: 5px 5px 5px 5px;
-    webkit-border-radius: 5px 5px 5px 5px; //(Google Chrome)
-   -moz-border-radius: 5px 5px 5px 5px; // (FireFox)
-   -khtml-border-radius: 5px 5px 5px 5px; //(Safari)
+    webkit-border-radius: 5px 5px 5px 5px;
+   -moz-border-radius: 5px 5px 5px 5px;
+   -khtml-border-radius: 5px 5px 5px 5px;
 }
 
 .title {
@@ -484,4 +484,25 @@ ul {
 span.post_link:hover {
     text-decoration: underline;
     cursor: pointer;
+}
+
+#options_button {
+    position: relative;
+    width: 30px;
+    height: 20px;
+}
+
+#options_button:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#options {
+    height: 45px;
+    width: 90px;
+    right: -10%;
+    position: absolute;
+    display:none;
+    bottom: 30px;
+    border: 1px solid #595959;
 }
