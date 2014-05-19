@@ -277,12 +277,14 @@ def post_adding(request, **kwargs):
                 current_board = get_object_or_404(Board.objects, id=board_id)
                 if current_thread.post_count < current_board.thread_max_post:
                     current_thread.update_time = post_form.instance.date
+
                 current_thread.post_count += 1
 
                 # Save thread.
                 current_thread.save()
                 # Save post.
                 post.save()
+
                 return HttpResponseRedirect(addr)
             else:
                 messages.error(request,
@@ -316,11 +318,11 @@ def post_deleting(request, p_id):
                 return HttpResponseRedirect(addr)
             else:
                 messages.error(request,
-                               "Sorry, but this message doesn't exist.")
+                               "<script>alert('Sorry, but this message doesn't exist.');</script>")
                 return HttpResponseRedirect(addr)
         else:
                 messages.error(request,
-                               "Sorry, but you have not enough permissions.")
+                               "<script>alert('Sorry, but you have not enough permissions.');</script>")
                 return HttpResponseRedirect(addr)
     else:
         return HttpResponseRedirect(addr)
