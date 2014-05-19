@@ -21,6 +21,8 @@ ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'Layers.User'
 
+CLOSED = False
+
 # Application definition
 
 PIC_SIZE = 180.0
