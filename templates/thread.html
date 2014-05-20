@@ -12,6 +12,7 @@
     <script src="/../static/script.js"></script>
   </head>
   <body>
+    <input type="hidden" name="board_name" id="board_name" value="{{thread.board_id}}"></input>
     <div id="main">
       <div class="threadbar">
         {% for thread in threads_menu %}
@@ -25,7 +26,8 @@
           New post
         </div>
         <div id="mainform">
-          <form action="{{thread.board_id}}thread/{{thread.id}}/add_post/" method="post" enctype="multipart/form-data">
+<!--action="{{thread.board_id}}thread/{{thread.id}}/add_post/" -->
+          <form id="send_form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
             <div class="formrow">
@@ -72,11 +74,12 @@
             <input type="text" disabled="disabled" class="edit file-name"></input>
             </div>
 
-            <input type="hidden" name="thread_id" value="{{thread.id}}"></input>
+            <input id="thread_id" type="hidden" name="thread_id" value="{{thread.id}}"></input>
             <input type="hidden" name="board_id" value="{{board.id}}"></input>
             <input type="hidden" name="user_id" value="{{user.id}}"></input>
             <div class="formrow">
-              <input class="button" type="submit" value="Send" />
+              <div class="button" id="send_post">Send</div>
+<!--              <input id="send_post" class="button" type="submit" value="Send" />-->
               <input class="button" type="reset" value="Clear"/>
             </div>
           </form>
@@ -97,6 +100,7 @@
             <img class='post_img' src='/media/thumbnails/{{thread.image1.name}}' data-alt_name='/media/{{thread.image1.name}}' alt='{{post.image1.name|slice:"2:"}}'>
             {{thread.text}}
           </div>
+          <div id="post_cont">
           {% for post in posts %}
           <div class="post">
             <div class="details pdetails">
@@ -116,6 +120,7 @@
             </div>
           </div>
           {% endfor %}
+          </div>
         </div>
         <div align="center" id="copyright"> Kasatou. Yet Another Pointless Imageboard. </div>
       </div>
@@ -128,6 +133,7 @@
           </div>
         </span>
 
+        <span class=linkbot' id='refresh'>Update<div id='answer'></div></span>
         <span class="linkbot"><a href="/">/</a></span>
         {% for board in boards %}
         <span class="linkbot"><a href="{{board}}">{{board}}</a></span>
