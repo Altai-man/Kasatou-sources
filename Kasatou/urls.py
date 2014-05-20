@@ -55,7 +55,7 @@ urlpatterns = patterns(
     url(r'^thread/get/(?P<pk>[0-9]+)/$',views.SingleThreadView.as_view(),name='thread_get'),
 
     # Update thread
-#    url(r'^(?P<board_name>[a-z]{1,3})/thread/update/(?P<thread_id>[0-9]+)/(?P<posts_numb>[0-9]+)$',views.ThreadUpdateView.as_view(),name='thread_update'),
+    url(r'^(?P<board_name>[a-z]{1,3})/thread/update/(?P<thread_id>[0-9]+)/(?P<posts_numb>[0-9]+)$',views.ThreadUpdateView.as_view(),name='thread_update'),
 )
 
 urlpatterns += patterns(
