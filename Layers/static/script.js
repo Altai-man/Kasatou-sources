@@ -132,7 +132,7 @@ $(document).ready(function() {
                     var url = location.href;
                     location.href = "#bottom_cont";
                     history.replaceState(null, null, url);
-                    
+
                     // make NSFW new pics
                     $('#nsfw').change()
 
@@ -180,36 +180,9 @@ $(document).ready(function() {
     });
 
 
-    // Hide thread
-    // NSFW option and it's cookies
-    if ($.cookie('hide_thread') != '') {
-        var selector = $('img.post_img');
-        selector.css('opacity','0');
-        $('#nsfw').attr('checked',true);
-        temp_look(true,selector);
-    }
-
-    $('#nsfw').change(function() {
-        var nsfw = $('#nsfw').is(':checked');
-        var selector = $('img.post_img');
-        if (nsfw) {
-            selector.css('opacity','0');
-            $.cookie('nsfw',true,{path: '/'});
-            temp_look(true,selector);
-        }
-        else {
-            selector.css('opacity','1.0');
-            $.cookie('nsfw',false,{path: '/'});
-            temp_look(false,selector);
-        }
-    });
-
-
     // Show/hide options
     $('#options_button').click(function() {
         $('#options').slideToggle();
-    }, function(){
-        $("#options").slideToggle();
     });
 
     // Link to post/thread
@@ -217,6 +190,25 @@ $(document).ready(function() {
         var text_field = $('#id_text');
         if (text_field.length)
             text_field.val(text_field.val()+'>>'+$(this).html().slice(1)+"\n");
+    });
+
+
+    // Cookie for hiding.
+    $('.sage_button').click(function() {
+        var thID = $(this).parent().parent().attr("id");
+        if ($.cookie(thID) == "true") {
+            $.cookie(thID, "false", {path: "/"});
+        } else {
+            $.cookie(thID, "true", {path: "/"});
+        }
+    });
+
+    // Hide thread/s
+    $('.thread').each(function () {
+        var currID = $(this) .attr('id');
+        if ($.cookie(currID) == 'true') {
+            $(this) .children('.post').hide();
+        }
     });
 
     // Show/hide quoted posts/threads
