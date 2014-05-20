@@ -93,7 +93,7 @@ textarea:focus {
     margin-top: 2px;
     margin-bottom: 2px;
     font-size: 14px;
-    line-height: 22 px;
+    line-height: 22px;
 }
 
 .edit:focus {
@@ -461,7 +461,7 @@ ul {
     opacity: 0.25; /
 }
 
-.imggrad:hover, {
+.imggrad:hover {
     background: linear-gradient(to top, #595959 0%, rgba(255, 255, 255, 0)  35%);
 }
 
@@ -526,4 +526,9 @@ span.post_link:hover {
     display: none;
     bottom: 30px;
     border: 1px solid #595959;
+}
+
+.sage_button:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }
