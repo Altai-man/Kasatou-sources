@@ -26,7 +26,6 @@
           New post
         </div>
         <div id="mainform">
-<!--action="{{thread.board_id}}thread/{{thread.id}}/add_post/" -->
           <form id="send_form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
@@ -133,7 +132,7 @@
           </div>
         </span>
 
-        <span class=linkbot' id='refresh'>Update<div id='answer'></div></span>
+        <span class="linkbot" id='refresh'>Update<div id='answer'></div></span>
         <span class="linkbot"><a href="/">/</a></span>
         {% for board in boards %}
         <span class="linkbot"><a href="{{board}}">{{board}}</a></span>

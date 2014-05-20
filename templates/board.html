@@ -7,9 +7,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" type="text/css" href="/static/main.css">
     <link rel="stylesheet" type="text/css" href="/static/{{user.theme|lower}}.css">
-    <script src="/../static/script.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.2/jquery.cookie.min.js"></script>
+    <script src="/../static/script.js"></script>
   </head>
 
 
@@ -74,7 +74,10 @@
             {% endif %}
             <a href="{{thread.board_id}}thread/{{thread.id}}">№{{thread.id}}</a> {{thread.date}}
           </div>
-          <div class="reply"><a href="{{thread.board_id}}thread/{{thread.id}}">Reply</a></div>
+
+          <div class="reply">
+            <span id="hide" class="sage_button linkbot">SAGE!</span>| <a href="{{thread.board_id}}thread/{{thread.id}}">Reply</a>
+          </div>
           <div class="message">
             {{thread.text}}
           </div>
