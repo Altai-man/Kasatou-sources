@@ -88,7 +88,7 @@ textarea:focus {
 }
 
 .edit {
-    padding: 3px 0px 0px 3px; 
+    padding: 3px 0px 0px 3px;
     height: 22px;
     margin-top: 2px;
     margin-bottom: 2px;
@@ -137,11 +137,11 @@ textarea:focus {
 }
 
 
-/* Elements style */ 
+/* Elements style */
 
 hr {
-    border:0px none; height:1px; /* высота 1px IE, Firefox, Opera, Safari */ 
-    clear:both; /* для очистки, если тег идет после float елемента */ 
+    border:0px none; height:1px; /* высота 1px IE, Firefox, Opera, Safari */
+    clear:both; /* для очистки, если тег идет после float елемента */
 }
 
 ul {
@@ -165,8 +165,8 @@ ul {
     width:600px;
     height:400px;
     position: absolute;
-    top: 50%;  
-    left: 50%;        
+    top: 50%;
+    left: 50%;
     margin: -200px 0 0 -300px;
     border-radius: 5px 5px 5px 5px;
     webkit-border-radius: 5px 5px 5px 5px;
@@ -186,8 +186,8 @@ ul {
     width:400px;
     height:210px;
     position: absolute;
-    top: 50%;  
-    left: 50%;        
+    top: 50%;
+    left: 50%;
     margin: -105px 0 0 -200px;
     border-radius: 5px 5px 5px 5px;
     webkit-border-radius: 5px 5px 5px 5px;
@@ -212,7 +212,7 @@ ul {
 #lftitle {
     font-weight: bold;
     font-size:22px;
-    padding: 5px 5px 5px 10px;        
+    padding: 5px 5px 5px 10px;
 }
 
 #lfcontent {
@@ -230,7 +230,7 @@ ul {
 
 
 #main {
-    width: 930px; 
+    width: 930px;
     margin: 0  auto;
 }
 
@@ -251,16 +251,16 @@ ul {
 
 #links {
     height: 20px;
-    padding: 15px 10px 10px 20px; 
+    padding: 15px 10px 10px 20px;
 }
 
 .link {
     display: block;
-    margin-bottom: 1px; 
+    margin-bottom: 1px;
 }
 
 .linkbot {
-   
+
     margin-right: 10px;
 }
 
@@ -338,12 +338,12 @@ ul {
 }
 
 .threadbar {
-	
+
     display: inline-block;
     padding: 10px 0px 10px 20px;
 }
 
-/* Search */ 
+/* Search */
 
 .search-box {
     position: relative;
@@ -356,7 +356,7 @@ ul {
     padding: 5px;
 }
 
-#search { 
+#search {
     position: relative;
     text-align: center;
     font-size: 16px;
@@ -376,7 +376,7 @@ ul {
     font-weight: bold;
     font-size:13px;
     top: 0px;
-    padding: 5px 0px 3px 10px;        
+    padding: 5px 0px 3px 10px;
 }
 
 
@@ -469,7 +469,7 @@ ul {
     font-weight: bold;
     font-size:13px;
     top: 0px;
-    padding: 5px 0px 3px 10px;        
+    padding: 5px 0px 3px 10px;
 }
 
 .inthread {
@@ -503,6 +503,27 @@ span.post_link:hover {
     right: -10%;
     position: absolute;
     display:none;
+    bottom: 30px;
+    border: 1px solid #595959;
+}
+
+#refresh{
+    position: relative;
+    width: 30px;
+    height: 20px;
+}
+
+#refresh:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#answer {
+    height: 25px;
+    width: 140px;
+    right: -10%;
+    position: absolute;
+    display: none;
     bottom: 30px;
     border: 1px solid #595959;
 }

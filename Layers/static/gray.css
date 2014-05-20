@@ -206,3 +206,7 @@ input[type="number"]:focus {
 #options {
     background: #2E2E2E;
 }
+
+#answer {
+    background: #2E2E2E;
+}
