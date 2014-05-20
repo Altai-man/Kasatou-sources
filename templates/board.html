@@ -61,11 +61,9 @@
             </div>
           </form>
         </div>
-        {% if threads %}
         {% for bundle in threads %}
         {% with thread=bundle.thread %}
-        {{thread.posts}}
-        <div class="thread">
+        <div class="thread" id="thread{{thread.id}}">
           <div class="title btitle">{{thread.topic}} ({{thread.post_count}} / {{board.thread_max_post}})</div>
 
           <div class="details tdetails">
@@ -91,12 +89,12 @@
             </div>
           </div>
           {% endfor %}
-          {% endfor %}
-          {% else %}
+          </div>
+          {% empty %}
             <div align="center" class="title">
               No threads yet.
             </div>
-          {% endif %}
+            {% endfor %}
         </div>
         <div align="center" id="copyright"> Kasatou. Yet Another Pointless Imageboard. </div>
       </div>
