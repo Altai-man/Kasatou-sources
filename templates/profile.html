@@ -15,7 +15,9 @@
       <div id="profileform">
         <form method="post" action="/profile/">
           {% csrf_token %}
+          <!-- Name of user.
           <div class="formrow"><div class="mformfield">Имя: </div> <input class="edit" name="name" type="text" size="53" maxlength="53" value="{{user.name}}"/></div>
+          -->
           <div class="formrow"><div class="mformfield">Число тредов на страницу:</div><input name="thread_per_page" type="number" min="0" value="{{user.thread_per_page}}"> </div>
           {% if invite_link %}
           <div class="formrow"><div class="mformfield">Ссылка регистрации: </div> <input value="{{invite_link}}" class="edit" type="url" size="53" maxlength="53"/></div>
