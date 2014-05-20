@@ -105,6 +105,28 @@ class SinglePostView(SingleThreadView):
     template_name = 'parts/post.html'
 
 
+class ThreadUpdateView(JsonMixin, ListView):
+    model = Post
+    template_name = "parts/posts.html"
+    context_object_name = "posts"
+
+    def get_queryset(self):
+        thread_id = self.kwargs['thread_id']
+        count = int(self.kwargs['posts_numb'])
+        posts = Post.objects.filter(thread_id__id=thread_id)[count:]
+        return posts
+
+    def render_to_response(self, context, **kwargs):
+        is_new = True if context[self.context_object_name] else False
+        response = dict(is_new=is_new)
+        if is_new:
+            posts = super(ThreadUpdateView, self).render_to_response(context, **kwargs)
+            print(posts)
+            response.update(new_threads=posts.rendered_content)
+            print(response)
+        return self.render_json_answer(response)
+
+
 def register_get(request, invite):
     context = RequestContext(request)
 
