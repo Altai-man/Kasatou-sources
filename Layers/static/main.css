@@ -532,3 +532,7 @@ span.post_link:hover {
     text-decoration: underline;
     cursor: pointer;
 }
+
+.link_to_content {
+    width: 20px; /* Small number, because div should be short to be like a link in size. */
+}
