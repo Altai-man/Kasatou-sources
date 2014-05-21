@@ -110,7 +110,6 @@ $(document).ready(function() {
         var thread_id = $('#thread_id').val();
         var board_name =  $('#board_name').val();
         var posts_numb = $('.post').length;
-        console.log(posts_numb);
 
         $.ajax({
             type:'GET',
@@ -154,10 +153,7 @@ $(document).ready(function() {
         var csrftoken = $.cookie('csrftoken');
         var thread_id = $('#thread_id').val();
         var board_name =  $('#board_name').val();
-        console.log(thread_id);
-        console.log(board_name);
         var form = new FormData(document.getElementById('send_form'));
-        console.log(form);
         $.ajax({
             type:'POST',
             crossdomain: false,
@@ -172,6 +168,9 @@ $(document).ready(function() {
             },
             success: function(output) {
                 if (output.success == true) {
+                    var url = location.href;
+                    location.href = "#bottom_cont";
+                    history.replaceState(null, null, url);
                     $('#refresh').click();
                 }
                 $('#form_table').html(output.form);
@@ -198,8 +197,10 @@ $(document).ready(function() {
         var thID = $(this).parent().parent().attr("id");
         if ($.cookie(thID) == "true") {
             $.cookie(thID, "false", {path: "/"});
+            $(this).parent().parent().children('.post').slideToggle();
         } else {
             $.cookie(thID, "true", {path: "/"});
+            $(this).parent().parent().children('.post').slideToggle();
         }
     });
 
