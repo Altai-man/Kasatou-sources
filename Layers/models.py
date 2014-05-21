@@ -191,9 +191,6 @@ class BasePost(models.Model):
             # new line
             [r'\n', r'<br>'],
 
-            # link with http-prefix.
-            [r'https?:\/\/', r''],
-
             # link
             [r'\[url=(?P<link>(https?)?:?\/?\/?(www)?\.?[-A-Za-z]+\.[a-z]+(\/[\.\+-_&\?=/A-Za-z0-9]*)?)\]',
              r'<a href="http://\g<link>">\g<link></a>'],
@@ -238,6 +235,36 @@ class Post(BasePost):
     image2 = models.ImageField(upload_to='.', blank=True)
     image3 = models.ImageField(upload_to='.', blank=True)
     thread_id = models.ForeignKey(Thread)
+
+    # Overload base method, because post have three pictures, not two.
+    def make_thumbnail(self):
+        if self.image1:
+            ratio = min(PIC_SIZE/self.image1.height,
+                        PIC_SIZE/self.image1.width)
+            thumbnail = Image.open(self.image1.path)
+            thumbnail.thumbnail((int(self.image1.width*ratio),
+                                 int(self.image1.height*ratio)),
+                                Image.ANTIALIAS)
+            thumbnail.save(''.join([MEDIA_ROOT, '/thumbnails/', self.image1.name]), thumbnail.format)
+        if self.image2:
+            ratio = min(PIC_SIZE/self.image2.height,
+                        PIC_SIZE/self.image2.width)
+            thumbnail = Image.open(self.image2.path)
+            thumbnail.thumbnail((int(self.image2.width*ratio),
+                                 int(self.image2.height*ratio)),
+                                Image.ANTIALIAS)
+            thumbnail.save(''.join([MEDIA_ROOT, '/thumbnails/', self.image2.name]), thumbnail.format)
+        if self.image3:
+            ratio = min(PIC_SIZE/self.image3.height,
+                        PIC_SIZE/self.image3.width)
+            thumbnail = Image.open(self.image3.path)
+            thumbnail.thumbnail((int(self.image3.width*ratio),
+                                 int(self.image3.height*ratio)),
+                                Image.ANTIALIAS)
+            thumbnail.save(''.join([MEDIA_ROOT, '/thumbnails/', self.image3.name]), thumbnail.format)
+            return True
+        else:
+            return False
 
     def get_id(self):
         return self.thread_id.id
