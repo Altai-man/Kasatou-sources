@@ -78,7 +78,6 @@
             <input type="hidden" name="user_id" value="{{user.id}}"></input>
             <div class="formrow">
               <div class="button" id="send_post">Send</div>
-<!--              <input id="send_post" class="button" type="submit" value="Send" />-->
               <input class="button" type="reset" value="Clear"/>
             </div>
           </form>
@@ -101,7 +100,7 @@
           </div>
           <div id="post_cont">
           {% for post in posts %}
-          <div class="post">
+          <div class="post" id="{{post.id}}">
             <div class="details pdetails">
               {% if post.topic %}
               <b>{{post.topic}}</b>
@@ -128,7 +127,6 @@
         <span class="linkbot"><a href="/profile/">Profile</a></span>
         <span class="linkbot" id="options_button">Other<div id="options">
             NSFW: <input type="checkbox" id='nsfw'>
-            Скрыть: <input type="checkbox" id='nsfw'>
           </div>
         </span>
 
@@ -138,6 +136,7 @@
         <span class="linkbot"><a href="{{board}}">{{board}}</a></span>
         {% endfor %}
       </div>
+<div id='bottom_cont'></div>
   </body>
 </html>
 {% endautoescape %}

@@ -13,6 +13,15 @@
 </head>
 <body>
 <div id="logo">Kasatou </div>
+<hr>
+{% if boards %}
+<div id="slogan">
+{% for board in boards %}
+<a alight="center" href="{{board}}">{{board}}</a>
+{% endfor %}
+</div>
+{% endif %}
+<hr>
 {% if threads %}
 {% for thread in threads %}
 <div class="indexbox">
