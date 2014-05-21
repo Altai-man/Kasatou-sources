@@ -57,7 +57,7 @@ class IndexView(TemplateView, BaseBoardClass):
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        context['threads'] = reversed(Thread.objects.all()[:10])
+        context['threads'] = reversed(Thread.objects.all().order_by('-update_time')[:10])
         return context
 
 
@@ -121,9 +121,7 @@ class ThreadUpdateView(JsonMixin, ListView):
         response = dict(is_new=is_new)
         if is_new:
             posts = super(ThreadUpdateView, self).render_to_response(context, **kwargs)
-            print(posts)
             response.update(new_threads=posts.rendered_content)
-            print(response)
         return self.render_json_answer(response)
 
 
