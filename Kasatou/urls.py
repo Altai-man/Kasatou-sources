@@ -45,24 +45,24 @@ urlpatterns = patterns(
     # Invites.
     url(r'^invite/$', views.invite, name='invite'),
 
-   # Move to post
-#    url(r'^post/(?P<pk>[0-9]+)/$',views.PostView.as_view(),name='post_view'),
-
     # Get single post
-    url(r'^post/get/(?P<pk>[0-9]+)/$',views.SinglePostView.as_view(),name='post_get'),
+    url(r'^post/get/(?P<pk>[0-9]+)/$', views.SinglePostView.as_view(),name='post_get'),
 
     # Get single thread
-    url(r'^thread/get/(?P<pk>[0-9]+)/$',views.SingleThreadView.as_view(),name='thread_get'),
+    url(r'^thread/get/(?P<pk>[0-9]+)/$', views.SingleThreadView.as_view(),name='thread_get'),
 
     # Update thread
-    url(r'^(?P<board_name>[a-z]{1,3})/thread/update/(?P<thread_id>[0-9]+)/(?P<posts_numb>[0-9]+)$',views.ThreadUpdateView.as_view(),name='thread_update'),
+    url(r'^(?P<board_name>[a-z]{1,3})/thread/update/(?P<thread_id>[0-9]+)/(?P<posts_numb>[0-9]+)$', views.ThreadUpdateView.as_view(),name='thread_update'),
+
+    # Liked threads
+    url(r'^liked/$', views.liked, name='liked'),
 )
 
 urlpatterns += patterns(
-    '',
     url(r'^media/(?P<path>.*)', 'django.views.static.serve', {
         'document_root': getattr(settings, 'MEDIA_ROOT', ''),
     }),
+
     url(r'^static/(?P<path>.*)', 'django.views.static.serve', {
         'document_root': getattr(settings, 'STATIC_ROOT', ''),
     }),
