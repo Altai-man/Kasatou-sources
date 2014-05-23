@@ -49,6 +49,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     theme = models.CharField(max_length=10, default="Light")
     name = models.CharField(max_length=14, default='Anonymous')
     thread_per_page = models.IntegerField(default=8)
+    liked_threads = models.CharField(max_length=50, default="")
     date_joined = models.DateTimeField(_('Date joined'), default=timezone.now)
     invites_count = models.IntegerField(default=3)
 
