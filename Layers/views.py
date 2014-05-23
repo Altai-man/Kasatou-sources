@@ -47,7 +47,7 @@ class BaseBoardClass(ContextMixin):
 
         context = super(BaseBoardClass, self).get_context_data(**kwargs)
         context['board'] = self.board
-        context['boards'] = Board.objects.all
+        context['boards'] = Board.objects.all()
         context['user'] = user
         return context
 
@@ -191,9 +191,11 @@ def profile(request):
     else:
         name = request.POST.get('name')
         theme = request.POST.get('theme')
+        liked_threads = request.POST.get('liked_threads')
         thread_per_page = request.POST.get('thread_per_page')
         user.name = name
         user.theme = theme
+        user.liked_threads = liked_threads
         user.thread_per_page = thread_per_page
 
         user.save()
@@ -367,3 +369,20 @@ def invite(request):
         context['invite_link'] = "Sorry, but you don't have any invites right now."
 
     return render_to_response("profile.html", {}, context)
+
+def liked(request):
+    context = RequestContext(request)
+    session_key = request.session.session_key
+    session = Session.objects.get(session_key=session_key)
+    uid = session.get_decoded().get('_auth_user_id')
+    user = User.objects.get(pk=uid)
+
+    threads = user.liked_threads
+    ids = threads.split(";")
+    context['liked'] = []
+
+    for th in ids:
+        thread = get_obj_or_None(Thread, id=th)
+        if thread != None:
+            context['liked'].append(thread)
+    return render_to_response("liked.html", {}, context)
