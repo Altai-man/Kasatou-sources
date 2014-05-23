@@ -167,12 +167,10 @@ $(document).ready(function() {
                 xhr.setRequestHeader("X-CSRFToken", csrftoken);
             },
             success: function(output) {
-                if (output.success == true) {
-                    var url = location.href;
-                    location.href = "#bottom_cont";
-                    history.replaceState(null, null, url);
-                    $('#refresh').click();
-                }
+                $('#refresh').click();
+                var url = location.href;
+                location.href = "#bottom_cont";
+                history.replaceState(null, null, url);
                 $('#form_table').html(output.form);
             },
         });
