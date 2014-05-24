@@ -149,7 +149,8 @@ $(document).ready(function() {
 
 
     // send post via ajax
-    $('#send_post').click(function() {
+    $('#send-post').click(function() {
+        console.log("SOME");
         var csrftoken = $.cookie('csrftoken');
         var thread_id = $('#thread_id').val();
         var board_name =  $('#board_name').val();
