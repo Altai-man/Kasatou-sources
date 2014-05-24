@@ -224,7 +224,7 @@ def user_login(request):
                 return HttpResponseRedirect("/login/")
 
         else:
-            messages.error(request, "Data is wrond. Are you registered?")
+            messages.error(request, "Data is wrong. Are you registered?")
             return HttpResponseRedirect("/login/")
 
     else:
