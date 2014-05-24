@@ -59,6 +59,9 @@ urlpatterns = patterns(
 
     # Error page.
     url(r'^closed/$', views.closed, name='closed'),
+
+    # Error page.
+    url(r'^other/$', views.other, name='other'),
 )
 
 urlpatterns += patterns(

@@ -390,3 +390,7 @@ def liked(request):
 def closed(request):
     context = RequestContext(request)
     return render_to_response("closed.html", {}, context)
+
+def other(request):
+    context = RequestContext(request)
+    return render_to_response("other.html", {}, context)
