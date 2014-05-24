@@ -1,9 +1,12 @@
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!DOCTYPE html>
+{% load i18n %}
+{% autoescape off %}
 <html>
   <head>
     <title>Kasatou</title>
     <link rel="stylesheet" type="text/css" href="/static/main.css">
     <link rel="stylesheet" type="text/css" href="/static/wakaba.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   </head>
   <body>
       <section id="wrapper">
@@ -15,11 +18,12 @@
         Sorry, but you need an invite key to use Kasatou.
       </div>
       </div>
-   </div>   
+   </div>
       <footer>
     <div id="slogan">Yet Another Pointless Imageboard</div>
-    </footer>  
-</section>  
+    </footer>
+</section>
   </body>
 
 </html>
+{% endautoescape %}
