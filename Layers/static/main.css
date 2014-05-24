@@ -669,3 +669,7 @@ span.post_link:hover {
 .link_to_content {
     width: 20px; /* Small number, because div should be short to be like a link in size. */
 }
+
+.rules {
+    padding-top: 100px;
+}
