@@ -12,166 +12,220 @@
     <script src="/../static/script.js"></script>
   </head>
   <body>
-      <section id="wrapper">
-    <input type="hidden" name="board_name" id="board_name" value="{{thread.board_id}}"></input>
-    <div id="main">
-      <div class="threadbar">
-        {% for thread in threads_menu %}
-        <div class="threads">
-          <span class="link"><a href="{{thread.board_id}}thread/{{thread.id}}">{{thread.topic|truncatechars:10}} </a></span>
-        </div>
-        {% endfor %}
-      </div>
-      <div id="content">
-        <div class="title">
-          New post
-        </div>
-        <div id="mainform">
-          <form id="send_form" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-
-            <div class="formrow">
-              <div class="mformfield">Topic:</div>
-              <input name="topic" class="edit" type="text" size="53" maxlength="53"/>
-            </div>
-
-            <div class="formrow">
-              <div class="mformfield">Text: </div>
-              <textarea name="text" id="id_text" rows="10" cols="60"></textarea>
-            </div>
-            {% if messages %}
-            {% for message in messages %}
-            <div class="lfelemefnt mformfield">
-              {{message}}<br/>
-            </div>
-            {% endfor %}
-            {% endif %}
-            <div class="formrow">
-              <label for="upload1" class="file-button" style="float:left;"> Img </label>
-              <input name="image1" id="upload1" accept="image/jpeg,image/png,image/gif"
-                     type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></input>
-            <input type="text" disabled="disabled" class="edit file-name"></input>
-            </div>
-
-            <div class="formrow">
-              <label for="upload2" class="file-button" style="float:left;"> Img </label>
-              <input name="image2" id="upload2" accept="image/jpeg,image/png,image/gif"
-                     type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></input>
-            <input type="text" disabled="disabled" class="edit file-name"></input>
-            </div>
-
-            <div class="formrow">
-              <label for="upload3" class="file-button" style="float:left;"> Img </label>
-              <input name="image3" id="upload3" accept="image/jpeg,image/png,image/gif"
-                     type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></input>
-            <input type="text" disabled="disabled" class="edit file-name"></input>
-            </div>
-
-            <div class="formrow">
-              <label for="upload4" class="file-button" style="float:left;"> Arch </label>
-              <input name="archive" id="upload4" accept="application/zip,application/gzip"
-                     type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></input>
-            <input type="text" disabled="disabled" class="edit file-name"></input>
-            </div>
-
-            <input id="thread_id" type="hidden" name="thread_id" value="{{thread.id}}"></input>
-            <input type="hidden" name="board_id" value="{{board.id}}"></input>
-            <input type="hidden" name="user_id" value="{{user.id}}"></input>
-            <div class="formrow">
-              <div id="send-post">Send</div>
-              <input class="button" type="reset" value="Clear"/>
-            </div>
-          </form>
-        </div>
-        <div class="thread">
-          <div class="title btitle"><a href="{{thread.board_id}}">{{thread.board_id}}</a>{{thread.topic}}</div>
-
-          <div class="details tdetails">
-            Anonymous
-            <span class="post_link">#t{{thread.id}}</span>
-            {{thread.date}}
-            <div class="reply"><a href="{{thread.board_id}}thread/{{thread.id}}">Reply</a></div>
-          </div>
-          <div class="message">
-
-              <div class="thread-images">
-                    <div class="thread-image">
-                        <img src="/media/horo-gallery_00028.jpg" class="thread-image">    
-                        <span><a href=#> image.jpg safsjahffffffffffffffffsakjhflsafhashfskjhlkhl </a> </span>
-                    </div>
-                    <div class="thread-image">
-                        <img src="/media/h_1395681039_9481778_64dcbed9d6_7.jpg" class="thread-image">    
-                        <span><a href=#> image.jpg </a> </span>
-                    </div>
-            </div>  
-            {{thread.text}}
-                <div class="arch">
-                  <hr>
-                  <span> Arch: <a href="#">Arhive.zip</a></span>  
-                </div>  
-          </div>
-          <div id="post_cont">
-          {% for post in posts %}
-          <div class="post" id="{{post.id}}">
-            <div class="details pdetails">
-              {% if post.topic %}
-              <b>{{post.topic}}</b>
-              {% else %}
-              {{post.user_id.name}}
-              {% endif %}
-              <span class="post_link">#p{{post.id}}</span>
-              {{post.date}}
-              {% if board.is_moderated %}
-              <div class="delete_post"><a href="/post_deleting/{{post.id}}">x</a></div>
-              {% endif %}
-            </div>
-            <div class="message">
-              <div class="post-images">
-                    <div class="post-image-big">
-                        <img src="/media/h_1395681039_9481778_64dcbed9d6_7.jpg" class="post-image-big">    
-                        <span><a href=#>fsasfjlsahflassgfafgllfafg Image.jpgfsasfjlsahflassgfafgllfafgfsasfjlsahflassgfafgllfafg </a> </span>
-                    </div>
-
-                    <div class="post-image-small">
-                        <img src="/media/h_1395681039_9481778_64dcbed9d6_7.jpg" class="post-image-small">    
-                        <span><a href=#> Image.jpgfsasfjlsahflassgfafgllfafg </a> </span>
-                    </div>
-
-
-                    <div class="post-image-small">
-                        <img src="/media/h_1395681039_9481778_64dcbed9d6_7.jpg" class="post-image-small">    
-                        <span><a href=#> Image.jpg </a> </span>
-                    </div>
-            </div>  
-
-              {{post.text}}
-                <div class="arch">
-                  <hr>
-                  <span> Arch: <a href="#">Arhive.zip</a></span>  
-                </div>  
-            </div>
+    <section id="wrapper">
+      <input type="hidden" name="board_name" id="board_name" value="{{thread.board_id}}"></input>
+      <div id="main">
+        <div class="threadbar">
+          {% for thread in threads_menu %}
+          <div class="threads">
+            <span class="link"><a href="{{thread.board_id}}thread/{{thread.id}}">{{thread.topic|truncatechars:10}} </a></span>
           </div>
           {% endfor %}
-          </div>
         </div>
-        <div align="center" id="copyright"> Kasatou. Yet Another Pointless Imageboard. </div>
-      </div>
+        <div id="content">
+          <div class="title">
+            New post
+          </div>
+          <div id="mainform">
+            <form id="send_form" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+
+              <div class="formrow">
+                <div class="mformfield">Topic:</div>
+                <input name="topic" class="edit" type="text" size="53" maxlength="53"/>
+              </div>
+
+              <div class="formrow">
+                <div class="mformfield">Text: </div>
+                <textarea name="text" id="id_text" rows="10" cols="60"></textarea>
+              </div>
+              {% if messages %}
+              {% for message in messages %}
+              <div class="lfelemefnt mformfield">
+                {{message}}<br/>
+              </div>
+              {% endfor %}
+              {% endif %}
+              <div class="formrow">
+                <label for="upload1" class="file-button" style="float:left;"> Img </label>
+                <input name="image1" id="upload1" accept="image/jpeg,image/png,image/gif"
+                       type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></input>
+                <input type="text" disabled="disabled" class="edit file-name"></input>
+              </div>
+
+              <div class="formrow">
+                <label for="upload2" class="file-button" style="float:left;"> Img </label>
+                <input name="image2" id="upload2" accept="image/jpeg,image/png,image/gif"
+                       type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></input>
+                <input type="text" disabled="disabled" class="edit file-name"></input>
+              </div>
+
+              <div class="formrow">
+                <label for="upload3" class="file-button" style="float:left;"> Img </label>
+                <input name="image3" id="upload3" accept="image/jpeg,image/png,image/gif"
+                       type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></input>
+                <input type="text" disabled="disabled" class="edit file-name"></input>
+              </div>
+
+              <div class="formrow">
+                <label for="upload4" class="file-button" style="float:left;"> Arch </label>
+                <input name="archive" id="upload4" accept="application/zip,application/gzip"
+                       type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></input>
+                <input type="text" disabled="disabled" class="edit file-name"></input>
+              </div>
+
+              <input id="thread_id" type="hidden" name="thread_id" value="{{thread.id}}"></input>
+              <input type="hidden" name="board_id" value="{{board.id}}"></input>
+              <input type="hidden" name="user_id" value="{{user.id}}"></input>
+              <div class="formrow">
+                <div id="send-post">Send</div>
+                <input class="button" type="reset" value="Clear"/>
+              </div>
+            </form>
+          </div>
+          <div class="thread">
+            <div class="title btitle"><a href="{{thread.board_id}}">{{thread.board_id}}</a>{{thread.topic}}</div>
+
+            <div class="details tdetails">
+              Anonymous
+              <span class="post_link">#t{{thread.id}}</span>
+              {{thread.date}}
+              <div class="reply"><a href="{{thread.board_id}}thread/{{thread.id}}">Reply</a></div>
+            </div>
+            <div class="message">
+
+              <div class="thread-images">
+                <div class="thread-image">
+                  <img src="/media/thumbnails/{{thread.image1}}" class="thread-image">
+                  <span><a href="/media/{{thread.image1}}"> {{thread.image1.name|truncatechars:35}}</a></span>
+                </div>
+                {% if thread.image2 %}
+                <div class="thread-image">
+                  <img src="/media/thumbnails/{{thread.image1}}" class="thread-image">
+                  <span><a href="/media/{{thread.image2}}"> {{thread.image2.name|truncatechars:35}}</a></span>
+                </div>
+                {% endif %}
+              </div>
+              {{thread.text}}
+              {% if thread.archive %}
+              <div class="arch">
+                <hr>
+                <span> Arch: <a href="/media/{{thread.archive.name}}">{{thread.archive.name|truncatechars:35}}</a></span>
+              </div>
+              {% endif %}
+            </div>
+            <div id="post_cont">
+              {% for post in posts %}
+              <div class="post" id="{{post.id}}">
+                <div class="details pdetails">
+                  {% if post.topic %}
+                  <b>{{post.topic}}</b>
+                  {% else %}
+                  {{post.user_id.name}}
+                  {% endif %}
+                  <span class="post_link">#p{{post.id}}</span>
+                  {{post.date}}
+                  {% if board.is_moderated %}
+                  <div class="delete_post"><a href="/post_deleting/{{post.id}}">x</a></div>
+                  {% endif %}
+                </div>
+                <div class="message">
+                  <div class="post-images">
+                    {% if not post.image1 and not post.image2 and not post.image3 %}
+                    <!-- EMPTY -->
+                    {% elif post.image1 and not post.image2 and not post.image3 %}
+                    <div class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name="/media/{{post.image1.name}}" class="post-image-big">
+                      <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:35}}</a> </span>
+                    </div>
+                    {% elif post.image2 and not post.image1 and not post.image3 %}
+                    <div class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big">
+                      <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:35}}</a> </span>
+                    </div>
+                    {% elif post.image3 and not post.image1 and not post.image2 %}
+                    <div class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big">
+                      <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:35}}</a> </span>
+                    </div>
+                    {% elif post.image1 and post.image2 and not post.image3 %}
+                    <div class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big">
+                      <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:35}}</a> </span>
+                    </div>
+
+                    <div class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big">
+                      <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:35}}</a> </span>
+                    </div>
+                    {% elif post.image2 and post.image3 and not post.image1 %}
+                    <div class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big">
+                      <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:35}}</a> </span>
+                    </div>
+
+                    <div class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big">
+                      <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:35}}</a> </span>
+                    </div>
+                    {% elif post.image1 and post.image3 and not post.image2 %}
+                    <div class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big">
+                      <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:35}}</a> </span>
+                    </div>
+
+                    <div class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big">
+                      <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:35}}</a> </span>
+                    </div>
+                    {% else %}
+                    <div class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big">
+                      <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:35}}</a> </span>
+                    </div>
+
+                    <div class="post-image-small">
+                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-small">
+                      <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:35}}</a> </span>
+                    </div>
+
+                    <div class="post-image-small">
+                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-small">
+                      <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:35}}</a> </span>
+                    </div>
+                    {% endif %}
+                  </div>
+
+                  {{post.text}}
+                  {% if post.archive %}
+                  <div class="arch">
+                    <hr>
+                    <span> Arch: <a href="/media/{{post.archive.name}}">{{post.archive.name|truncatechars:35}}</a></span>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          <div align="center" id="copyright"> Kasatou. Yet Another Pointless Imageboard. </div>
+        </div>
 
 
         <footer>
-        <div id="footer-links">
-                <a href="/">Main</a><a href="/search/">Search </a> <a href="/profile/"> Profle </a>  <a href="#">Other </a>
+          <div id="footer-links">
+            <a href="/">Main</a><a href="/search/">Search </a> <a href="/profile/"> Profle </a>  <a href="#">Other </a>
             <span class="linkbot" id="options_button">Other<div id="options">
                 NSFW: <input type="checkbox" id='nsfw'>
-            </div>
+              </div>
             </span>
 
             <span class="linkbot" id='refresh'>Update<div id='answer'></div></span>
             {% for board in boards %}
             <span class="linkbot"><a href="{{board}}">{{board}}</a></span>
             {% endfor %}
-        </div>  
-        </footer>  
+          </div>
+        </footer>
     </section>
 
     <div id='bottom_cont'></div>

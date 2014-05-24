@@ -19,7 +19,7 @@
       <div class="threadbar">
         {% for thread in threads_menu %}
         <div class="threads">
-          <span class="link"><a href="{{thread.board_id}}thread/{{thread.id}}">{{thread.topic|truncatechars:15}} </a></span>
+          <span class="link"><a href="{{thread.board_id}}thread/{{thread.id}}">{{thread.topic|truncatechars:35}} </a></span>
         </div>
         {% endfor %}
       </div>
@@ -82,20 +82,26 @@
           <div class="message">
 
               <div class="thread-images">
+                {% if thread.image1 %}
                     <div class="thread-image">
-                        <img src="/media/horo-gallery_00028.jpg" class="thread-image">    
-                        <span><a href=#> image.jpg safsjahffffffffffffffffsakjhflsafhashfskjhlkhl </a> </span>
+                        <img src="/media/thumbnails/{{thread.image1.name}}" class="thread-image">
+                        <span><a href="/media/{{thread.image1.name}}"> {{thread.image1.name|truncatechars:35}} </a> </span>
                     </div>
+                    {% endif %}
+                    {% if thread.image2 %}
                     <div class="thread-image">
-                        <img src="/media/h_1395681039_9481778_64dcbed9d6_7.jpg" class="thread-image">    
-                        <span><a href=#> image.jpg </a> </span>
+                      <img src="/media/thumbnails/{{thread.image2.name}}" class="thread-image">
+                        <span><a href="/media/{{thread.image2.name}}"> {{thread.image2.name|truncatechars:35}} </a> </span>
                     </div>
-            </div>  
+                    {% endif %}
+            </div>
             {{thread.text}}
-                <div class="arch">
-                  <hr>
-                  <span> Arch: <a href="#">Arhive.zip</a></span>  
-                </div>  
+                  {% if thread.archive %}
+                  <div class="arch">
+                    <hr>
+                    <span> Arch: <a href="/media/{{thread.archive.name}}">{{thread.archive.name|truncatechars:35}}</a></span>
+                  </div>
+                  {% endif %}
           </div>
 
           {% endwith %}
@@ -107,29 +113,78 @@
             <div class="message">
 
               <div class="post-images">
+                    {% if not post.image1 and not post.image2 and not post.image3 %}
+                    <!-- EMPTY -->
+                    {% elif post.image1 and not post.image2 and not post.image3 %}
                     <div class="post-image-big">
-                        <img src="/media/h_1395681039_9481778_64dcbed9d6_7.jpg" class="post-image-big">    
-                        <span><a href=#>fsasfjlsahflassgfafgllfafg Image.jpgfsasfjlsahflassgfafgllfafgfsasfjlsahflassgfafgllfafg </a> </span>
+                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name="/media/{{post.image1.name}}" class="post-image-big">
+                      <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:35}}</a> </span>
+                    </div>
+                    {% elif post.image2 and not post.image1 and not post.image3 %}
+                    <div class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big">
+                      <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:35}}</a> </span>
+                    </div>
+                    {% elif post.image3 and not post.image1 and not post.image2 %}
+                    <div class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big">
+                      <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:35}}</a> </span>
+                    </div>
+                    {% elif post.image1 and post.image2 and not post.image3 %}
+                    <div class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big">
+                      <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:35}}</a> </span>
+                    </div>
+
+                    <div class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big">
+                      <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:35}}</a> </span>
+                    </div>
+                    {% elif post.image2 and post.image3 and not post.image1 %}
+                    <div class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big">
+                      <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:35}}</a> </span>
+                    </div>
+
+                    <div class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big">
+                      <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:35}}</a> </span>
+                    </div>
+                    {% elif post.image1 and post.image3 and not post.image2 %}
+                    <div class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big">
+                      <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:35}}</a> </span>
+                    </div>
+
+                    <div class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big">
+                      <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:35}}</a> </span>
+                    </div>
+                    {% else %}
+                    <div class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big">
+                      <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:35}}</a> </span>
                     </div>
 
                     <div class="post-image-small">
-                        <img src="/media/h_1395681039_9481778_64dcbed9d6_7.jpg" class="post-image-small">    
-                        <span><a href=#> Image.jpgfsasfjlsahflassgfafgllfafg </a> </span>
+                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-small">
+                      <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:35}}</a> </span>
                     </div>
-
 
                     <div class="post-image-small">
-                        <img src="/media/h_1395681039_9481778_64dcbed9d6_7.jpg" class="post-image-small">    
-                        <span><a href=#> Image.jpg </a> </span>
+                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-small">
+                      <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:35}}</a> </span>
                     </div>
-            </div>  
+                    {% endif %}
+            </div>
 
               {{post.text}}
-
-                <div class="arch">
-                  <hr>
-                  <span> Arch: <a href="#">Arhive.zip</a></span>  
-                </div>  
+                  {% if post.archive %}
+                  <div class="arch">
+                    <hr>
+                    <span> Arch: <a href="/media/{{post.archive.name}}">{{post.archive.name|truncatechars:35}}</a></span>
+                  </div>
+                  {% endif %}
             </div>
           </div>
           {% endfor %}
@@ -145,12 +200,12 @@
 
         <footer>
             <div id="footer-links">
-            <a href="/">Main</a><a href="/search/">Search </a> <a href="/profile/"> Profle </a>  <a href="#">Other </a>
+            <a href="/">Main</a><a href="/search/">Search </a> <a href="/profile/"> Profile </a>
 {% for board in boards %}
 <span class="linkbot"><a href="{{board}}">{{board}}</a></span>
 {% endfor %}
-            </div>  
-        </footer>  
+            </div>
+        </footer>
     </section>
   </body>
 

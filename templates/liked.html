@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{% load i18n %}
+{% autoescape off %}
+<html>
+  <head>
+    <title>Kasatou - {{board}}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="/static/main.css">
+    <link rel="stylesheet" type="text/css" href="/static/{{user.theme|lower}}.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.2/jquery.cookie.min.js"></script>
+    <script src="/../static/script.js"></script>
+  </head>
+  
+  <body>
+    <section id="wrapper">
+      <div id="main">
+        <div id="content">
+          {% for bundle in liked %}
+          {% with thread=bundle.thread %}
+          <div class="thread" id="thread{{thread.id}}">
+            <div class="title"> <span class="btitle">{{thread.topic}}</span> ({{thread.post_count}} / {{board.thread_max_post}})</div>
+            
+            <div class="details tdetails">
+              {% if post.topic %}
+              <b>{{post.topic}}</b>
+              {% else %}
+              Anonymous
+              {% endif %}
+              <a href="{{thread.board_id}}thread/{{thread.id}}">№{{thread.id}}</a> {{thread.date}}
+            </div>
+            
+            <div class="reply">
+              <span id="hide" class="sage_button linkbot">SAGE!</span>| <a href="{{thread.board_id}}thread/{{thread.id}}">Reply</a>
+            </div>
+            <div class="message">
+              
+              <div class="thread-images">
+                {% if thread.image1 %}
+                <div class="thread-image">
+                  <img src="/media/thumbnails/{{thread.image1.name}}" class="thread-image">
+                  <span><a href="/media/{{thread.image1.name}}"> {{thread.image1.name|truncatechars:35}} </a> </span>
+                </div>
+                {% endif %}
+                {% if thread.image2 %}
+                <div class="thread-image">
+                  <img src="/media/thumbnails/{{thread.image2.name}}" class="thread-image">
+                  <span><a href="/media/{{thread.image2.name}}"> {{thread.image2.name|truncatechars:35}} </a> </span>
+                </div>
+                {% endif %}
+              </div>
+              {{thread.text}}
+              {% if thread.archive %}
+              <div class="arch">
+                <hr>
+                <span> Arch: <a href="/media/{{thread.archive.name}}">{{thread.archive.name|truncatechars:35}}</a></span>
+              </div>
+              {% endif %}
+            </div>
+            {% endwith %}
+          </div>
+          {% empty %}
+          <div align="center" class="title">
+            No threads yet.
+          </div>
+          {% endfor %}
+          <div id="copyright"> Kasatou. Yet Another Pointless Imageboard. </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div id="footer-links">
+          <a href="/">Main</a><a href="/search/">Search </a> <a href="/profile/"> Profile </a>
+          {% for board in boards %}
+          <span class="linkbot"><a href="{{board}}">{{board}}</a></span>
+          {% endfor %}
+        </div>
+      </footer>
+    </section>
+  </body>
+  
+  
+</html>
+{% endautoescape %}

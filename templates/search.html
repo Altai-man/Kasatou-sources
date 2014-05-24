@@ -9,50 +9,51 @@
   </head>
   <body>
 
-   <section id="wrapper">
-    <div id="index-content">
-    <div id="logo">Kasatou </div>
+    <section id="wrapper">
+      <div id="index-content">
+        <div id="logo">Kasatou </div>
 
-    <div id="search">
-      <form id="search", method="post" action="/search/">
-        {% csrf_token %}
-      <div class="formrow">
-        <input name="search_text" class="edit" size="53" maxlength="53">
-        <input type="submit" class="button" value="Поиск"></div>
-      </form>
-      {% if posts.count == 1 %}
-      <div>Found {{posts.count}} result: </div>
-      {% elif posts.count == 0 %}
-      <div id="search">I found nothing.</div>
-      {% else %}
-      {% if posts %}
-      <div>Found {{posts.count}} results: </div>
-      {% endif %}
-      {% endif %}
-    </div>
+        <div id="search">
+          <form id="search", method="post" action="/search/">
+            {% csrf_token %}
+            <div class="formrow">
+              <input name="search_text" class="edit" size="53" maxlength="53">
+              <input type="submit" class="button" value="Поиск">
+            </div>
+          </form>
+          {% if posts.count == 1 %}
+          <div>Found {{posts.count}} result: </div>
+          {% elif posts.count == 0 %}
+          <div id="search">I found nothing.</div>
+          {% else %}
+          {% if posts %}
+          <div>Found {{posts.count}} results: </div>
+          {% endif %}
+          {% endif %}
+        </div>
 
-    {% for post in posts %}
-    <div class="search-box">
-      <div class="search-title">
-        {{post.thread}}
+        {% for post in posts %}
+        <div class="search-box">
+          <div class="search-title">
+            {{post.thread}}
+          </div>
+
+          <div class="search-result">
+
+            {{post.text}}
+
+          </div>
+
+          <div class="inthread"><a href="{{post.board_id}}thread/{{post.thread.id}}">Перейти</a></div>
+        </div>
+        {% endfor %}
       </div>
-
-      <div class="search-result">
-
-        {{post.text}}
-
-      </div>
-
-      <div class="inthread"><a href="{{post.board_id}}thread/{{post.thread.id}}">Перейти</a></div>
-    </div>
-    {% endfor %}
-    </div>  
-    <footer>
-            <div id="footer-links">
-            <a href="/">Main </a> <a href="/b/">/b/</a> <a href="/search/">Search </a> <a href="/profile/"> Profle </a>  <a href="#">Other </a>
-            </div>  
-    </footer>  
-    </section>  
+      <footer>
+        <div id="footer-links">
+          <a href="/">Main </a> <a href="/b/">/b/</a> <a href="/search/">Search </a> <a href="/profile/"> Profle </a>
+        </div>
+      </footer>
+    </section>
   </body>
 
 </html>
