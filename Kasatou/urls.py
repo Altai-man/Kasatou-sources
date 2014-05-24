@@ -59,7 +59,9 @@ urlpatterns = patterns(
 )
 
 urlpatterns += patterns(
-    url(r'^media/(?P<path>.*)', 'django.views.static.serve', {
+    '',
+
+   url(r'^media/(?P<path>.*)', 'django.views.static.serve', {
         'document_root': getattr(settings, 'MEDIA_ROOT', ''),
     }),
 
