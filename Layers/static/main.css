@@ -1,10 +1,13 @@
-html{
+* {
+    margin: 0;
+    padding: 0
+}
+html, 
+body {
     height: 100%;
 }
 
 body {
-    margin: 0;
-    padding: 0;
     font-size: 14px;
     font-family: Verdana, Geneva, Arial, sans-serif;
 }
@@ -55,6 +58,7 @@ body {
 }
 
 
+
 .error-msg {
     padding:  0px;
     font-size:13px;
@@ -90,7 +94,7 @@ textarea:focus {
 .edit {
     padding: 3px 0px 0px 3px;
     height: 22px;
-    margin-top: 2px;
+    margin-top: 2px
     margin-bottom: 2px;
     font-size: 14px;
     line-height: 22px;
@@ -100,6 +104,20 @@ textarea:focus {
     outline: none;
 }
 
+#send-post {
+    display: inline-block;
+    width: 100px;
+    height: 16px;
+    padding: 8px 10px 2px 2px;
+    font-size: 12px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    line-height: 1;
+    position: relative;
+    cursor: pointer;
+    margin-top: 10px;
+}
 
 .button {
     display: inline-block;
@@ -163,11 +181,11 @@ ul {
 #profile {
     padding: 8px;
     width:600px;
-    height:400px;
+    height:250px;
     position: absolute;
     top: 50%;
     left: 50%;
-    margin: -200px 0 0 -300px;
+    margin: -125px 0 0 -300px;
     border-radius: 5px 5px 5px 5px;
     webkit-border-radius: 5px 5px 5px 5px;
    -moz-border-radius: 5px 5px 5px 5px;
@@ -185,7 +203,7 @@ ul {
     padding: 8px;
     width:400px;
     height:210px;
-    position: absolute;
+    position: absolut5;
     top: 50%;
     left: 50%;
     margin: -105px 0 0 -200px;
@@ -206,7 +224,7 @@ ul {
 }
 
 .formrow {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 #lftitle {
@@ -232,6 +250,7 @@ ul {
 #main {
     width: 930px;
     margin: 0  auto;
+    padding-bottom: 30px;
 }
 
 #content {
@@ -244,6 +263,7 @@ ul {
 }
 
 #copyright {
+    text-align: center;
     padding-top: 5px;
     font-size: 11px;
     font-weight: bold;
@@ -321,7 +341,7 @@ ul {
 
 .reply {
     position: absolute;
-    right: 20px;
+    right: 5px;
     padding-top: 2px;
     font-weight: bold;
     font-size: 12px;
@@ -362,7 +382,7 @@ ul {
     font-size: 16px;
     margin: 0 auto;
     width: 900px;
-    min-height: 100px;
+    min-height: 50px;
     margin-top: 10px;
     margin-bottom: 10px;
 }
@@ -383,38 +403,68 @@ ul {
 
 /* Index style */
 
+#wrapper {
+    position: relative;
+    min-height: 100%;
+}
+
+footer {
+    font-weight: bold; 
+    font-size: 14px;
+    padding-bottom: 5px;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+}
+
+#footer-links {
+    text-align: center;
+    width:500px;
+    margin-left:-250px;
+}
+
+footer a {
+padding-right: 5px;
+}
+
 #logo {
     text-align: center;
     font-size: 64px;
     margin: 0 auto;
     width: 500px;
     height: 80px;
-    margin-top: 10px;
+    padding-top: 10px;
 }
 
 #slogan {
     text-align: center;
-    position: relative;
-    font-size: 22px;
+    font-size: 12px;
+    font-weight:normal;
     left:50%;
-    padding-top: 10px;
+    margin-top: 5px;
     margin-left:-250px;
     width: 500px;
-    height: 50px;
+    height: 20px;
+}
+
+#index-content {
+    padding-bottom: 35px;
 }
 
 .indexbox {
     position: relative;
     left:50%;
     margin-left: -350px;
-    margin-bottom: 25px;
     width: 700px;
+    margin-bottom: 25px;
+    min-height: 90px;
+    overflow: hidden;
 }
 
 .indexmsgbox {
     margin: 0;
     padding: 0;
-    position: absolute;
+   // position: absolute;
     display: inline-block;
     vertical-align:top;
     top: 0px;
@@ -428,9 +478,13 @@ ul {
 }
 
 .indeximg {
-    background-size: cover;
     width: 205px;
     display: inline-block;
+}
+
+.main-image {
+    width: 205px;
+    margin-bottom: -3px;
 }
 
 .grad {
@@ -463,6 +517,7 @@ ul {
 
 .imggrad:hover {
     background: linear-gradient(to top, #595959 0%, rgba(255, 255, 255, 0)  35%);
+    overflow: hidden;
 }
 
 .indextitle {

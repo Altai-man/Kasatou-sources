@@ -34,7 +34,7 @@ textarea, .edit, .dropdown select, input[type="number"] {
 	border-left: 1px solid #D9C6C2;
 }
 
-textarea, .edit, .button, .dropdown select { 
+textarea, .edit, .button, #send-post, .dropdown select { 
     border: 1px solid #D9C6C2;
 }
 
@@ -147,14 +147,14 @@ input[type="number"]:focus {
 
 /* Buttons style */
 
-.button, .file-button {
+#send-post, .button, .file-button {
     background: #F1E0D6;
     background: linear-gradient(to top, #F1E0D6 0%, #FFE7D9 75%);
     color: #681715;
     border: 1px solid #D9C6C2;
 }
 
-.button:hover, .file-button:hover{
+#send-post:hover, .button:hover, .file-button:hover{
     background: #FFD7BF;
     background: linear-gradient(to top, #FFD7BF 0%, #FFE7D9 75%);
 }

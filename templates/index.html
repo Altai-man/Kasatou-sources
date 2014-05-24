@@ -12,37 +12,40 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.2/jquery.cookie.min.js"></script>
 </head>
 <body>
-<div id="logo">Kasatou </div>
-<hr>
-{% if boards %}
-<div id="slogan">
-{% for board in boards %}
-<a alight="center" href="{{board}}">{{board}}</a>
-{% endfor %}
-</div>
-{% endif %}
-<hr>
-{% if threads %}
-{% for thread in threads %}
-<div class="indexbox">
-  <div class="indeximg">
-    <a href="{{thread.board_id}}thread/{{thread.id}}">
-      <span class="imggrad"></span>
-      <img src="/media/thumbnails/{{thread.image1.name}}" class="indeximg" /></a>
-  </div>
 
-  <div class="indexmsgbox">
-    <div class="indextitle">{{thread.topic}}</div>
-    <div class="indexmsg">{{thread.text|truncatechars:400}}</div>
-  </div>
-  <div class="inthread"><a href="{{thread.board_id}}thread/{{thread.id}}">Перейти</a></div>
-</div>
-{% endfor %}
-{% else %}
-<div align="center" class="indexbox">No threads.</div>
-{% endif %}
-<div id="slogan">Yet Another Pointless Imageboard</div>
+    <section id="wrapper">    
+    <div id="index-content">
+        <div id="logo"><a href="/b/" title="/b/">Kasatou</a> </div>
+        {% if threads %}
+        {% for thread in threads %} 
 
+
+        <div class="indexbox">
+        <div class="indeximg">
+            <a href="{{thread.board_id}}thread/{{thread.id}}">
+            <span class="imggrad"></span>
+            <img src="/media/thumbnails/{{thread.image1.name}}" class="main-image" /></a> 
+        </div>
+
+        <div class="indexmsgbox">
+            <div class="indextitle">{{thread.topic}}</div>
+            <div class="indexmsg">{{thread.text|truncatechars:400}}</div>
+        </div>
+        <div class="inthread"><a href="{{thread.board_id}}thread/{{thread.id}}">Перейти</a></div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div align="center" class="indexbox">No threads.</div>
+        {% endif %}
+        
+    </div>  
+        <footer>
+            <div id="footer-links">
+            <a href="/b/">/b/</a><a href="/search/">Search </a> <a href="/profile/"> Profle </a>  <a href="#">Other </a>
+            </div>  
+            <div id="slogan">Yet Another Pointless Imageboard</div>
+        </footer>  
+    </section>
 </body>
 
 </html>

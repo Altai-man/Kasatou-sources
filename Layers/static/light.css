@@ -33,7 +33,7 @@ textarea, .edit, .dropdown select {
 	border-left: 1px solid #E6E6FA;
 }
 
-textarea, .edit, .button, .dropdown select { 
+#send-post, textarea, .edit, .button, .dropdown select { 
     border: 1px solid #cccccc;
 }
 
@@ -94,7 +94,7 @@ textarea {
 
 
 textarea:hover {
-    border: 1px solid #777777;
+    border: 1px solid #999999;
 }
 
 textarea:focus {
@@ -111,14 +111,13 @@ input[type="number"]:focus {
     border: 1px solid #228B22;
 }
 
-}
 
 .edit {
     color: #555555;
 }
 
 .edit:hover {
-    border: 1px solid #777777;
+    border: 1px solid #999999;
 
 }
 
@@ -136,15 +135,17 @@ input[type="number"]:focus {
 
 /* Buttons style */
 
-.button, .file-button {
+#send-post, .button, .file-button {
     background: #ffffff;
     background: linear-gradient(to top, #cccccc 0%, #ffffff 75%);
     color: #595959;
+    border: 1px solid #E6E6FA;
 }
 
-.button:hover, .file-button:hover{
+#send-post:hover, .button:hover, .file-button:hover{
     background: #E6E6FA;
     background: linear-gradient(to top, #E6E6FA 0%, #ffffff 75%);
+    border: 1px solid #E6E6FA;
 }
 
 

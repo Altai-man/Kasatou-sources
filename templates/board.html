@@ -14,6 +14,7 @@
 
 
   <body>
+    <section id="wrapper">
     <div id="main">
       <div class="threadbar">
         {% for thread in threads_menu %}
@@ -64,7 +65,7 @@
         {% for bundle in threads %}
         {% with thread=bundle.thread %}
         <div class="thread" id="thread{{thread.id}}">
-          <div class="title btitle">{{thread.topic}} ({{thread.post_count}} / {{board.thread_max_post}})</div>
+            <div class="title"> <span class="btitle">{{thread.topic}}</span> ({{thread.post_count}} / {{board.thread_max_post}})</div>
 
           <div class="details tdetails">
             {% if post.topic %}
@@ -79,6 +80,7 @@
             <span id="hide" class="sage_button linkbot">SAGE!</span>| <a href="{{thread.board_id}}thread/{{thread.id}}">Reply</a>
           </div>
           <div class="message">
+
             {{thread.text}}
           </div>
           {% endwith %}
@@ -98,18 +100,19 @@
               No threads yet.
             </div>
             {% endfor %}
+        <div id="copyright"> Kasatou. Yet Another Pointless Imageboard. </div>
         </div>
-        <div align="center" id="copyright"> Kasatou. Yet Another Pointless Imageboard. </div>
       </div>
 
-      <div id="links">
-        <span class="linkbot"><a href="/search/">Search</a></span>
-        <span class="linkbot"><a href="/profile/">Profile</a></span>
-        <span class="linkbot"><a href="/">/</a></span>
+        <footer>
+            <div id="footer-links">
+            <a href="/">Main</a><a href="/search/">Search </a> <a href="/profile/"> Profle </a>  <a href="#">Other </a>
 {% for board in boards %}
 <span class="linkbot"><a href="{{board}}">{{board}}</a></span>
 {% endfor %}
-</div>
+            </div>  
+        </footer>  
+    </section>
   </body>
 
 
