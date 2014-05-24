@@ -56,6 +56,9 @@ urlpatterns = patterns(
 
     # Liked threads
     url(r'^liked/$', views.liked, name='liked'),
+
+    # Error page.
+    url(r'^closed/$', views.closed, name='closed'),
 )
 
 urlpatterns += patterns(

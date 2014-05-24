@@ -1,53 +1,53 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <html> 
-<head>
-<title>Kasatou - Page not found</title>
-<link rel="stylesheet" type="text/css" href="/static/main.css">
-<link rel="stylesheet" type="text/css" href="/static/gray.css">
-</head>
-<body>
+  <head>
+    <title>Kasatou - Page not found</title>
+    <link rel="stylesheet" type="text/css" href="/static/main.css">
+    <link rel="stylesheet" type="text/css" href="/static/gray.css">
+  </head>
+  <body>
+    
+    <div id="error-image"></div>
+    
+    <div id="errorbox" class="indexbox">
+      <div id="etitle" class="title">
+        {% if text %}
+        Kasatou - Invite key already in use
+        {% elif not_invited %}
+        Sorry, but you need an invite key to use Kasatou.
+        {% else %}
+        Kasatou - Page not found
+        {% endif %}
+      </div>
+      
+      <div class="error-msg">
+        <div class="error-block">
+          <a href="/" class="error-link">
+            <span class="grad"></span>
+            На главную
+          </a>
+        </div>
+        
+        <div class="error-block">
+          <a href="/b/">
+            <span class="grad"></span>
+            /b/
+          </a>
+        </div>
+        
+        <div class="error-block">
+          <a href="/search/">
+            <span class="grad"></span>
+            Поиск
+          </a>
+        </div>
 
-<div id="error-image"></div>
-
-<div id="errorbox" class="indexbox">
-<div id="etitle" class="title">
-{% if text %}
-Kasatou - Invite key already in use
-{% elif soon %}
-Coming soon!
-{% else %}
-Kasatou - Page not found
-{% endif %}
-</div>
-
-<!--
-<div class="error-msg">
-<div class="error-block">
-
-<a href="/" class="error-link">
-<span class="grad"></span>
-На главную</a>
-</div>
-
-<div class="error-block">
-<a href="/b/">
-<span class="grad"></span>
-/b/</a>
-</div>
-
-<div class="error-block">
-<a href="/search/">
-<span class="grad"></span>
-Поиск</a>
-</div>
--->
-
-</div>
-</div> 
-
-
-<div id="slogan">Yet Another Pointless Imageboard</div>
-
-</body>
-
+      </div>
+    </div> 
+    
+    
+    <div id="slogan">Yet Another Pointless Imageboard</div>
+    
+  </body>
+  
 </html>

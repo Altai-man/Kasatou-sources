@@ -11,7 +11,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-SECRET_KEY = '3%dyqozgd4l)yheblv=-^lhbn1$js6uv5$7rh6r-qyi7gx88bf'
+SECRET_KEY = '%dyqozgd4l)yheblv=-^lhbn1$js6uv5$7rh6r-qyi7gx88bf'
 
 DEBUG = True
 
@@ -20,8 +20,6 @@ TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'Layers.User'
-
-CLOSED = False
 
 # Application definition
 

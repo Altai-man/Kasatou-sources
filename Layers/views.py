@@ -386,3 +386,7 @@ def liked(request):
         if thread != None:
             context['liked'].append(thread)
     return render_to_response("liked.html", {}, context)
+
+def closed(request):
+    context = RequestContext(request)
+    return render_to_response("closed.html", {}, context)
