@@ -203,7 +203,7 @@ ul {
     padding: 8px;
     width:400px;
     height:210px;
-    position: absolut5;
+    position: absolute;
     top: 50%;
     left: 50%;
     margin: -105px 0 0 -200px;
@@ -284,16 +284,82 @@ ul {
     margin-right: 10px;
 }
 
+.arch {
+    font-size: 11px;
+    padding-top: 5px;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.arch a {
+    font-style: normal;
+    font-weight: normal;
+}
+
+.arch hr {
+    margin-bottom: 5px;
+}
+
+.arch span {
+    padding-left: 10px;
+}
+
 .threads {
     display:inline-block;
 }
 
 .thread {
+    clear: both;
     padding-top:3px;
 }
+.thread-images {
+    float:left;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    text-align: center; 
+    font-size: 11px;
+    font-weight: bold;
+    word-break: break-all;
+}
+
+
+.thread-image {
+    width: 150px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    float: left;
+}
+
+.post-images {
+    width: 180px;
+    float:left;
+    margin-right: 10px;
+    //margin-bottom: 5px;
+    text-align: center; 
+    word-break: break-all;
+}
+
+.post-images span {
+    font-size: 11px;
+}
+
+.post-image-big {
+    width: 180px;
+}
+
+
+.post-image-small {
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    width: 85px;
+    float: left;
+}
+
 
 .message {
     padding: 5px 5px 5px 10px;
+    overflow: hidden;
 }
 
 .details {
@@ -313,6 +379,7 @@ ul {
 }
 
 .post {
+    clear: both;
     width: 94%;
     margin: 5px 3px 10px 40px;
     border-radius: 5px 5px 5px 5px;
@@ -410,8 +477,8 @@ ul {
 
 footer {
     font-weight: bold; 
-    font-size: 14px;
-    padding-bottom: 5px;
+    font-size: 12px;
+    padding-bottom: 10px;
     position: absolute;
     left: 50%;
     bottom: 0;

@@ -81,8 +81,23 @@
           </div>
           <div class="message">
 
+              <div class="thread-images">
+                    <div class="thread-image">
+                        <img src="/media/h_1395681039_9481778_64dcbed9d6_7.jpg" class="thread-image">    
+                        <span><a href=#> image.jpg safsjahffffffffffffffffsakjhflsafhashfskjhlkhl </a> </span>
+                    </div>
+                    <div class="thread-image">
+                        <img src="/media/h_1395681039_9481778_64dcbed9d6_7.jpg" class="thread-image">    
+                        <span><a href=#> image.jpg </a> </span>
+                    </div>
+            </div>  
             {{thread.text}}
+                <div class="arch">
+                  <hr>
+                  <span> Arch: <a href="#">Arhive.zip</a></span>  
+                </div>  
           </div>
+
           {% endwith %}
           {% for post in bundle.posts %}
           <div class="post">
@@ -90,7 +105,31 @@
               {{post.user_id.name}} <a href="{{post.board_id}}thread/{{post.thread_id.id}}">{{post.id}}</a> {{post.date}}
             </div>
             <div class="message">
+
+              <div class="post-images">
+                    <div class="post-image-big">
+                        <img src="/media/h_1395681039_9481778_64dcbed9d6_7.jpg" class="post-image-big">    
+                        <span><a href=#>fsasfjlsahflassgfafgllfafg Image.jpgfsasfjlsahflassgfafgllfafgfsasfjlsahflassgfafgllfafg </a> </span>
+                    </div>
+
+                    <div class="post-image-small">
+                        <img src="/media/h_1395681039_9481778_64dcbed9d6_7.jpg" class="post-image-small">    
+                        <span><a href=#> Image.jpgfsasfjlsahflassgfafgllfafg </a> </span>
+                    </div>
+
+
+                    <div class="post-image-small">
+                        <img src="/media/h_1395681039_9481778_64dcbed9d6_7.jpg" class="post-image-small">    
+                        <span><a href=#> Image.jpg </a> </span>
+                    </div>
+            </div>  
+
               {{post.text}}
+
+                <div class="arch">
+                  <hr>
+                  <span> Arch: <a href="#">Arhive.zip</a></span>  
+                </div>  
             </div>
           </div>
           {% endfor %}

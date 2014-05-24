@@ -12,6 +12,7 @@
     <script src="/../static/script.js"></script>
   </head>
   <body>
+      <section id="wrapper">
     <input type="hidden" name="board_name" id="board_name" value="{{thread.board_id}}"></input>
     <div id="main">
       <div class="threadbar">
@@ -114,6 +115,23 @@
               {% endif %}
             </div>
             <div class="message">
+              <div class="post-images">
+                    <div class="post-image-big">
+                        <img src="/media/h_1395681039_9481778_64dcbed9d6_7.jpg" class="post-image-big">    
+                        <span><a href=#> Image.jpg </a> </span>
+                    </div>
+
+                    <div class="post-image-small">
+                        <img src="/media/h_1395681039_9481778_64dcbed9d6_7.jpg" class="post-image-small">    
+                        <span><a href=#> Image.jpg </a> </span>
+                    </div>
+
+
+                    <div class="post-image-small">
+                        <img src="/media/h_1395681039_9481778_64dcbed9d6_7.jpg" class="post-image-small">    
+                        <span><a href=#> Image.jpg </a> </span>
+                    </div>
+            </div>  
               {{post.text}}
             </div>
           </div>

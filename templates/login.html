@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="/static/light.css">
   </head>
   <body>
-    
+      <section id="wrapper">
     <div id="logo">Kasatou</div>
     
     <div id="loginform">
@@ -19,11 +19,13 @@
           {% csrf_token %}
           <div class="lfelement">login:<br/> <input class="edit" name="email" type="text" size="35" maxlength="35"></div>
           <div class="lfelement">pass:<br/>  <input class="edit" name="password" type="password" size="35" maxlength="35"/></div>
-          {% if messages %}
+          <div class="lfelemefnt">{% if messages %}
           {% for message in messages %}
-          <div class="lfelemefnt">{{message}}<br/></div>
+          {{message}}
           {% endfor %}
           {% endif %}
+          <br/>
+          </div>  
           <div class="lfelement">
             <input class="button" type="submit" value="Login" />
             <input class="button" type="reset" value="Reset"/>
@@ -31,7 +33,7 @@
         </form>
       </div>
     </div>
-    
+   </section>   
   </body>
 </html>
 {% endautoescape %}
