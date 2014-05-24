@@ -93,11 +93,22 @@
             <div class="reply"><a href="{{thread.board_id}}thread/{{thread.id}}">Reply</a></div>
           </div>
           <div class="message">
-            <div>
-              <a href="/media/{{thread.image1.name}}">{{thread.image1.name|slice:"2:"|truncatechars:20}}</a>
-            </div>
-            <img class='post_img' src='/media/thumbnails/{{thread.image1.name}}' data-alt_name='/media/{{thread.image1.name}}' alt='{{post.image1.name|slice:"2:"}}'>
+
+              <div class="thread-images">
+                    <div class="thread-image">
+                        <img src="/media/horo-gallery_00028.jpg" class="thread-image">    
+                        <span><a href=#> image.jpg safsjahffffffffffffffffsakjhflsafhashfskjhlkhl </a> </span>
+                    </div>
+                    <div class="thread-image">
+                        <img src="/media/h_1395681039_9481778_64dcbed9d6_7.jpg" class="thread-image">    
+                        <span><a href=#> image.jpg </a> </span>
+                    </div>
+            </div>  
             {{thread.text}}
+                <div class="arch">
+                  <hr>
+                  <span> Arch: <a href="#">Arhive.zip</a></span>  
+                </div>  
           </div>
           <div id="post_cont">
           {% for post in posts %}
@@ -118,12 +129,12 @@
               <div class="post-images">
                     <div class="post-image-big">
                         <img src="/media/h_1395681039_9481778_64dcbed9d6_7.jpg" class="post-image-big">    
-                        <span><a href=#> Image.jpg </a> </span>
+                        <span><a href=#>fsasfjlsahflassgfafgllfafg Image.jpgfsasfjlsahflassgfafgllfafgfsasfjlsahflassgfafgllfafg </a> </span>
                     </div>
 
                     <div class="post-image-small">
                         <img src="/media/h_1395681039_9481778_64dcbed9d6_7.jpg" class="post-image-small">    
-                        <span><a href=#> Image.jpg </a> </span>
+                        <span><a href=#> Image.jpgfsasfjlsahflassgfafgllfafg </a> </span>
                     </div>
 
 
@@ -132,7 +143,12 @@
                         <span><a href=#> Image.jpg </a> </span>
                     </div>
             </div>  
+
               {{post.text}}
+                <div class="arch">
+                  <hr>
+                  <span> Arch: <a href="#">Arhive.zip</a></span>  
+                </div>  
             </div>
           </div>
           {% endfor %}

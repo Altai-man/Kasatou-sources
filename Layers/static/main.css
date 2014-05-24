@@ -246,11 +246,10 @@ ul {
 
 }
 
-
 #main {
     width: 930px;
     margin: 0  auto;
-    padding-bottom: 30px;
+    padding-bottom: 35px;
 }
 
 #content {
@@ -317,8 +316,7 @@ ul {
     margin-right: 5px;
     margin-bottom: 5px;
     text-align: center; 
-    font-size: 11px;
-    font-weight: bold;
+    font-size: 12px;
     word-break: break-all;
 }
 
@@ -340,7 +338,7 @@ ul {
 }
 
 .post-images span {
-    font-size: 11px;
+    font-size: 12px;
 }
 
 .post-image-big {
