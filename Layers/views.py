@@ -360,7 +360,7 @@ def invite(request):
         invite = Invite()
         invite.sender = user
         invite.generate_code()
-        link = 'http://python-altay.rhcloud.com/register/' + invite.code
+        link = 'http://kasatou.ru/register/' + invite.code
         context['invite_link'] = link
         invite.save()
         user.invites_count -= 1
