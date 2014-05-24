@@ -74,7 +74,7 @@ function show_linked(selector) {
 
 $(document).ready(function() {
     // Full image by click
-    $('img.post_img').click(function() {
+    $('img').click(function() {
         var temp = '';
         temp = $(this).attr('src');
         $(this).attr('src', $(this).attr('data-alt_name'));
