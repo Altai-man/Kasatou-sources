@@ -168,6 +168,7 @@ $(document).ready(function() {
                 xhr.setRequestHeader("X-CSRFToken", csrftoken);
             },
             success: function(output) {
+                $('#clear').click();
                 $('#refresh').click();
                 var url = location.href;
                 location.href = "#bottom_cont";
