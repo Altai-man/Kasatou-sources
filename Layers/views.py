@@ -57,7 +57,7 @@ class IndexView(TemplateView, BaseBoardClass):
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        context['threads'] = reversed(Thread.objects.all().order_by('-update_time')[:10])
+        context['threads'] = Thread.objects.all().order_by('-update_time')[:10]
         return context
 
 
@@ -393,4 +393,5 @@ def closed(request):
 
 def other(request):
     context = RequestContext(request)
+    context['boards'] = Board.objects.all()
     return render_to_response("other.html", {}, context)
