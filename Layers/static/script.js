@@ -83,7 +83,7 @@ $(document).ready(function() {
 
     // NSFW option and it's cookies
     if ($.cookie('nsfw') == 'true') {
-        var selector = $('img.post_img');
+        var selector = $('div.post-images');
         selector.css('opacity','0');
         $('#nsfw').attr('checked',true);
         temp_look(true,selector);
@@ -91,7 +91,7 @@ $(document).ready(function() {
 
     $('#nsfw').change(function() {
         var nsfw = $('#nsfw').is(':checked');
-        var selector = $('img.post_img');
+        var selector = $('div.post-images');
         if (nsfw) {
             selector.css('opacity','0');
             $.cookie('nsfw',true,{path: '/'});
@@ -186,11 +186,18 @@ $(document).ready(function() {
 
     // Link to post/thread
     $('span.post_link').click(function() {
-        var text_field = $('#id_text');
-        if (text_field.length)
-            text_field.val(text_field.val()+'>>'+$(this).html().slice(1)+"\n");
-    });
+        if (document.URL.indexOf("thread") !== -1) {
+            $('#mainform').insertAfter($(this).parent().parent());
+            $('#mainform').css("margin", "0 auto 15pt 40pt");
+            var text_field = $('#id_text');
+            if (text_field.length)
+                text_field.val(text_field.val()+'>>'+$(this).html().slice(1)+"\n");
+    }});
 
+    // Form hiding.
+    $('#form-button').click(function() {
+        $('#mainform').slideToggle();
+    })
 
     // Cookie for hiding.
     $('.sage_button').click(function() {
