@@ -23,7 +23,7 @@
           {% endfor %}
         </div>
         <div id="content">
-          <div class="title">
+          <div id="form-button" class="title">
             New post
           </div>
           <div id="mainform">
@@ -49,28 +49,28 @@
               <div class="formrow">
                 <label for="upload1" class="file-button" style="float:left;"> Img </label>
                 <input name="image1" id="upload1" accept="image/jpeg,image/png,image/gif"
-                       type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></input>
+                       type="file" style="display: none;" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name; $('#upl2').show()"></input>
                 <input type="text" disabled="disabled" class="edit file-name"></input>
               </div>
 
-              <div class="formrow">
+              <div class="formrow" id="upl2" style="display: none;">
                 <label for="upload2" class="file-button" style="float:left;"> Img </label>
                 <input name="image2" id="upload2" accept="image/jpeg,image/png,image/gif"
-                       type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></input>
+                       type="file" style="display: none;" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name; $('#upl3').show()"></input>
                 <input type="text" disabled="disabled" class="edit file-name"></input>
               </div>
 
-              <div class="formrow">
+              <div class="formrow" id="upl3" style="display:none;">
                 <label for="upload3" class="file-button" style="float:left;"> Img </label>
                 <input name="image3" id="upload3" accept="image/jpeg,image/png,image/gif"
-                       type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></input>
+                       type="file" style="display: none;" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name; $('#upl4').show()"></input>
                 <input type="text" disabled="disabled" class="edit file-name"></input>
               </div>
 
-              <div class="formrow">
+              <div class="formrow" id="upl4" style="display:none;">
                 <label for="upload4" class="file-button" style="float:left;"> Arch </label>
                 <input name="archive" id="upload4" accept="application/zip,application/gzip"
-                       type="file" style="display: none" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></input>
+                       type="file" style="display: none;" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></input>
                 <input type="text" disabled="disabled" class="edit file-name"></input>
               </div>
 
@@ -97,12 +97,12 @@
               <div class="thread-images">
                 <div class="thread-image">
                   <img src="/media/thumbnails/{{thread.image1}}" class="thread-image">
-                  <span><a href="/media/{{thread.image1}}"> {{thread.image1.name|truncatechars:35}}</a></span>
+                  <span><a href="/media/{{thread.image1}}"> {{thread.image1.name|truncatechars:20}}</a></span>
                 </div>
                 {% if thread.image2 %}
                 <div class="thread-image">
                   <img src="/media/thumbnails/{{thread.image1}}" class="thread-image">
-                  <span><a href="/media/{{thread.image2}}"> {{thread.image2.name|truncatechars:35}}</a></span>
+                  <span><a href="/media/{{thread.image2}}"> {{thread.image2.name|truncatechars:20}}</a></span>
                 </div>
                 {% endif %}
               </div>
@@ -110,7 +110,7 @@
               {% if thread.archive %}
               <div class="arch">
                 <hr>
-                <span> Arch: <a href="/media/{{thread.archive.name}}">{{thread.archive.name|truncatechars:35}}</a></span>
+                <span> Arch: <a href="/media/{{thread.archive.name}}">{{thread.archive.name|truncatechars:20}}</a></span>
               </div>
               {% endif %}
             </div>
@@ -136,62 +136,62 @@
                     {% elif post.image1 and not post.image2 and not post.image3 %}
                     <div class="post-image-big">
                       <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name="/media/{{post.image1.name}}" class="post-image-big">
-                      <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:35}}</a> </span>
+                      <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:20}}</a> </span>
                     </div>
                     {% elif post.image2 and not post.image1 and not post.image3 %}
                     <div class="post-image-big">
                       <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big">
-                      <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:35}}</a> </span>
+                      <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:20}}</a> </span>
                     </div>
                     {% elif post.image3 and not post.image1 and not post.image2 %}
                     <div class="post-image-big">
                       <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big">
-                      <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:35}}</a> </span>
+                      <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:20}}</a> </span>
                     </div>
                     {% elif post.image1 and post.image2 and not post.image3 %}
                     <div class="post-image-big">
                       <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big">
-                      <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:35}}</a> </span>
+                      <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:20}}</a> </span>
                     </div>
 
                     <div class="post-image-big">
                       <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big">
-                      <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:35}}</a> </span>
+                      <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:20}}</a> </span>
                     </div>
                     {% elif post.image2 and post.image3 and not post.image1 %}
                     <div class="post-image-big">
                       <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big">
-                      <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:35}}</a> </span>
+                      <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:20}}</a> </span>
                     </div>
 
                     <div class="post-image-big">
                       <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big">
-                      <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:35}}</a> </span>
+                      <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:20}}</a> </span>
                     </div>
                     {% elif post.image1 and post.image3 and not post.image2 %}
                     <div class="post-image-big">
                       <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big">
-                      <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:35}}</a> </span>
+                      <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:20}}</a> </span>
                     </div>
 
                     <div class="post-image-big">
                       <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big">
-                      <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:35}}</a> </span>
+                      <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:20}}</a> </span>
                     </div>
                     {% else %}
                     <div class="post-image-big">
                       <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big">
-                      <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:35}}</a> </span>
+                      <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:20}}</a> </span>
                     </div>
 
                     <div class="post-image-small">
                       <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-small">
-                      <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:35}}</a> </span>
+                      <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:20}}</a> </span>
                     </div>
 
                     <div class="post-image-small">
                       <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-small">
-                      <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:35}}</a> </span>
+                      <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:20}}</a> </span>
                     </div>
                     {% endif %}
                   </div>
@@ -200,7 +200,7 @@
                   {% if post.archive %}
                   <div class="arch">
                     <hr>
-                    <span> Arch: <a href="/media/{{post.archive.name}}">{{post.archive.name|truncatechars:35}}</a></span>
+                    <span> Arch: <a href="/media/{{post.archive.name}}">{{post.archive.name|truncatechars:20}}</a></span>
                   </div>
                   {% endif %}
                 </div>
