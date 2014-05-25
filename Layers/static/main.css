@@ -678,3 +678,7 @@ div.link_to_content {
     margin: 0;
     display: inline-block;
 }
+
+#form-button {
+    cursor: pointer;    
+}
