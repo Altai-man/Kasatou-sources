@@ -26,10 +26,10 @@ Installation
 
  Download sources in your development directory.
  Do 
- '''
+ ```
  python3 manage.py syncdb
  python3 manage.py runserver
- '''
+ ```
  to start.
  And that is all! Also it will work with OpenShift RedHat service(look at commented strings in settings.py).
 
