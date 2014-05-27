@@ -67,11 +67,11 @@ urlpatterns = patterns(
 urlpatterns += patterns(
     '',
 
-   url(r'^media/(?P<path>.*)', 'django.views.static.serve', {
-        'document_root': getattr(settings, 'MEDIA_ROOT', ''),
-    }),
+    (r'^media\/(?P<path>.*)$',
+     'django.views.static.serve',
+     {'document_root': settings.MEDIA_ROOT}),
 
-    url(r'^static/(?P<path>.*)', 'django.views.static.serve', {
-        'document_root': getattr(settings, 'STATIC_ROOT', ''),
-    }),
+    (r'^static\/(?P<path>.*)$',
+     'django.views.static.serve',
+     {'document_root': settings.STATIC_ROOT}),
 )
