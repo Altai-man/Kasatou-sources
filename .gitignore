@@ -1,0 +1,9 @@
+db.sqlite3
+
+__pycache__/
+*.py[cod]
+
+pip-log.txt
+pip-delete-this-directory.txt
+
+*.log
