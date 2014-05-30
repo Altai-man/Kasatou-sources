@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -51,3 +52,14 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+=======
+db.sqlite3
+
+__pycache__/
+*.py[cod]
+
+pip-log.txt
+pip-delete-this-directory.txt
+
+*.log
+>>>>>>> b99bb8b844cd37be74d7fad84c5774600e23529a
