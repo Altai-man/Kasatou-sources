@@ -25,7 +25,9 @@ AUTH_USER_MODEL = 'Layers.User'
 
 PIC_SIZE = 180.0
 
+# Paths that user can go without session.
 ALLOWED_PATHS = ['/login/', '/bunny/', '/closed/']
+
 
 INSTALLED_APPS = (
     'django.contrib.admin',
