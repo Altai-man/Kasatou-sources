@@ -25,6 +25,8 @@ AUTH_USER_MODEL = 'Layers.User'
 
 PIC_SIZE = 180.0
 
+ALLOWED_PATHS = ['/login/', '/bunny/', '/closed/']
+
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
