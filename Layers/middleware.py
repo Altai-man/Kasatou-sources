@@ -5,6 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from Layers.models import User
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.conf import settings
 
 class Invitation(object):
     def process_request(self, request):
@@ -19,16 +20,10 @@ class Invitation(object):
             return None
         elif "css" in request.path or "png" in request.path:
             return None
-        elif user == None and request.path == "/login/":
+        elif user == None and request.path in settings.ALLOWED_PATHS:
             return None
         elif user == None and "/register/" in request.path:
             return None
-        elif user == None and request.path == "/bunny/":
-            return None
-        elif user == None and request.path == "/closed/":
-            return None
-        elif user == None and request.path == "/logout/":
-            return HttpResponseRedirect("/closed/")
         elif user == None and request.path != "/login/":
             return HttpResponseRedirect("/closed/")
         else:
