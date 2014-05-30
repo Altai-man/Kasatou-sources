@@ -17,10 +17,17 @@ from django.db.models.signals import pre_delete, post_save, pre_save
 from django.dispatch import receiver
 from Kasatou.settings import PIC_SIZE, MEDIA_ROOT
 
+
 # Method for files.
 def content_file_name(instance, filename):
-    print("Yes")
-    return '/'.join([str(instance.date)])[:9]
+    name = '/'.join([str(instance.date)[:9]])  # At first we add a few symbols of date.
+
+    if "jpeg" in filename[-4:]:
+        name = name + filename[-5:]  #  Because in '.jpeg' is more that 4 symbols.
+    else:
+        name = name + filename[-4:]  # Here is jpg, png and so.
+
+    return name
 
 
 class SearchManager(models.Manager):
