@@ -17,6 +17,11 @@ from django.db.models.signals import pre_delete, post_save, pre_save
 from django.dispatch import receiver
 from Kasatou.settings import PIC_SIZE, MEDIA_ROOT
 
+# Method for files.
+def content_file_name(instance, filename):
+    print("Yes")
+    return '/'.join([str(instance.date)])
+
 
 class SearchManager(models.Manager):
     def search(self, search_text):
@@ -177,8 +182,11 @@ class BasePost(models.Model):
             # monospace [code]code[/code]
             [r'\[code\](?P<text>.+)\[\/code\]', r'<code>\g<text></code>'],
 
+            # new line
+            [r'\n', r'<br>'],
+
             #spoiler %%s%%
-            [r'\%\%(?P<text>[^*%]+)\%\%',
+            [r'\%\%(?P<text>.*?)\%\%',
              r'<span class="spoiler">\g<text></span>'],
 
             # link to thread >t14
@@ -189,27 +197,26 @@ class BasePost(models.Model):
             [r'\&gt;\&gt;p(?P<id>[0-9]+)',
              r'<div class="link_to_content"><a class="link_to_post" href="/post/\g<id>">&gt;&gt;p\g<id></a><div class="post_quote"></div></div>'],
 
-            # new line
-            [r'\n', r'<br>'],
-
             # link
             [r'\[url=(?P<link>(https?)?:?\/?\/?(www)?\.?[-A-Za-z]+\.[a-z]+(\/[\.\+-_&\?=/A-Za-z0-9]*)?)\]',
              r'<a href="http://\g<link>">\g<link></a>'],
 
         ]
         for one_markup in markups:
-            string = re.sub(one_markup[0], one_markup[1], string)
+            string = re.sub(one_markup[0], one_markup[1], string, re.DOTALL)
         return string
 
 
 class Thread(BasePost):
+
+
     post_count = models.IntegerField(default=0)
     update_time = models.DateTimeField('%Y-%m-%d %H:%M:%S', auto_now_add=True)
 
     # Post attributes.
     topic = models.CharField(max_length=40, blank=False)
-    image1 = models.ImageField(upload_to='.', blank=False)
-    image2 = models.ImageField(upload_to='.', blank=True)
+    image1 = models.ImageField(upload_to=content_file_name, blank=False)
+    image2 = models.ImageField(upload_to=content_file_name, blank=True)
 
     def latest_posts(self, count=3):
         posts = Post.objects.filter(thread_id=self).order_by('-id')[:count]  # Get 3 last posts.
@@ -232,9 +239,9 @@ class ThreadForm(forms.ModelForm):
 
 class Post(BasePost):
     topic = models.CharField(max_length=40, blank=True)
-    image1 = models.ImageField(upload_to='.', blank=True)
-    image2 = models.ImageField(upload_to='.', blank=True)
-    image3 = models.ImageField(upload_to='.', blank=True)
+    image1 = models.ImageField(upload_to=content_file_name, blank=True)
+    image2 = models.ImageField(upload_to=content_file_name, blank=True)
+    image3 = models.ImageField(upload_to=content_file_name, blank=True)
     thread_id = models.ForeignKey(Thread)
 
     # Overload base method, because post have three pictures, not two.
