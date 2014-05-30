@@ -20,7 +20,7 @@ from Kasatou.settings import PIC_SIZE, MEDIA_ROOT
 # Method for files.
 def content_file_name(instance, filename):
     print("Yes")
-    return '/'.join([str(instance.date)])
+    return '/'.join([str(instance.date)])[:9]
 
 
 class SearchManager(models.Manager):
