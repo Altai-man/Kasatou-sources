@@ -4,9 +4,9 @@ Django settings for Kasatou project.
 import os
 
 
-#ON_OPENSHIFT = False
-#if os.environ.has_key('OPENSHIFT_REPO_DIR'):
-#    ON_OPENSHIFT = True
+ON_OPENSHIFT = False
+if 'OPENSHIFT_REPO_DIR' in os.environ:
+    ON_OPENSHIFT = True
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -74,11 +74,15 @@ ROOT_URLCONF = 'Kasatou.urls'
 
 WSGI_APPLICATION = 'Kasatou.wsgi.application'
 
+if ON_OPENSHIFT:
+    DB_NAME = os.path.join(os.environ['OPENSHIFT_DATA_DIR'], 'database.db')
+else:
+    DB_NAME = os.path.join(BASE_DIR, 'db.sqlite3')
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': os.path.join(os.environ['OPENSHIFT_DATA_DIR'], 'database.db'),  # Or path to database file if using sqlite3.
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': DB_NAME,
     }
 }
 
@@ -96,10 +100,12 @@ USE_TZ = True
 
 
 # Static
-STATIC_URL = '/static/'
-#STATIC_ROOT = os.path.join(os.environ['OPENSHIFT_DATA_DIR'], 'wsgi', 'static')
-STATIC_ROOT = os.path.join(os.getcwd(), 'Layers', 'static')
+if ON_OPENSHIFT:
+    STATIC_ROOT = os.path.join(os.environ['OPENSHIFT_DATA_DIR'], 'wsgi', 'static')
+else:
+    STATIC_ROOT = os.path.join(os.getcwd(), 'Layers', 'static')
 
+STATIC_URL = '/static/'
 
 STATICFILES_FINDERS = ( 
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -109,6 +115,9 @@ STATICFILES_FINDERS = (
 
 
 # Media
-#MEDIA_ROOT = os.path.join(os.environ['OPENSHIFT_DATA_DIR'], 'media')
-MEDIA_ROOT = os.path.join(os.getcwd(),'media')
+if ON_OPENSHIFT:
+    MEDIA_ROOT = os.path.join(os.environ['OPENSHIFT_DATA_DIR'], 'media')
+else:
+    MEDIA_ROOT = os.path.join(os.getcwd(),'media')
+
 MEDIA_URL = '/media/'
