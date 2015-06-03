@@ -17,7 +17,7 @@
           <form id="search", method="post" action="/search/">
             {% csrf_token %}
             <div class="formrow">
-              <input name="search_text" class="edit" size="53" maxlength="53">
+              <input name="search_text" class="edit" size="53" maxlength="53" required>
               <input type="submit" class="button" value="Поиск">
             </div>
           </form>
@@ -43,14 +43,13 @@
             {{post.text}}
 
           </div>
-
-          <div class="inthread"><a href="{{post.board_id}}thread/{{post.thread.id}}">Перейти</a></div>
+          <div class="inthread"><a href="{{post.board_id}}thread/{{post.thread_id.id}}/#post_{{post.pk}}">Перейти</a></div>
         </div>
         {% endfor %}
       </div>
       <footer>
         <div id="footer-links">
-          <a href="/">Main </a> <a href="/b/">/b/</a> <a href="/search/">Search </a> <a href="/profile/"> Profle </a>  <a href="/other/">Other </a>
+          <a href="/">Main </a> <a href="/b/">/b/</a> <a href="/search/">Search </a> <a href="/profile/"> Profile </a>  <a href="/other/">Other </a>
         </div>
       </footer>
     </section>

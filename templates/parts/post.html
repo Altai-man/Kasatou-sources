@@ -9,10 +9,77 @@
     <span class="post_link">#p{{post.id}}</span>
     {{post.date}}
     {% if board.is_moderated %}
+    {% if user.id == post.user_id.id %}
     <div class="delete_post"><a href="/post_deleting/{{post.id}}">x</a></div>
+    {% endif %}
     {% endif %}
   </div>
   <div class="message">
+    <div class="post-images">
+      {% if not post.image1 and not post.image2 and not post.image3 %}
+      <!-- EMPTY -->
+      {% elif post.image1 and not post.image2 and not post.image3 %}
+      <div class="post-image-big">
+	<img src="/media/thumbnails/{{post.image1.name}}" data-alt_name="/media/{{post.image1.name}}" class="post-image-big"><br>
+	<span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:20}}</a> </span>
+      </div>
+      {% elif post.image2 and not post.image1 and not post.image3 %}
+      <div class="post-image-big">
+	<img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big"><br>
+	<span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:20}}</a> </span>
+      </div>
+      {% elif post.image3 and not post.image1 and not post.image2 %}
+      <div class="post-image-big">
+	<img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big"><br>
+	<span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:20}}</a> </span>
+      </div>
+      {% elif post.image1 and post.image2 and not post.image3 %}
+      <div class="post-image-big">
+	<img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big"><br>
+	<span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:20}}</a> </span>
+      </div>
+
+      <div class="post-image-big">
+	<img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big"><br>
+	<span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:20}}</a> </span>
+      </div>
+      {% elif post.image2 and post.image3 and not post.image1 %}
+      <div class="post-image-big">
+	<img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big"><br>
+	<span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:20}}</a> </span>
+      </div>
+
+      <div class="post-image-big">
+	<img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big"><br>
+	<span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:20}}</a> </span>
+      </div>
+      {% elif post.image1 and post.image3 and not post.image2 %}
+      <div class="post-image-big">
+	<img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big"><br>
+	<span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:20}}</a> </span>
+      </div>
+
+      <div class="post-image-big">
+	<img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big"><br>
+	<span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:20}}</a> </span>
+      </div>
+      {% else %}
+      <div class="post-image-big">
+	<img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big"><br>
+	<span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:20}}</a> </span>
+      </div>
+
+      <div class="post-image-small">
+	<img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-small"><br>
+	<span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:20}}</a> </span>
+      </div>
+
+      <div class="post-image-small">
+	<img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-small"><br>
+	<span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:20}}</a> </span>
+      </div>
+      {% endif %}
+    </div>
     {{post.text}}
   </div>
 </div>

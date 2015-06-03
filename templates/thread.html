@@ -37,6 +37,17 @@
 
               <div class="formrow">
                 <div class="mformfield">Text: </div>
+                <div class="formrow">
+              <button type=button class="button codebar" id="q">></button>
+              <button type=button class="button codebar" id="b">b</button>
+              <button type=button class="button codebar" id="i">i</button>
+              <button type=button class="button codebar" id="s">s</button>
+              <button type=button class="button codebar" id="sp">sp</button>
+              <button type=button class="button codebar" id="magic">u</button>
+              <button type=button class="button codebar" id="cd">code</button>
+              <button type=button class="button codebar" id="cens">cens</button>
+              <button type=button class="button codebar" id="url">url</button>
+                </div>
                 <textarea name="text" id="id_text" rows="10" cols="60"></textarea>
               </div>
               {% if messages %}
@@ -90,7 +101,6 @@
               Anonymous
               <span class="post_link">#t{{thread.id}}</span>
               {{thread.date}}
-              <div class="reply"><a href="{{thread.board_id}}thread/{{thread.id}}">Reply</a></div>
             </div>
             <div class="message">
 
@@ -116,7 +126,7 @@
             </div>
             <div id="post_cont">
               {% for post in posts %}
-              <div class="post" id="{{post.id}}">
+              <div class="post" id="post_{{post.id}}">
                 <div class="details pdetails">
                   {% if post.topic %}
                   <b>{{post.topic}}</b>
@@ -126,7 +136,9 @@
                   <span class="post_link">#p{{post.id}}</span>
                   {{post.date}}
                   {% if board.is_moderated %}
-                  <div class="delete_post"><a href="/post_deleting/{{post.id}}">x</a></div>
+		  {% if user.id == post.user_id.id %}
+                  <div class="delete_post"><a href="/post_editing/{{post.id}}">Edit</a> <a href="/post_deleting/{{post.id}}">x</a></div>
+		  {% endif %}
                   {% endif %}
                 </div>
                 <div class="message">
@@ -135,62 +147,62 @@
                     <!-- EMPTY -->
                     {% elif post.image1 and not post.image2 and not post.image3 %}
                     <div class="post-image-big">
-                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name="/media/{{post.image1.name}}" class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name="/media/{{post.image1.name}}" class="post-image-big"><br>
                       <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:20}}</a> </span>
                     </div>
                     {% elif post.image2 and not post.image1 and not post.image3 %}
                     <div class="post-image-big">
-                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big"><br>
                       <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:20}}</a> </span>
                     </div>
                     {% elif post.image3 and not post.image1 and not post.image2 %}
                     <div class="post-image-big">
-                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big"><br>
                       <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:20}}</a> </span>
                     </div>
                     {% elif post.image1 and post.image2 and not post.image3 %}
                     <div class="post-image-big">
-                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big"><br>
                       <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:20}}</a> </span>
                     </div>
 
                     <div class="post-image-big">
-                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big"><br>
                       <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:20}}</a> </span>
                     </div>
                     {% elif post.image2 and post.image3 and not post.image1 %}
                     <div class="post-image-big">
-                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big"><br>
                       <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:20}}</a> </span>
                     </div>
 
                     <div class="post-image-big">
-                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big"><br>
                       <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:20}}</a> </span>
                     </div>
                     {% elif post.image1 and post.image3 and not post.image2 %}
                     <div class="post-image-big">
-                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big"><br>
                       <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:20}}</a> </span>
                     </div>
 
                     <div class="post-image-big">
-                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big"><br>
                       <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:20}}</a> </span>
                     </div>
                     {% else %}
                     <div class="post-image-big">
-                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big"><br>
                       <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:20}}</a> </span>
                     </div>
 
                     <div class="post-image-small">
-                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-small">
+                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-small"><br>
                       <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:20}}</a> </span>
                     </div>
 
                     <div class="post-image-small">
-                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-small">
+                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-small"><br>
                       <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:20}}</a> </span>
                     </div>
                     {% endif %}
@@ -217,6 +229,7 @@
             <a href="/">Main</a><a href="/search/">Search </a> <a href="/profile/"> Profile </a>  <a href="/other/">Other </a>
             <span class="linkbot" id="options_button">Options<div id="options">
                 NSFW: <input type="checkbox" id='nsfw'>
+                !Censored: <input type="checkbox" id='cens'>
               </div>
             </span>
 

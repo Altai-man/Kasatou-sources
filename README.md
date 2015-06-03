@@ -11,14 +11,13 @@ Features
  * Thread hiding(by "SAGE!" button).
  * Post search.
  * Customizable styles.
- * Ability for user to delete his posts.
+ * Ability for user to edit and delete his posts.
  * Whatever you write - source code is not complicated.
-
 
 Requirements
 ===============
 
- Kasatou engine require Django 1.6 or higher and Python3(maybe will work with Python2 after some fixes). You can use and change all code as much as you need, pull requests is welcome.
+ Kasatou engine requires Django from 1.6 to 1.8 and Python3(maybe will work with Python2 after some fixes). You can use and change all code as much as you need, pull requests is welcome.
  
  
 Installation

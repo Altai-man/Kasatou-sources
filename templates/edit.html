@@ -1,0 +1,110 @@
+{% autoescape off %}
+<!DOCTYPE html>
+<html>
+  {% load i18n %}
+  <head>
+    <title>Kasatou</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="/static/main.css">
+    <link rel="stylesheet" type="text/css" href="/static/{{user.theme|lower}}.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.2/jquery.cookie.min.js"></script>
+    <script src="/../static/script.js"></script>
+  </head>
+  <body>
+    <section id="wrapper">
+      <div id="main">
+	{% include "parts/post.html" %}
+          <div id="mainform">
+            <form id="send_form" method="post" enctype="multipart/form-data">
+	      <input type="hidden" name="board_name" id="board_name" value="{{board_name}}"></input>
+              {% csrf_token %}
+
+              <div class="formrow">
+                <div class="mformfield">Topic:</div>
+                <input name="topic" class="edit" type="text" size="53" maxlength="53" value="{{post.topic}}">
+              </div>
+              <div class="formrow">
+                <div class="mformfield">Text: </div>
+                <div class="formrow">
+              <button type=button class="button codebar" id="q">></button>
+              <button type=button class="button codebar" id="b">b</button>
+              <button type=button class="button codebar" id="i">i</button>
+              <button type=button class="button codebar" id="s">s</button>
+              <button type=button class="button codebar" id="sp">sp</button>
+              <button type=button class="button codebar" id="magic">u</button>
+              <button type=button class="button codebar" id="cd">code</button>
+              <button type=button class="button codebar" id="cens">cens</button>
+              <button type=button class="button codebar" id="url">url</button>
+                </div>
+                <textarea name="text" id="id_text" rows="10" cols="60">{{raw_text}}</textarea>
+              </div>
+              {% if messages %}
+              {% for message in messages %}
+              <div class="lfelemefnt mformfield">
+                {{message}}<br/>
+              </div>
+              {% endfor %}
+              {% endif %}
+              <div class="formrow">
+                <label for="upload1" class="file-button" style="float:left;"> Img </label>
+                <input name="image1" id="upload1" accept="image/jpeg,image/png,image/gif"
+                       type="file" style="display: none;" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name; $('#upl2').show()"></input>
+                <input type="text" disabled="disabled" class="edit file-name"></input>
+              </div>
+
+              <div class="formrow" id="upl2" style="display: none;">
+                <label for="upload2" class="file-button" style="float:left;"> Img </label>
+                <input name="image2" id="upload2" accept="image/jpeg,image/png,image/gif"
+                       type="file" style="display: none;" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name; $('#upl3').show()"></input>
+                <input type="text" disabled="disabled" class="edit file-name"></input>
+              </div>
+
+              <div class="formrow" id="upl3" style="display:none;">
+                <label for="upload3" class="file-button" style="float:left;"> Img </label>
+                <input name="image3" id="upload3" accept="image/jpeg,image/png,image/gif"
+                       type="file" style="display: none;" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name; $('#upl4').show()"></input>
+                <input type="text" disabled="disabled" class="edit file-name"></input>
+              </div>
+
+              <div class="formrow" id="upl4" style="display:none;">
+                <label for="upload4" class="file-button" style="float:left;"> Arch </label>
+                <input name="archive" id="upload4" accept="application/zip,application/gzip"
+                       type="file" style="display: none;" onchange="this.nextElementSibling.value = this.previousElementSibling.title = this.files[0].name"></input>
+                <input type="text" disabled="disabled" class="edit file-name"></input>
+              </div>
+
+              <input id="thread_id" type="hidden" name="thread_id" value="{{thread_id}}"></input>
+              <input type="hidden" name="board_id" value="{{board.id}}"></input>
+              <input type="hidden" name="user_id" value="{{user.id}}"></input>
+              <div class="formrow">
+                <!-- <div id="send">Send</div> -->
+		<input type="submit" class="button"  value="Send"/>
+                <input class="button" id="clear" type="reset" value="Clear"/>
+              <!-- </div> -->
+            </form>
+          </div>
+        </div>
+
+        <footer>
+          <div id="footer-links">
+	    Kasatou. Yet Another Pointless Imageboard.<br>
+            <a href="/">Main</a><a href="/search/">Search </a> <a href="/profile/"> Profile </a>  <a href="/other/">Other </a>
+            <span class="linkbot" id="options_button">Options<div id="options">
+                NSFW: <input type="checkbox" id='nsfw'>
+                !Censored: <input type="checkbox" id='cens'>
+              </div>
+            </span>
+
+            <span class="linkbot" id='refresh'>Update<div id='answer'></div></span>
+            {% for board in boards %}
+            <span class="linkbot"><a href="{{board}}">{{board}}</a></span>
+            {% endfor %}
+          </div>
+        </footer>
+    </section>
+
+    <div id='bottom_cont'></div>
+  </body>
+</html>
+{% endautoescape %}

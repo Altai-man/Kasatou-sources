@@ -3,13 +3,15 @@ import json
 import time
 from django.http import HttpResponse
 
+
 class JsonMixin(object):
     content_type = "application/json"
 
-    def render_json_answer(self,data):
+    def render_json_answer(self, data):
         """ Recieves dict. and gives back HttpResponse object with json data """
         data = json.dumps(data)
-        return HttpResponse(data,self.content_type)
+        return HttpResponse(data, self.content_type)
+
 
 class JsonFormMixin(JsonMixin):
     http_method_names = ['post']
@@ -19,8 +21,8 @@ class JsonFormMixin(JsonMixin):
             send_json will say should be data converted and sent, or just returned. Default: True.
         """
         response = {
-            'success':False,
-            'form':form.as_table(),
+            'success': False,
+            'form': form.as_table(),
         }
         return self.render_json_answer(response) if send_json else response 
 
@@ -37,7 +39,7 @@ class JsonFormMixin(JsonMixin):
         form = self.form_class()
 
         response = {
-            'success':True,
-            'form':form.as_table(),
+            'success': True,
+            'form': form.as_table(),
         }
         return self.render_json_answer(response) if send_json else response 

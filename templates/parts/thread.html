@@ -1,32 +1,28 @@
 {% autoescape off %}
-<div class='thread' id='t{{thread.id}}'>
-  <div class='post_header'>
+<div class="post" id="t{{thread.id}}">
+  <div class="post_header">
     &nbsp;
-    <div class='post_header_left'>
+    <div class="post_header_left">
       {% if not thread_hide_answer %}
-      <b class='topic'><a href='/{{board.name}}/thread/{{thread.id}}'>{{thread.topic}}</a></b>
+      <b class="topic"><a href="/{{board.name}}/thread/{{thread.id}}">{{thread.topic}}</a></b>
       {% else %}
-      <b class='topic'>{{thread.topic}}</b>
+      <b class="topic">{{thread.topic}}</b>
       {% endif %}
-      <span class='orange post_link'>#t{{thread.id}}</span> 
+      <span class="orange post_link">#t{{thread.id}}</span>
       {{thread.date|date:"F d H:i:s"}}
     </div>
     {% if not thread_hide_answer %}
-    <div class='post_header_right'>
-      <a href='/{{board.name}}/thread/{{thread.id}}'>Ответить</a>
+    <div class="post_header_right">
+      <a href="/{{board.name}}/thread/{{thread.id}}">Ответить</a>
     </div>
     {% endif %}
   </div>
-  <div class='post_text'>
-    {% if thread.image1 %}
-    <div class='img_cont'>
-      <div>
-        <a href="/media/{{thread.image1.name}}">{{thread.image1.name|slice:"2:"|truncatechars:20}}</a>
-      </div>
-      <img class='post_img' src='/images/thumbnails/{{thread.image1.name}}' data-alt_name='/images/{{thread.image1.name}}' alt='{{post.image1.name|slice:"2:"}}'>
+  <div class="message">
+    <div class="post_text">
+      <img class="post_img" src="/media/thumbnails/{{thread.image1.name}}" data-alt_name="/images/{{thread.image1.name}}" alt="{{post.image1.name|slice:'2:'}}"><br>
+      <span><a href="/media/{{thread.image1.name}}">{{thread.image1.name|slice:"2:"|truncatechars:20}}</a></span>
+      {{thread.text}}
     </div>
-    {% endif %}
-    {{thread.text}}
   </div>
 </div>
 {% endautoescape %}

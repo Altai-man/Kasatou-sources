@@ -19,7 +19,7 @@
           {% for bundle in liked %}
           {% with thread=bundle.thread %}
           <div class="thread" id="thread{{thread.id}}">
-            <div class="title"> <span class="btitle">{{thread.topic}}</span> ({{thread.post_count}} / {{board.thread_max_post}})</div>
+            <div class="title"> <span class="btitle">{{thread.topic}}</span> ({{thread.post_count}})</div>
             
             <div class="details tdetails">
               {% if post.topic %}

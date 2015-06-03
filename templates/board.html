@@ -30,7 +30,18 @@
           <form action="/thread_add/" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="formrow"><div class="mformfield">Topic:</div> <input name="topic" class="edit" type="text" size="53" maxlength="53"/></div>
-            <div class="formrow"><div class="mformfield">Text: </div><textarea name="text" rows="10" cols="60" name="text"></textarea> </div>
+            <div class="formrow"><div class="mformfield">Text: </div><div class="formrow">
+              <button type=button class="button codebar" id="q">></button>
+              <button type=button class="button codebar" id="b">b</button>
+              <button type=button class="button codebar" id="i">i</button>
+              <button type=button class="button codebar" id="s">s</button>
+              <button type=button class="button codebar" id="sp">sp</button>
+              <button type=button class="button codebar" id="magic">u</button>
+              <button type=button class="button codebar" id="cd">code</button>
+              <button type=button class="button codebar" id="cens">cens</button>
+              <button type=button class="button codebar" id="url">url</button>
+              </div>
+              <textarea id="id_text" name="text" rows="10" cols="60" name="text"></textarea> </div>
             <div class="formrow">
               <label for="upload" class="file-button" style="float:left;"> Img </label>
               <input name="image1" id="upload" accept="image/jpeg,image/png,image/gif"
@@ -80,17 +91,16 @@
             <span id="hide" class="sage_button linkbot">SAGE!</span>| <a href="{{thread.board_id}}thread/{{thread.id}}">Reply</a>
           </div>
           <div class="message">
-
               <div class="thread-images">
                 {% if thread.image1 %}
-                    <div class="thread-image">
-                        <img src="/media/thumbnails/{{thread.image1.name}}" class="thread-image">
+                <div class="thread-image">
+                        <img src="/media/thumbnails/{{thread.image1.name}}" class="thread-image"><br>
                         <span><a href="/media/{{thread.image1.name}}"> {{thread.image1.name|truncatechars:35}} </a> </span>
                     </div>
                     {% endif %}
                     {% if thread.image2 %}
                     <div class="thread-image">
-                      <img src="/media/thumbnails/{{thread.image2.name}}" class="thread-image">
+                      <img src="/media/thumbnails/{{thread.image2.name}}" class="thread-image"><br>
                         <span><a href="/media/{{thread.image2.name}}"> {{thread.image2.name|truncatechars:35}} </a> </span>
                     </div>
                     {% endif %}
@@ -108,71 +118,70 @@
           {% for post in bundle.posts %}
           <div class="post">
             <div class="details pdetails">
-              {{post.user_id.name}} <a href="{{post.board_id}}thread/{{post.thread_id.id}}">{{post.id}}</a> {{post.date}}
+              {{post.user_id.name}} <a href="{{post.board_id}}thread/{{post.thread_id.id}}/#post_{{post.id}}">{{post.id}}</a> {{post.date}}
             </div>
             <div class="message">
-
               <div class="post-images">
                     {% if not post.image1 and not post.image2 and not post.image3 %}
                     <!-- EMPTY -->
                     {% elif post.image1 and not post.image2 and not post.image3 %}
                     <div class="post-image-big">
-                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name="/media/{{post.image1.name}}" class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name="/media/{{post.image1.name}}" class="post-image-big"><br>
                       <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:35}}</a> </span>
                     </div>
                     {% elif post.image2 and not post.image1 and not post.image3 %}
                     <div class="post-image-big">
-                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big"><br>
                       <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:35}}</a> </span>
                     </div>
                     {% elif post.image3 and not post.image1 and not post.image2 %}
                     <div class="post-image-big">
-                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big"><br>
                       <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:35}}</a> </span>
                     </div>
                     {% elif post.image1 and post.image2 and not post.image3 %}
                     <div class="post-image-big">
-                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big"><br>
                       <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:35}}</a> </span>
                     </div>
 
                     <div class="post-image-big">
-                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big"><br>
                       <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:35}}</a> </span>
                     </div>
                     {% elif post.image2 and post.image3 and not post.image1 %}
                     <div class="post-image-big">
-                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-big"><br>
                       <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:35}}</a> </span>
                     </div>
 
                     <div class="post-image-big">
-                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big"><br>
                       <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:35}}</a> </span>
                     </div>
                     {% elif post.image1 and post.image3 and not post.image2 %}
                     <div class="post-image-big">
-                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big"><br>
                       <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:35}}</a> </span>
                     </div>
 
                     <div class="post-image-big">
-                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-big"><br>
                       <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:35}}</a> </span>
                     </div>
                     {% else %}
                     <div class="post-image-big">
-                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big">
+                      <img src="/media/thumbnails/{{post.image1.name}}" data-alt_name='/media/{{post.image1.name}}' class="post-image-big"><br>
                       <span><a href="/media/{{post.image1.name}}">{{post.image1.name|truncatechars:35}}</a> </span>
                     </div>
 
                     <div class="post-image-small">
-                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-small">
+                      <img src="/media/thumbnails/{{post.image2.name}}" data-alt_name='/media/{{post.image2.name}}' class="post-image-small"><br>
                       <span><a href="/media/{{post.image2.name}}">{{post.image2.name|truncatechars:35}}</a> </span>
                     </div>
 
                     <div class="post-image-small">
-                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-small">
+                      <img src="/media/thumbnails/{{post.image3.name}}" data-alt_name='/media/{{post.image3.name}}' class="post-image-small"><br>
                       <span><a href="/media/{{post.image3.name}}">{{post.image3.name|truncatechars:35}}</a> </span>
                     </div>
                     {% endif %}
@@ -198,9 +207,14 @@
         </div>
       </div>
 
-        <footer>
-            <div id="footer-links">
+    <footer>
+      <div id="footer-links">
             <a href="/">Main</a><a href="/search/">Search </a> <a href="/profile/"> Profile </a>  <a href="/other/">Other </a>
+            <span class="linkbot" id="options_button">Options<div id="options">
+                NSFW: <input type="checkbox" id='nsfw'>
+                !Censored: <input type="checkbox" id='cens'>
+              </div>
+            </span>
 {% for board in boards %}
 <span class="linkbot"><a href="{{board}}">{{board}}</a></span>
 {% endfor %}

@@ -11,9 +11,9 @@ if 'OPENSHIFT_REPO_DIR' in os.environ:
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-SECRET_KEY = '%dyqozgd4l)yheblv=-^lhbn1$js6uv5$7rh6r-qyi7gx88bf'
+SECRET_KEY = '%dyqozgd4l)yheblv=-^lhbn1$js6uv5$7rh6r-29ht8gaksjgn2h'
 
-DEBUG = True
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
@@ -26,7 +26,7 @@ AUTH_USER_MODEL = 'Layers.User'
 PIC_SIZE = 180.0
 
 # Paths that user can go without session.
-ALLOWED_PATHS = ['/login/', '/bunny/', '/closed/']
+ALLOWED_PATHS = ['/login/', '/bunny/', '/closed/', '/~strippy-way-for-you-baby/']
 
 
 INSTALLED_APPS = (
@@ -118,6 +118,6 @@ STATICFILES_FINDERS = (
 if ON_OPENSHIFT:
     MEDIA_ROOT = os.path.join(os.environ['OPENSHIFT_DATA_DIR'], 'media')
 else:
-    MEDIA_ROOT = os.path.join(os.getcwd(),'media')
+    MEDIA_ROOT = os.path.join(os.getcwd(), 'media')
 
 MEDIA_URL = '/media/'

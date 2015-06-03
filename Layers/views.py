@@ -1,30 +1,27 @@
 # -*- coding: utf-8 -*-
 
 # Django modules
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
-from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404, render_to_response
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
-from django.views.generic import RedirectView, ListView, DetailView
+from django.views.generic import View, ListView, DetailView
 from django.views.generic.base import TemplateView, ContextMixin
 
 # Kasatou modules
-from Layers.models import BasePost
 from Layers.models import Board
 from Layers.models import Invite
 from Layers.models import Post
-from Layers.models import PostForm
+from Layers.forms import PostForm
 from Layers.models import Thread
-from Layers.models import ThreadForm
-from Layers.models import UserForm
-from Layers.mixins import JsonMixin, JsonFormMixin
-from Layers.snippets import get_obj_or_None
+from Layers.forms import ThreadForm
+from Layers.forms import UserForm
+from Layers.mixins import JsonMixin
+from Layers.snippets import get_obj_or_none
 User = get_user_model()
 
 
@@ -99,6 +96,7 @@ class SingleThreadView(JsonMixin, DetailView):
         response = dict(answer=data.rendered_content)
         return self.render_json_answer(response)
 
+
 class SinglePostView(SingleThreadView):
     model = Post
     context_object_name = 'post'
@@ -125,94 +123,81 @@ class ThreadUpdateView(JsonMixin, ListView):
         return self.render_json_answer(response)
 
 
-def register_get(request, invite):
-    context = RequestContext(request)
+class Register(View):
+    @staticmethod
+    def get(request, code):
+        try:
+            invitation = Invite.objects.get(code=code)
+        except Invite.DoesNotExist:
+            return HttpResponseRedirect("/")
 
-    try:
-        invite = Invite.objects.get(code=invite)
-    except:
-        invite = None
+        context = RequestContext(request)
+        if invitation is None:
+            return render_to_response('404.html', context)
+        if invitation.is_active:
+            user_form = UserForm()
+            invitation.is_active = False
+            invitation.save()
 
-    if request.user.is_authenticated():
-        return HttpResponseRedirect("/")
-    else:
-        if request.method == 'GET':
-            if invite is None:
-                return render_to_response('404.html', context)
-            else:
-                if invite.is_active:
-                    user_form = UserForm()
-                    invite.is_active = False
-                    invite.save()
-
-                    return render_to_response(
-                        'register.html',
-                        {'user_form': user_form}, context)
-                else:
-                    return render_to_response('404.html', {'text': 'Invite is outdated or already in use.'}, context)
+            return render_to_response(
+                'register.html',
+                {'user_form': user_form}, context)
         else:
-            HttpResponseRedirect("/")
+            return render_to_response('404.html', {'text': 'Invite is outdated or already in use.'}, context)
 
-
-def register_accept(request):
-    context = RequestContext(request)
-
-    if request.method == "POST":
+    @staticmethod
+    def post(request):
         user_form = UserForm(data=request.POST)
         if user_form.is_valid():
             user = user_form.save()
             user.set_password(user.password)
             user.save()
-            email = request.POST['email']
-            password = request.POST['password']
-            user = authenticate(email=email, password=password)
+            user = authenticate(email=request.POST['email'],
+                                password=request.POST['password'])
             login(request, user)
             return HttpResponseRedirect("/")
-        else:
-            return render_to_response('404.html', {'text': "Sorry, but you have an errors in registration form."}, context)
-    else:
-        return HttpResponseRedirect("/login/")
+
+        return render_to_response('404.html',
+                                  {'text': "Sorry, but you have an errors in registration form."}, {})
 
 
-def profile(request):
-    context = RequestContext(request)
+class Profile(View):
+    @staticmethod
+    def get_user(key):
+        session = Session.objects.get(session_key=key)
+        uid = session.get_decoded().get('_auth_user_id')
+        return User.objects.get(pk=uid)
 
-    session_key = request.session.session_key
-    session = Session.objects.get(session_key=session_key)
-    uid = session.get_decoded().get('_auth_user_id')
-    user = User.objects.get(pk=uid)
+    def get(self, request):
+        context = RequestContext(request)
+        session_key = request.session.session_key
+        user = self.get_user(session_key)
 
-    if request.method == 'GET':
-        context.update({
-            'user': user,
-        })
-
+        context['user'] = user
         return render_to_response("profile.html", {}, context)
-    else:
-        name = request.POST.get('name')
-        theme = request.POST.get('theme')
-        liked_threads = request.POST.get('liked_threads')
-        thread_per_page = request.POST.get('thread_per_page')
-        user.name = name
-        user.theme = theme
-        user.liked_threads = liked_threads
-        user.thread_per_page = thread_per_page
+
+    def post(self, request):
+        context = RequestContext(request)
+        session_key = request.session.session_key
+        user = self.get_user(session_key)
+        user.name = request.POST.get('name', None)
+        user.theme = request.POST.get('theme', None)
+        user.liked_threads = request.POST.get('liked_threads', None)
+        user.thread_per_page = request.POST.get('thread_per_page', None)
 
         user.save()
-
+        context['user'] = user
         return render_to_response("profile.html", {}, context)
 
 
-def user_login(request):
-    context = RequestContext(request)
-
-    if request.method == 'POST':
+class Login(View):
+    @staticmethod
+    def post(request):
         email = request.POST['email']
         password = request.POST['password']
         user = authenticate(email=email, password=password)
 
         if user:
-
             if user.is_active:
                 login(request, user)
                 return HttpResponseRedirect('/')
@@ -227,7 +212,9 @@ def user_login(request):
             messages.error(request, "Data is wrong. Are you registered?")
             return HttpResponseRedirect("/login/")
 
-    else:
+    @staticmethod
+    def get(request):
+        context = RequestContext(request)
         return render_to_response('login.html', {}, context)
 
 
@@ -237,46 +224,41 @@ def user_logout(request):
     return HttpResponseRedirect('/login/')
 
 
-def search(request):
-    context = RequestContext(request)
-
-    if request.method == 'POST':
+class SearchView(View):
+    @staticmethod
+    def post(request):
         search_text = request.POST['search_text']
-        posts = BasePost.objects.search(search_text)
-
+        context = RequestContext(request)
         context.update({
-            'posts': BasePost.objects.search(search_text)
+            'posts': Post.objects.search(search_text)
         })
         return render_to_response('search.html', {}, context)
 
-    else:
+    @staticmethod
+    def get(request):
+        context = RequestContext(request)
         return render_to_response("search.html", {}, context)
 
 
-def create_thread(request, **kwargs):
-    context = RequestContext(request)
-    board_id = request.POST.get('board_id')
-    board_name = Board.objects.get(id=board_id)
-    addr = ''.join([str(board_name)])
+class ThreadCreating(View):
+    @staticmethod
+    def post(request):
+        board_id = request.POST.get('board_id')
+        board_name = Board.objects.get(id=board_id)
+        addr = ''.join([str(board_name)])
 
-    if request.method == 'POST':
         thread_form = ThreadForm(request.POST, request.FILES)
 
         if thread_form.is_valid():
             thread = thread_form.save()
             thread.save()
             return HttpResponseRedirect(addr)
-
         else:
             messages.error(request, thread_form.errors)
             return HttpResponseRedirect(addr)
 
-    else:
-        return HttpResponseRedirect(addr)
-
 
 def post_adding(request, **kwargs):
-    context = RequestContext(request)
     board_id = request.POST.get('board_id')
     board_name = Board.objects.get(id=board_id)
     thread_id = request.POST.get('thread_id')
@@ -288,7 +270,6 @@ def post_adding(request, **kwargs):
         image1 = request.FILES.get('image1')
 
         post_form = PostForm(request.POST, request.FILES)
-
 
         if post_form.is_valid():
             if text or topic or image1:  # We do not save empty posts.
@@ -322,9 +303,10 @@ def post_adding(request, **kwargs):
 
 
 def post_deleting(request, p_id):
-    board_name = str(Post.objects.get(id=p_id).board_id)
-    thread_id = Post.objects.get(id=p_id).get_id()
-    addr = ''.join([str(board_name), "thread/", str(thread_id)])
+    post = Post.objects.get(pk=p_id)
+    board_name = str(post.board_id)
+    thread = Thread.objects.get(pk=post.get_id())
+    addr = ''.join([str(board_name), "thread/", str(post.get_id())])
 
     if request.method == 'GET':
         session_key = request.session.session_key
@@ -333,21 +315,52 @@ def post_deleting(request, p_id):
         uid = session.get_decoded().get('_auth_user_id')
         user = User.objects.get(pk=uid)
 
-        post = get_obj_or_None(Post, id=p_id)
+        post = get_obj_or_none(Post, id=p_id)
         if user == post.user_id or user.is_admin:
             if post is not None:
                 post.delete()
+                thread.post_count -= 1
+                thread.save()
                 return HttpResponseRedirect(addr)
             else:
                 messages.error(request,
                                "<script>alert('Sorry, but this message doesn't exist.');</script>")
                 return HttpResponseRedirect(addr)
         else:
-                messages.error(request,
-                               "<script>alert('Sorry, but you have not enough permissions.');</script>")
-                return HttpResponseRedirect(addr)
+            messages.error(request,
+                           "<script>alert('Sorry, but you have not enough permissions.');</script>")
+            return HttpResponseRedirect(addr)
     else:
         return HttpResponseRedirect(addr)
+
+
+class PostEditing(View):
+    @staticmethod
+    def get(request, p_id):
+        context = RequestContext(request)
+        try:
+            post = Post.objects.get(pk=p_id)
+            context['raw_text'] = Post.unmarkup(post.text)
+            context['post'] = post
+            context['thread_id'] = post.get_id()
+            board = Board.objects.get(pk=post.board_id.pk)
+            context['board_name'] = board.board_name
+        except Post.DoesNotExist:
+            return HttpResponseRedirect("/")
+        return render_to_response("edit.html", {}, context)
+
+    @staticmethod
+    def post(request, p_id):
+        try:
+            post = Post.objects.get(pk=p_id)
+        except Post.DoesNotExist:
+            return HttpResponseRedirect("/")
+        post.text = Post.markup(request.POST['text'])
+        post.topic = request.POST['topic']
+        post.save()
+        addr = '/'.join(('', request.POST['board_name'], 'thread', request.POST['thread_id'], '#post_' + p_id))
+        return HttpResponseRedirect(addr)
+
 
 def invite(request):
     context = RequestContext(request)
@@ -357,18 +370,19 @@ def invite(request):
     user = User.objects.get(pk=uid)
 
     if user.invites_count > 0:
-        invite = Invite()
-        invite.sender = user
-        invite.generate_code()
-        link = 'http://kasatou.ru/register/' + invite.code
+        i = Invite()
+        i.sender = user
+        i.generate_code()
+        link = 'http://kasatou.ru/register/' + i.code
         context['invite_link'] = link
-        invite.save()
+        i.save()
         user.invites_count -= 1
         user.save()
     else:
         context['invite_link'] = "Sorry, but you don't have any invites right now."
 
     return render_to_response("profile.html", {}, context)
+
 
 def liked(request):
     context = RequestContext(request)
@@ -382,16 +396,23 @@ def liked(request):
     context['liked'] = []
 
     for th in ids:
-        thread = get_obj_or_None(Thread, id=th)
-        if thread != None:
+        thread = get_obj_or_none(Thread, id=th)
+        if thread is not None:
             context['liked'].append(thread)
     return render_to_response("liked.html", {}, context)
+
 
 def closed(request):
     context = RequestContext(request)
     return render_to_response("closed.html", {}, context)
 
+
 def other(request):
     context = RequestContext(request)
-    context['boards'] = Board.objects.all()
     return render_to_response("other.html", {}, context)
+
+
+def last(request):
+    context = RequestContext(request)
+    context['posts'] = Post.objects.all().order_by('-date')[:5]
+    return render_to_response("parts/last_posts.html", {}, context)

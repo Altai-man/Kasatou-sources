@@ -1,5 +1,4 @@
-function temp_look(is_nsfw,selector) {
-
+function temp_look(is_nsfw, selector) {
     if (is_nsfw) {
         selector.mouseenter(function() {
             $(this).css('opacity','1.0');
@@ -10,7 +9,20 @@ function temp_look(is_nsfw,selector) {
         });
     } else
         selector.unbind();
+}
 
+function cens_look(is_cens, selector) {
+    if (is_cens) {
+        selector.mouseenter(function() {
+            $(this).css('opacity','1.0');
+            $(this).css('background-color','#ffffff');
+        });
+
+        selector.mouseleave(function() {
+            $(this).css('opacity','0');
+        });
+    } else
+        selector.unbind();
 }
 
 
@@ -104,6 +116,33 @@ $(document).ready(function() {
         }
     });
 
+
+    // cens option and it's cookies
+    if ($.cookie('cens') == 'true') {
+        var selector = $('.censored');
+        selector.css('opacity','0');
+        $('#cens').attr('checked',true);
+        cens_look(true,selector);
+    }
+
+    $('#cens').change(function() {
+        var cens = $('#cens').is(':checked');
+        var selector = $('.censored');
+        if (cens) {
+            selector.css('opacity','0');
+            $(this).css('background-color','#ffffff');
+            $.cookie('cens',true,{path: '/'});
+            cens_look(true,selector);
+        }
+        else {
+            selector.css('opacity','1.0');
+            $(this).css('background-color','#000000');
+            $.cookie('cens',false,{path: '/'});
+            cens_look(false,selector);
+        }
+    });
+
+
     // AJAX request for new posts in thread
     $('#refresh').click(function() {
         var csrftoken = $.cookie('csrftoken');
@@ -150,7 +189,6 @@ $(document).ready(function() {
 
     // send post via ajax
     $('#send-post').click(function() {
-        console.log("SOME");
         var csrftoken = $.cookie('csrftoken');
         var thread_id = $('#thread_id').val();
         var board_name =  $('#board_name').val();
@@ -222,4 +260,58 @@ $(document).ready(function() {
     // Show/hide quoted posts/threads
     window.links = $('div.link_to_content')
     window.links = show_linked(window.links);
+
+
+    // markdown buttons
+    function wrapText(openTag, closeTag) {
+        var textArea = $('#id_text');
+        var len = textArea.val().length;
+        var start = textArea[0].selectionStart;
+        var end = textArea[0].selectionEnd;
+        var selectedText = textArea.val().substring(start, end);
+        var replacement = openTag + selectedText + closeTag;
+        textArea.val(textArea.val().substring(0, start) + replacement + textArea.val().substring(end, len));
+    }
+
+    $('#q').click(function () {
+        var textArea = $('#id_text');
+        var len = textArea.val().length;
+        var start = textArea[0].selectionStart;
+        var end = textArea[0].selectionEnd;
+        var selectedText = textArea.val().substring(start, end);
+        var replacement = ">" + selectedText;
+        textArea.val(textArea.val().substring(0, start) + replacement + textArea.val().substring(end, len));
+    });
+
+    $('#b').click(function () {
+        wrapText('**', '**');
+    });
+
+    $('#i').click(function () {
+        wrapText('*', '*');
+    });
+
+    $('#s').click(function () {
+        wrapText('[s]', '[/s]');
+    });
+
+    $('#sp').click(function () {
+        wrapText('%%', '%%');
+    });
+
+    $('#magic').click(function () {
+        wrapText('[m]', '[/m]');
+    });
+
+    $('#cd').click(function () {
+        wrapText('[code]', '[/code]');
+    });
+
+    $('#cens').click(function () {
+        wrapText('[cens]', '[/cens]');
+    });
+
+    $('#url').click(function () {
+      wrapText('[url=', ']');
+    });
 });

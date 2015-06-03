@@ -1,19 +1,17 @@
 #! -*- coding: utf-8 -*-
-# Pyhon
-import os
+# Python
 from PIL import Image
 import re
 import random
 import string
 
 # Django
-from django import forms
 from django.db import models
 from django.utils.html import escape
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
-from django.db.models.signals import pre_delete, post_save, pre_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from Kasatou.settings import PIC_SIZE, MEDIA_ROOT
 
@@ -23,7 +21,7 @@ def content_file_name(instance, filename):
     name = '/'.join([str(instance.date)[:9]])  # At first we add a few symbols of date.
 
     if "jpeg" in filename[-4:]:
-        name = name + filename[-5:]  #  Because in '.jpeg' is more that 4 symbols.
+        name = name + filename[-5:]  # Because in '.jpeg' is more that 4 symbols.
     else:
         name = name + filename[-4:]  # Here is jpg, png and so.
 
@@ -63,7 +61,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     thread_per_page = models.IntegerField(default=8)
     liked_threads = models.CharField(max_length=50, default="")
     date_joined = models.DateTimeField(_('Date joined'), default=timezone.now)
-    invites_count = models.IntegerField(default=3)
+    invites_count = models.IntegerField(default=10)
 
     is_admin = models.BooleanField(_('Admin status'), default=False)
     is_active = models.BooleanField(_('Active'), default=True)
@@ -89,15 +87,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.is_admin
 
 
-class UserForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(UserForm, self).__init__(*args, **kwargs)
-
-    class Meta:
-        model = User
-        fields = ('email', 'password', 'name', 'theme', 'thread_per_page')
-
-
 class Invite(models.Model):
     is_active = models.BooleanField(default=True)
     code = models.CharField(max_length=32)
@@ -106,11 +95,12 @@ class Invite(models.Model):
     def generate_code(self):
         self.code = ''.join(random.choice(string.ascii_letters + string.digits) for x in range(32))
 
-    def check(self, code):
+    @staticmethod
+    def check_invite(code):
         try:
             curr_invite = Invite.objects.get(code=code)
-        except:
-              curr_invite = None
+        except Invite.DoesNotExist:
+            curr_invite = None
 
         if curr_invite is not None:
             curr_invite.is_active = False
@@ -119,7 +109,7 @@ class Invite(models.Model):
             return False
 
     def __str__(self):
-        return 'Invite№ %s.' % self.id
+        return 'Invite №%s.' % self.id
 
 
 class Board(models.Model):
@@ -136,8 +126,6 @@ class Board(models.Model):
 
 
 class BasePost(models.Model):
-    objects = SearchManager()
-
     text = models.TextField(max_length=5000, blank=True)
     date = models.DateTimeField('%Y-%m-%d %H:%M:%S', auto_now_add=True)
     archive = models.FileField(upload_to='documents', blank=True)
@@ -166,13 +154,60 @@ class BasePost(models.Model):
             return False
 
     @staticmethod
-    def markup(string):
-        """ Makes markup for post and thread text. Strings will be safe. """
-        string = escape(string)
+    def unmarkup(raw_string):
         markups = [
             # quote
-            [r'(?P<text>(?<!(&gt;))&gt;(?!(&gt;)).+)',
-             r'<span class="post_quote">\g<text></span>'],
+            [r'',
+             r'</?span.*?>'],
+
+            [r'',
+             r'</?div.*?>'],
+
+            [r'',
+             r'</?a.*?>'],
+
+            # bold **b**
+            [r'**\g<text>**', r'<b>(?P<text>.*?)</b>'],
+
+            # cursive *i*
+            [r'*\g<text>*', r'<i>(?P<text>.*?)</i>'],
+
+            # underline
+            [r'[m]\g<text>[/m]', r'<u>(?P<text>.*?)</u>'],
+
+            # deleted [s]s[/s]
+            [r'[s]\g<text>[/s]', r'<del>(?P<text>.*?)</del>'],
+
+            # monospace [code]code[/code]
+            [r'[code]\g<text>[/code]', r'<code>(?P<text>.*?)</code>'],
+
+            # new line
+            [r'\n', r'<br>'],
+
+            # spoiler %%s%%
+            [r'%%\g<text>%%',
+             r'<span class="spoiler">(?P<text>.*?)</span>'],
+
+            # censored [cens]censored[/cens]
+            [r'[cens]\g<text>[/cens]',
+             r'<span class="censored">(?P<text>.*?)</span>'],
+
+            # link
+            [r'[url=\g<link>]',
+             r'<a href="(?P<link>.*?)">.*?</a>'],
+        ]
+        for one_markup in markups:
+            raw_string = re.sub(one_markup[1], one_markup[0], raw_string, re.DOTALL)
+        return raw_string
+
+
+    @staticmethod
+    def markup(raw_string):
+        """ Makes markup for post and thread text. Strings will be safe. """
+        markups = [
+            # quote
+            [r'(?P<text>(^|\n)>[^>]+?)\n',
+             r'<span class="post_quote">\g<text></span>\n'],
 
             # bold **b**
             [r'\*\*(?P<text>[^*%]+)\*\*', r'<b>\g<text></b>'],
@@ -184,7 +219,7 @@ class BasePost(models.Model):
             [r'\[m\](?P<text>.+)\[\/m\]', r'<u>\g<text></u>'],
 
             # deleted [s]s[/s]
-            [r'\[s\](?P<text>.+)\[\/s\]', r'<del>\g<text></del>'],
+            [r'\[s\](?P<text>.+?)\[\/s\]', r'<del>\g<text></del>'],
 
             # monospace [code]code[/code]
             [r'\[code\](?P<text>.+)\[\/code\]', r'<code>\g<text></code>'],
@@ -192,31 +227,33 @@ class BasePost(models.Model):
             # new line
             [r'\n', r'<br>'],
 
-            #spoiler %%s%%
+            # spoiler %%s%%
             [r'\%\%(?P<text>.*?)\%\%',
              r'<span class="spoiler">\g<text></span>'],
 
+            # censored [cens]censored[/cens]
+            [r'\[cens\](?P<text>.*?)\[/cens\]',
+             r'<span class="censored">\g<text></span>'],
+
             # link to thread >t14
-            [r'\&gt;\&gt;t(?P<id>[0-9]+)',
+            [r'>>t(?P<id>[0-9]+)',
              r'<div class="link_to_content"><a class="link_to_post" href="/thread/\g<id>">&gt;&gt;t\g<id></a><div class="post_quote"></div></div>'],
 
             # link to post >p88
-            [r'\&gt;\&gt;p(?P<id>[0-9]+)',
+            [r'>>p(?P<id>[0-9]+)',
              r'<div class="link_to_content"><a class="link_to_post" href="/post/\g<id>">&gt;&gt;p\g<id></a><div class="post_quote"></div></div>'],
 
             # link
-            [r'\[url=(?P<link>(https?)?:?\/?\/?(www)?\.?[-A-Za-z]+\.[a-z]+(\/[\.\+-_&\?=/A-Za-z0-9]*)?)\]',
-             r'<a href="http://\g<link>">\g<link></a>'],
+            [r'\[url=(?P<link>.*?)\]',
+             r'<a href="\g<link>">\g<link></a>'],
 
         ]
         for one_markup in markups:
-            string = re.sub(one_markup[0], one_markup[1], string, re.DOTALL)
-        return string
+            raw_string = re.sub(one_markup[0], one_markup[1], raw_string, re.DOTALL)
+        return raw_string
 
 
 class Thread(BasePost):
-
-
     post_count = models.IntegerField(default=0)
     update_time = models.DateTimeField('%Y-%m-%d %H:%M:%S', auto_now_add=True)
 
@@ -231,27 +268,19 @@ class Thread(BasePost):
         return rev_posts
 
     def __str__(self):
-        return '%s' % (self.topic)
-
-
-class ThreadForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(ThreadForm, self).__init__(*args, **kwargs)
-
-    class Meta:
-        model = Thread
-        fields = ['topic', 'text', 'image1', 'image2',
-                  'archive', 'board_id', 'user_id']
+        return '%s' % self.topic
 
 
 class Post(BasePost):
+    objects = SearchManager()
+
     topic = models.CharField(max_length=40, blank=True)
     image1 = models.ImageField(upload_to=content_file_name, blank=True)
     image2 = models.ImageField(upload_to=content_file_name, blank=True)
     image3 = models.ImageField(upload_to=content_file_name, blank=True)
     thread_id = models.ForeignKey(Thread)
 
-    # Overload base method, because post have three pictures, not two.
+    # Overload base method, because post has three pictures, not two.
     def make_thumbnail(self):
         if self.image1:
             ratio = min(PIC_SIZE/self.image1.height,
@@ -287,19 +316,7 @@ class Post(BasePost):
     def __str__(self):
         return ''.join([self.text[:40], ', ', str(self.date)])
 
-
-class PostForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super(PostForm, self).__init__(*args, **kwargs)
-
-    class Meta:
-        model = Post
-        fields = ['topic', 'text', 'image1', 'image2', 'image3',
-                  'archive', 'thread_id', 'board_id', 'user_id']
-
-
 # Signals
-
 # Callbacks here because save does not always mean new object
 @receiver(pre_save, sender=Post)
 @receiver(pre_save, sender=Thread)
