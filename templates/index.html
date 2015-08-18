@@ -3,49 +3,87 @@
 {% load i18n %}
 {% load staticfiles %}
 {% autoescape off %}
+{% load a_filters %}
 <head>
-<title>Kasatou - Main</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="stylesheet" type="text/css" href="static/main.css">
-<link rel="stylesheet" type="text/css" href="static/{{user.theme|lower}}.css">
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.2/jquery.cookie.min.js"></script>
+  <title>Kasatou - Main</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" type="text/css" href="static/main.css">
+  <link rel="stylesheet" type="text/css" href="static/{{user.theme|lower}}.css">
+  <link rel="shortcut icon" href="/static/favicon.ico"/>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.2/jquery.cookie.min.js"></script>
 </head>
 <body>
+    <section id="wrapper">
+	<div id="joy">
+          <section id="content">
+            <div id="joy-title" class="title">
+              Kasatou
+              <div id="search-field">
+		Yet Another Pointless Imageboard
+              </div>
+            </div>
 
-    <section id="wrapper">    
-    <div id="index-content">
-        <div id="logo"><a href="/b/" title="/b/">Kasatou</a> </div>
-        {% if threads %}
-        {% for thread in threads %} 
+            <div id="main-thread">
+              <div class="title">
+		<span class="btitle">{{main_thread.topic}}</span>
+		{% if main_thread  %}
+		({{main_thread.post_count}})
+		{% endif %}
+              </div>
 
+            <div id="main-image">
+	      {% if main_thread  %}
+              <a href="{{main_thread.board_id}}thread/{{main_thread.id}}/#bottom_cont"
+		 title="{{main_thread.topic}}">
+                <img src="/media/{{main_thread.image1.name}}">
+              </a>
+	      {% else %}
+	      <h2> No threads yet~ </h2>
+	      {% endif %}
+            </div>
 
-        <div class="indexbox">
-        <div class="indeximg">
-            <a href="{{thread.board_id}}thread/{{thread.id}}">
-            <span class="imggrad"></span>
-            <img src="/media/thumbnails/{{thread.image1.name}}" class="main-image" /></a> 
+            <div id="main-post-block">
+              {% for post in main_posts %}
+              <div class="main-post post">
+                <div class="details pdetails main-details">
+		  Anonymous
+		  <a href="{{post.board_id}}thread/{{post.thread_id.id}}/#post_{{post.id}}">#p{{post.id}}</a>
+                  {{post.date}}
+                  <div class="inthread">
+                    <a href="{{post.board_id}}thread/{{post.thread_id.id}}/#post_{{post.id}}">Ответить</a>
+                  </div>
+                </div>
+                <div class="main-message">
+		  {{post.text|cut:"3"|default:"...<br><br>"}}
+                </div>
+              </div>
+	      {% endfor %}
+            </div>
+          </div>
+
+        </section>
+
+        <section id="joy-threads-bar">
+
+	  {% for thread in threads %}
+          <a href="{{thread.board_id}}thread/{{thread.id}}/#bottom_cont" class="joy-thread-link">
+            <div class="joy-thread ">
+              <img src="/media/thumbnails/{{thread.image1.name}}" class="joy-thread-image"> <br>
+              <span>{{thread.topic}}</span>
+            </div>
+          </a>
+	  {% endfor %}
+
+        </section>
+	</div>
+      <footer>
+        <div id="footer-links">
+          <a href="/b/">/b/</a><a href="/search/">Search </a> <a href="/profile/"> Profile </a>
         </div>
-
-        <div class="indexmsgbox">
-            <div class="indextitle">{{thread.topic}}</div>
-            <div class="indexmsg">{{thread.text|truncatechars:400}}</div>
-        </div>
-        <div class="inthread"><a href="{{thread.board_id}}thread/{{thread.id}}">Перейти</a></div>
-        </div>
-        {% endfor %}
-        {% else %}
-        <div align="center" class="indexbox">No threads.</div>
-        {% endif %}
-        
-    </div>  
-        <footer>
-            <div id="footer-links">
-              <a href="/b/">/b/</a><a href="/search/">Search </a> <a href="/profile/"> Profile </a>  <a href="/other/">Other </a>
-            </div>  
-        </footer>  
+      </footer>
     </section>
-</body>
+  </body>
 
 </html>
 {% endautoescape %}

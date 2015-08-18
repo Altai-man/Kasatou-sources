@@ -11,7 +11,7 @@ body {
 
 textarea, .edit, .dropdown select, input[type="number"] {
     background: #F1E0D6;
-} 
+}
 
 
 
@@ -34,7 +34,7 @@ textarea, .edit, .dropdown select, input[type="number"] {
 	border-left: 1px solid #D9C6C2;
 }
 
-textarea, .edit, .button, #send-post, .dropdown select { 
+textarea, .edit, .button, #send-post, .dropdown select {
     border: 1px solid #D9C6C2;
 }
 
@@ -47,8 +47,8 @@ textarea, .edit, .button, #send-post, .dropdown select {
 }
 
 .spoiler {
-        background-color: #D9C6C2;
-        color: #D9C6C2;
+    background-color: #D9C6C2;
+    color: #D9C6C2;
 }
 
 .spoiler:hover {
@@ -85,8 +85,8 @@ a:hover {
 }
 
 hr {
-    color: #D9C6C2; /*для IE */ 
-    background-color:#D9C6C2; /*для Firefox, Opera, Safari*/ 
+    color: #D9C6C2; /*для IE */
+    background-color:#D9C6C2; /*для Firefox, Opera, Safari*/
 
 }
 
@@ -139,7 +139,7 @@ input[type="number"]:focus {
 #loginform {
     background: #F1E0D6 ;
     background: linear-gradient(to top, #d9c4b8 0%, #F1E0D6 15%);
-    box-shadow: 0px 3px 5px #D6D9AD; 
+    box-shadow: 0px 3px 5px #D6D9AD;
     border: 1px solid #D9C6C2;
 }
 
@@ -159,6 +159,14 @@ input[type="number"]:focus {
     background: linear-gradient(to top, #FFD7BF 0%, #FFE7D9 75%);
 }
 
+/* New main style */
+
+.joy-thread {
+    background: #F1E0D6;
+    border: 1px solid #D9C6C2;
+    border-top: 2px solid #D9C6C2;
+    box-shadow: 0px 3px 5px #D6D9AD;
+}
 
 
 /* Board style */
@@ -196,7 +204,7 @@ input[type="number"]:focus {
 .indexbox, .search-box {
     background: #F1E0D6;
     border: 1px solid #D9C6C2;
-    box-shadow: 0px 2px 3px #D6D9AD; 
+    box-shadow: 0px 2px 3px #D6D9AD;
     background: linear-gradient(to top, #d9c4b8 0%, #F1E0D6 50%);
     border-bottom: none;
 }
@@ -206,9 +214,9 @@ input[type="number"]:focus {
 }
 
 #options {
-    background: #e6d4cb;   
+    background: #e6d4cb;
 }
 
 #answer {
-    background: #e6d4cb;   
+    background: #e6d4cb;
 }

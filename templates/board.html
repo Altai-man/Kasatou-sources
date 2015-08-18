@@ -7,6 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" type="text/css" href="/static/main.css">
     <link rel="stylesheet" type="text/css" href="/static/{{user.theme|lower}}.css">
+    <link rel="shortcut icon" href="/static/favicon.ico"/>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.2/jquery.cookie.min.js"></script>
     <script src="/../static/script.js"></script>
@@ -118,6 +119,11 @@
           {% for post in bundle.posts %}
           <div class="post">
             <div class="details pdetails">
+            {% if post.topic %}
+            <b>{{post.topic}}</b>
+            {% else %}
+            Anonymous
+            {% endif %}
               {{post.user_id.name}} <a href="{{post.board_id}}thread/{{post.thread_id.id}}/#post_{{post.id}}">{{post.id}}</a> {{post.date}}
             </div>
             <div class="message">
@@ -209,10 +215,10 @@
 
     <footer>
       <div id="footer-links">
-            <a href="/">Main</a><a href="/search/">Search </a> <a href="/profile/"> Profile </a>  <a href="/other/">Other </a>
+            <a href="/">Main</a><a href="/search/">Search </a> <a href="/profile/"> Profile </a>
             <span class="linkbot" id="options_button">Options<div id="options">
-                NSFW: <input type="checkbox" id='nsfw'>
-                !Censored: <input type="checkbox" id='cens'>
+                NSFW: <input type="checkbox" id="nsfw_btn">
+                !Censored: <input type="checkbox" id="cens_btn">
               </div>
             </span>
 {% for board in boards %}

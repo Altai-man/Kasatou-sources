@@ -2,7 +2,8 @@
     margin: 0;
     padding: 0
 }
-html, 
+
+html,
 body {
     height: 100%;
 }
@@ -349,7 +350,7 @@ ul {
     float:left;
     margin-right: 5px;
     margin-bottom: 5px;
-    text-align: center; 
+    text-align: center;
     font-size: 12px;
     word-break: break-all;
 }
@@ -367,7 +368,7 @@ ul {
     float:left;
     margin-right: 10px;
     //margin-bottom: 5px;
-    text-align: center; 
+    text-align: center;
     word-break: break-all;
 }
 
@@ -445,6 +446,14 @@ ul {
     display: inline-block;
 }
 
+.main-reply {
+    float: right;
+    font-weight: bold;
+    font-size: 13px;
+    /* display: inline-block; */
+    margin-top: 9px;
+}
+
 .delete_post {
     position: absolute;
     right: -8px;
@@ -496,7 +505,157 @@ ul {
     padding: 5px 0px 3px 10px;
 }
 
+/* New main index style */
 
+/* #joy { */
+    /* width: 955px; */
+    /* height: 650px; */
+    /* background: gray; */
+    /* margin: 0 auto; */
+/* } */
+#joy {
+padding-top: 15px;
+padding-bottom: 25px;
+position: relative;
+width: 955px;
+min-height: 100%;
+margin: 0 auto;
+}
+
+
+#joy-title {
+    padding-left: 15px;
+    font-size:22px;
+}
+
+#search-field {
+    float:right;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-right: 10px;
+}
+
+#main-thread {
+    text-align: center;
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+}
+
+#main-thread img {
+    max-width: 524px;
+    max-height: 300px;
+}
+
+#main-image {
+    padding-top: 5px;
+    /* padding-left: 2px; */
+    vertical-align:middle;
+    max-width: 524px;
+    display:table-cell;
+    /* -webkit-filter: grayscale(20%); */
+}
+
+#main-image:hover {
+    /* -webkit-filter: grayscale(0%); */
+}
+
+#main-post-block {
+    /* background: gray; */
+    /* vertical-align:top; */
+    /* width: 400px; */
+    padding-top: 5px;
+    text-align: left;
+    display:table-cell;
+}
+
+#main-thread .title {
+    text-align: left;
+}
+
+.main-post {
+    margin-left: 10px;
+    padding: 5px;
+    overflow: hidden;
+
+}
+
+.main-message {
+    padding: 2px 2px 2px 5px;
+    overflow: hidden;
+}
+
+
+.main-details {
+    margin-bottom: 5px;
+    width: 94%;
+}
+
+#joy-head {
+    background: #fafafa;
+    border: 1px solid #ccc;
+    border-top: 2px solid gray;
+
+    min-height: 400px;
+    overflow: hidden;
+    padding: 5px;
+    position: relative;
+
+    border-radius: 0px 0px 5px 5px;
+    webkit-border-radius: 0px 0px 5px 5px;
+   -moz-border-radius: 0px 0px 5px 5px;
+   -khtml-border-radius: 0px 0px 5px 5px;
+}
+
+
+#joy-threads-bar {
+    margin-top: 10px;
+    margin-left: 8px;
+    margin-bottom: 20px;
+}
+
+.joy-thread {
+    /* background: #fafafa; */
+    /* border: 1px solid #ccc; */
+    /* border-top: 2px solid #999; */
+
+    text-align: center;
+    width: 180px;
+    border-radius: 0px 0px 5px 5px;
+    webkit-border-radius: 0px 0px 5px 5px;
+   -moz-border-radius: 0px 0px 5px 5px;
+   -khtml-border-radius: 0px 0px 5px 5px;
+
+   margin: 0px;
+   margin-bottom: 10px;
+   padding-bottom: 5px;
+   padding-top: 5px;
+   margin-right: 3px;
+
+   display:inline-block;
+   vertical-align: top;
+}
+
+.joy-thread span:hover {
+    text-decoration: underline;
+}
+
+
+.joy-thread img {
+    margin-bottom: 2px;
+}
+
+.joy-thread-image {
+    margin-top: 5px;
+    margin-bottom: 2px;
+    max-width: 170px;
+    max-height: 95px;
+}
+
+.joy-thread-link {
+    width: 190px;
+    font-size: 13px;
+}
 
 /* Index style */
 
@@ -506,7 +665,7 @@ ul {
 }
 
 footer {
-    font-weight: bold; 
+    font-weight: bold;
     font-size: 12px;
     padding-bottom: 10px;
     position: absolute;
@@ -624,9 +783,7 @@ padding-right: 5px;
 }
 
 .inthread {
-    position: absolute;
-    right: 20px;
-    bottom: 5px;
+    float: right;
     font-size: 12px;
     font-weight: bold
 
@@ -695,10 +852,15 @@ div.link_to_content {
 }
 
 #form-button {
-    cursor: pointer;    
+    cursor: pointer;
 }
 
 .censored {
     background-color: #000000;
     color: #000000;
+}
+
+.delete_btn {
+    background: transparent;
+    border: none !important;
 }

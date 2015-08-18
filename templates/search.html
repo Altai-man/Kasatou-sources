@@ -6,6 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" type="text/css" href="/static/main.css">
     <link rel="stylesheet" type="text/css" href="/static/{{user.theme|lower}}.css">
+    <link rel="shortcut icon" href="/static/favicon.ico"/>
   </head>
   <body>
 
@@ -17,7 +18,9 @@
           <form id="search", method="post" action="/search/">
             {% csrf_token %}
             <div class="formrow">
-              <input name="search_text" class="edit" size="53" maxlength="53" required>
+              <input name="search_text" class="edit" size="53" maxlength="53"
+		     pattern=".{6,}"
+		     title="запрос должен состоять из минимум шести символов" required>
               <input type="submit" class="button" value="Поиск">
             </div>
           </form>
@@ -39,17 +42,17 @@
           </div>
 
           <div class="search-result">
-
             {{post.text}}
-
           </div>
+
           <div class="inthread"><a href="{{post.board_id}}thread/{{post.thread_id.id}}/#post_{{post.pk}}">Перейти</a></div>
         </div>
         {% endfor %}
+
       </div>
       <footer>
         <div id="footer-links">
-          <a href="/">Main </a> <a href="/b/">/b/</a> <a href="/search/">Search </a> <a href="/profile/"> Profile </a>  <a href="/other/">Other </a>
+          <a href="/">Main </a> <a href="/b/">/b/</a> <a href="/profile/"> Profile </a>
         </div>
       </footer>
     </section>

@@ -1,0 +1,253 @@
+body {
+    /* background: url('back.png') #282828; */
+    background: url('back.png') #3C3836;
+    background-repeat: no-repeat;
+    background-position: center center;
+    /* color: #D19FA2; */
+    color: #BFAD96;
+}
+
+
+
+/* Background style */
+
+textarea, .edit, .dropdown select, input[type="number"] {
+    /* background: #F1E0D6; */
+    /* background: #3C3836; */
+    background: #504945;
+} 
+
+
+
+/* Borders style */
+
+#content, input[type="number"], #loginform, .post, .indexbox {
+    border: 1px solid #6B665E;
+}
+
+#lftitle, .indextitle, .title, .details, .thread, .search-title {
+    /* border-bottom: 1px solid #7A756B; */
+    border-bottom: 1px solid #6B665E;
+}
+
+.thread {
+    /* border-top: 1px solid #878277; */
+    border-top: 1px solid #6B665E;
+}
+
+
+.error-block {
+	/* border-left: 1px solid #878277; */
+    border-left: 1px solid #80746E;
+}
+
+textarea, .edit, .button, #send-post, .dropdown select { 
+    border: 1px solid #80746E;
+}
+
+
+
+/* Text style */
+
+.mformfield, #lftitle, #lfcontent, #copyright, .title, .indextitle, .search-title {
+    color: #736F5F;
+}
+
+.spoiler {
+        background-color: #80746E;
+        color: #80746E;
+        /* color: #878277; */
+}
+
+.spoiler:hover {
+    color: inherit;
+}
+
+.post_quote {
+    /* color: #555555; */
+    color: #998A78;
+}
+
+/* Login form */
+
+#lftitle, #lfcontent {
+    color: #8C8774;
+}
+
+
+/* Links style */
+
+a, a:hover {
+    color: #5FA29A;
+}
+
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.inthread a {
+    color: #DDB32E;
+}
+
+.inthread a:hover {
+    color: #F3C432;
+}
+
+hr {
+    color: #7D786E; /*для IE */ 
+    background-color:#7D786E; /*для Firefox, Opera, Safari*/ 
+
+}
+
+
+/* Forms style */
+
+input[type="number"]{
+    /* color: #681715; */
+    color: #BFAD96;
+}
+
+.dropdown select {
+    /* color: #681715; */
+    color: #BFAD96;
+}
+
+textarea {
+    color: #BFAC96;
+}
+
+textarea:hover {
+    /* border: 1px solid #999999; */
+    border: 1px solid #8C8579;
+}
+
+textarea:focus {
+    /* border: 1px solid #0B7A45; */
+    border: 1px solid  #B3AD8C;
+}
+
+input[type="number"]{
+    outline: none;
+    padding: 3px 0 2px 5px;
+}
+
+input[type="number"]:focus {
+    outline: none;
+    /* border: 1px solid #0B7A45; */
+    border: 1px solid  #B3AD8C;
+}
+
+.edit {
+    /* color: #681715; */
+    color: #BFAC96;
+}
+
+.edit:hover {
+    /* border: 1px solid #999999; */
+    border: 1px solid #8C8579;
+
+}
+
+.edit:focus {
+    /* border: 1px solid  #E6DEB4; */
+    border: 1px solid  #B3AD8C;
+}
+
+#loginform {
+    background: #504945 ;
+    /* background: linear-gradient(to top, #d9c4b8 0%, #F1E0D6 15%); */
+    background: linear-gradient(to top, #504945 0%, #736863 75%);
+    /* box-shadow: 0px 3px 5px #D6D9AD; */ 
+    box-shadow: 0px 3px 5px #403E38;
+    /* border: 1px solid #D9C6C2; */
+    border: 1px solid #665A51;
+}
+
+
+
+/* Buttons style */
+
+#send-post, .button, .file-button {
+    background: #504945;
+    background: linear-gradient(to top, #504945 0%, #736863 75%);
+    color: #BFAD96;
+    border: 1px solid #6B665D;
+}
+
+#send-post:hover, .button:hover, .file-button:hover{
+    /* background: #FFD7BF; */
+    /* background: linear-gradient(to top, #FFD7BF 0%, #FFE7D9 75%); */
+    background: #504945;
+    color: #CCB9A0;
+    background: linear-gradient(to top, #574E4A 0%, #786C67 75%);
+}
+
+/* New main style */ 
+
+/* .joy-thread { */
+/*     background: #F1E0D6; */
+/*     border: 1px solid #D9C6C2; */
+/*     border-top: 2px solid #D9C6C2; */
+/*     box-shadow: 0px 3px 5px #D6D9AD; */
+/* } */
+
+
+/* Board style */
+
+#content, .joy-thread {
+    background: #504945;
+    /* background: #3C3836; */
+    border: 1px solid #665A51;
+    /* border-top: 2px solid #878277; */
+    border-top: 2px solid #594F47;
+    box-shadow: 0px 3px 5px #403E38;
+}
+
+.details {
+    color: #a5a69b;
+}
+
+
+.btitle {
+    color: #91B76D;
+    border-bottom: none;
+}
+
+.post {
+    background: #665D58;
+}
+
+
+/* Index style */
+
+#logo, #slogan {
+    color: #7D8E43;
+    text-shadow: -1px -1px 1px #666359;
+}
+
+
+.indexbox, .search-box {
+    background: #F1E0D6;
+    border: 1px solid #665A51;
+    box-shadow: 0px 2px 3px #403E38;
+    /* background: linear-gradient(to top, #d9c4b8 0%, #F1E0D6 50%); */
+    background: linear-gradient(to top, #504945 0%, #736863 75%);
+    border-bottom: none;
+}
+
+.indeximg {
+    border-right: 1px solid #D9C6C2;
+}
+
+#options {
+    background: #665D58;   
+}
+
+#answer {
+    background: #665D58;
+}

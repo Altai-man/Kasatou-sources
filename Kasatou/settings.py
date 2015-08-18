@@ -11,11 +11,14 @@ if 'OPENSHIFT_REPO_DIR' in os.environ:
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-SECRET_KEY = '%dyqozgd4l)yheblv=-^lhbn1$js6uv5$7rh6r-29ht8gaksjgn2h'
+SECRET_KEY = 'some-cool-pass-here'
 
-DEBUG = False
-
-TEMPLATE_DEBUG = True
+if ON_OPENSHIFT:
+    DEBUG = False
+    TEMPLATE_DEBUG = False
+else:
+    DEBUG = True
+    TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -26,7 +29,7 @@ AUTH_USER_MODEL = 'Layers.User'
 PIC_SIZE = 180.0
 
 # Paths that user can go without session.
-ALLOWED_PATHS = ['/login/', '/bunny/', '/closed/', '/~strippy-way-for-you-baby/']
+ALLOWED_PATHS = ['/login/', '/bunny/', '/closed/']
 
 
 INSTALLED_APPS = (
@@ -74,17 +77,42 @@ ROOT_URLCONF = 'Kasatou.urls'
 
 WSGI_APPLICATION = 'Kasatou.wsgi.application'
 
-if ON_OPENSHIFT:
-    DB_NAME = os.path.join(os.environ['OPENSHIFT_DATA_DIR'], 'database.db')
-else:
-    DB_NAME = os.path.join(BASE_DIR, 'db.sqlite3')
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': DB_NAME,
+if 'OPENSHIFT_APP_NAME' in os.environ:
+    DB_NAME = os.environ['OPENSHIFT_APP_NAME']
+if 'OPENSHIFT_POSTGRESQL_DB_USERNAME' in os.environ:
+    DB_USER = os.environ['OPENSHIFT_POSTGRESQL_DB_USERNAME']
+if 'OPENSHIFT_POSTGRESQL_DB_PASSWORD' in os.environ:
+    DB_PASSWD = os.environ['OPENSHIFT_POSTGRESQL_DB_PASSWORD']
+if 'OPENSHIFT_POSTGRESQL_DB_HOST' in os.environ:
+    DB_HOST = os.environ['OPENSHIFT_POSTGRESQL_DB_HOST']
+if 'OPENSHIFT_POSTGRESQL_DB_PORT' in os.environ:
+    DB_PORT = os.environ['OPENSHIFT_POSTGRESQL_DB_PORT']
+
+if ON_OPENSHIFT:
+    # os.environ['OPENSHIFT_DB_*'] variables can be used with databases created
+    # with rhc app cartridge add (see /README in this git repo)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': DB_NAME,               # Or path to database file if using sqlite3.
+            'USER': DB_USER,               # Not used with sqlite3.
+            'PASSWORD': DB_PASSWD,         # Not used with sqlite3.
+            'HOST': DB_HOST,               # Set to empty string for localhost. Not used with sqlite3.
+            'PORT': DB_PORT,               # Set to empty string for default. Not used with sqlite3.
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': os.path.join(BASE_DIR, 'sqlite3.db'),  # Or path to database file if using sqlite3.
+            'USER': '',                      # Not used with sqlite3.
+            'PASSWORD': '',                  # Not used with sqlite3.
+            'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+            'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        }
+    }
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -101,7 +129,7 @@ USE_TZ = True
 
 # Static
 if ON_OPENSHIFT:
-    STATIC_ROOT = os.path.join(os.environ['OPENSHIFT_DATA_DIR'], 'wsgi', 'static')
+    STATIC_ROOT = os.path.join(os.environ['OPENSHIFT_REPO_DIR'], 'wsgi', 'static')
 else:
     STATIC_ROOT = os.path.join(os.getcwd(), 'Layers', 'static')
 

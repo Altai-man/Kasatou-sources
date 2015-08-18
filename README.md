@@ -17,14 +17,14 @@ Features
 Requirements
 ===============
 
- Kasatou engine requires Django from 1.6 to 1.8 and Python3(maybe will work with Python2 after some fixes). You can use and change all code as much as you need, pull requests is welcome.
- 
- 
+ Kasatou engine requires Django 1.7.9(or higher), Postgresql and Python3(maybe engine will works with Python2 after some fixes). You can use and change all code as much as you need, pull requests are welcome.
+
+
 Installation
 ===============
 
  Download sources in your development directory.
- Do 
+ Do
  ```
  python3 manage.py syncdb
  python3 manage.py runserver
@@ -35,4 +35,4 @@ Installation
 Other
 ===============
 
- I'm greatly thank to Ktan32 for his Kataba engine - it was help me to get on with web-development.
+ I'm greatly thankful to @Ktan32 for his Kataba engine - it was help me to get on with web-development. Also I really appreciate @Ordy's help - his default design for Kasatou engine is simple yet really pleasurable.

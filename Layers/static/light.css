@@ -11,7 +11,7 @@ body {
 
 textarea, .edit, .dropdown select {
     background: #ffffff;
-} 
+}
 
 
 
@@ -33,7 +33,7 @@ textarea, .edit, .dropdown select {
 	border-left: 1px solid #E6E6FA;
 }
 
-#send-post, textarea, .edit, .button, .dropdown select { 
+#send-post, textarea, .edit, .button, .dropdown select {
     border: 1px solid #cccccc;
 }
 
@@ -46,8 +46,8 @@ textarea, .edit, .dropdown select {
 }
 
 .spoiler {
-        background-color: #E6E6FA;
-        color: #E6E6FA;
+    background-color: #E6E6FA;
+    color: #E6E6FA;
 }
 
 .spoiler:hover {
@@ -80,8 +80,8 @@ a:hover {
 }
 
 hr {
-    color: #E6E6FA; /*для IE */ 
-    background-color:#E6E6FA; /*для Firefox, Opera, Safari*/ 
+    color: #E6E6FA; /*для IE */
+    background-color:#E6E6FA; /*для Firefox, Opera, Safari*/
 
 }
 
@@ -128,7 +128,7 @@ input[type="number"]:focus {
 #loginform {
     background: #ffffff;
     background: linear-gradient(to top, #E6E6FA 0%, rgba(255, 255, 255, 0)  15%);
-    box-shadow: 0px 3px 5px #cccccc; 
+    box-shadow: 0px 3px 5px #cccccc;
 }
 
 
@@ -148,6 +148,13 @@ input[type="number"]:focus {
     border: 1px solid #E6E6FA;
 }
 
+/* New main style */
+
+.joy-thread {
+    background: #ffffff;
+    border-top: 2px solid #E6E6FA;
+    box-shadow: 0px 3px 5px #cccccc;
+}
 
 
 /* Board style */
@@ -180,7 +187,7 @@ input[type="number"]:focus {
 
 .indexbox, .search-box {
     background: #ffffff;
-    box-shadow: 0px 2px 3px #cccccc; 
+    box-shadow: 0px 2px 3px #cccccc;
     background: linear-gradient(to top, #E6E6fA 0%, #ffffff 50%);
     border-bottom: none;
 }

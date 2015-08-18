@@ -7,6 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" type="text/css" href="/static/main.css">
     <link rel="stylesheet" type="text/css" href="/static/{{user.theme|lower}}.css">
+    <link rel="shortcut icon" href="/static/favicon.ico"/>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.2/jquery.cookie.min.js"></script>
     <script src="/../static/script.js"></script>
@@ -48,15 +49,9 @@
               <button type=button class="button codebar" id="cens">cens</button>
               <button type=button class="button codebar" id="url">url</button>
                 </div>
-                <textarea name="text" id="id_text" rows="10" cols="60"></textarea>
+                <textarea name="text" id="id_text" rows="10" cols="60" maxlength="5000"></textarea>
               </div>
-              {% if messages %}
-              {% for message in messages %}
-              <div class="lfelemefnt mformfield">
-                {{message}}<br/>
-              </div>
-              {% endfor %}
-              {% endif %}
+              <div id="errors"></div>
               <div class="formrow">
                 <label for="upload1" class="file-button" style="float:left;"> Img </label>
                 <input name="image1" id="upload1" accept="image/jpeg,image/png,image/gif"
@@ -131,13 +126,13 @@
                   {% if post.topic %}
                   <b>{{post.topic}}</b>
                   {% else %}
-                  {{post.user_id.name}}
+		  Anonymous
                   {% endif %}
                   <span class="post_link">#p{{post.id}}</span>
                   {{post.date}}
                   {% if board.is_moderated %}
 		  {% if user.id == post.user_id.id %}
-                  <div class="delete_post"><a href="/post_editing/{{post.id}}">Edit</a> <a href="/post_deleting/{{post.id}}">x</a></div>
+                  <div class="delete_post"><a href="/post_editing/{{post.id}}">Edit</a> <button class="delete_btn" id="db_{{post.id}}"> x </button> </div>
 		  {% endif %}
                   {% endif %}
                 </div>
@@ -226,10 +221,10 @@
 
         <footer>
           <div id="footer-links">
-            <a href="/">Main</a><a href="/search/">Search </a> <a href="/profile/"> Profile </a>  <a href="/other/">Other </a>
+            <a href="/">Main</a><a href="/search/">Search </a> <a href="/profile/"> Profile </a>
             <span class="linkbot" id="options_button">Options<div id="options">
-                NSFW: <input type="checkbox" id='nsfw'>
-                !Censored: <input type="checkbox" id='cens'>
+                NSFW: <input type="checkbox" id="nsfw_btn">
+                !Censored: <input type="checkbox" id="cens_btn">
               </div>
             </span>
 

@@ -1,5 +1,6 @@
+"""Admin file for Kasatou."""
 from django.contrib import admin
-from Layers.models import *
+from Layers.models import Board, Thread, Post, User, Invite
 
 admin.site.register(Board)
 admin.site.register(Thread)

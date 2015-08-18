@@ -1,6 +1,5 @@
 #! -*- coding: utf-8 -*-
 from django.contrib.sessions.models import Session
-from Layers.snippets import get_obj_or_none
 from django.http import HttpResponse, HttpResponseRedirect
 from Layers.models import User
 from django.conf import settings
@@ -11,8 +10,11 @@ class Invitation(object):
     def process_request(request):
         try:
             session_key = request.session.session_key
-            session = Session.objects.get(session_key=session_key).get_decoded().get('_auth_user_id')
-            user = get_obj_or_none(User, pk=session)
+            pk = Session.objects.get(session_key=session_key).get_decoded().get('_auth_user_id')
+            try:
+                user = User.objects.get(pk=pk)
+            except:
+                user = None
         except Session.DoesNotExist:
             user = None
 

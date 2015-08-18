@@ -1,12 +1,11 @@
-# -*- coding: utf-8 -*-
-
+"""Description of Kasatou views."""
 # Django modules
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.contrib.sessions.models import Session
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
 from django.views.generic import View, ListView, DetailView
@@ -21,12 +20,13 @@ from Layers.models import Thread
 from Layers.forms import ThreadForm
 from Layers.forms import UserForm
 from Layers.mixins import JsonMixin
-from Layers.snippets import get_obj_or_none
-User = get_user_model()
+from Layers.utils import return_user
 
 
 class BaseBoardClass(ContextMixin):
+    """Board dispatcher."""
     def dispatch(self, *args, **kwargs):
+        """Dispatch method."""
         # Current board.
         if 'board_name' in kwargs.keys():
             self.board = get_object_or_404(Board.objects,
@@ -37,10 +37,8 @@ class BaseBoardClass(ContextMixin):
         return super(BaseBoardClass, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        s_key = self.request.session.session_key
-        session = Session.objects.get(session_key=s_key).get_decoded()
-        uid = session.get('_auth_user_id')
-        user = User.objects.get(pk=uid)
+        """Get context."""
+        user = return_user(self.request)
 
         context = super(BaseBoardClass, self).get_context_data(**kwargs)
         context['board'] = self.board
@@ -50,15 +48,28 @@ class BaseBoardClass(ContextMixin):
 
 
 class IndexView(TemplateView, BaseBoardClass):
+    """View of index page."""
     template_name = "index.html"
 
     def get_context_data(self, **kwargs):
+        """Overloaded get_context_data for list of last threads."""
         context = super(IndexView, self).get_context_data(**kwargs)
-        context['threads'] = Thread.objects.all().order_by('-update_time')[:10]
+        threads = Thread.objects.all().order_by('-update_time')[:6]
+        try:
+            # If we receive empty list, exception will raised
+            context['main_thread'] = threads[0]
+            context['main_posts'] = Post.objects.filter(
+                thread_id=threads[0].pk).order_by('-date')[:3]
+        except IndexError:
+            context['main_thread'] = None
+
+        context['threads'] = threads[1:6]
+        # Slice from empty list is empty list.
         return context
 
 
 class BoardView(ListView, BaseBoardClass):
+    """View of Board page."""
     model = Thread
     template_name = "board.html"
     context_object_name = "threads"
@@ -74,6 +85,7 @@ class BoardView(ListView, BaseBoardClass):
 
 
 class ThreadView(DetailView, BaseBoardClass):
+    """View of Thread page."""
     model = Thread
     template_name = 'thread.html'
     context_object_name = 'thread'
@@ -81,7 +93,7 @@ class ThreadView(DetailView, BaseBoardClass):
     def get_context_data(self, **kwargs):
         context = super(ThreadView, self).get_context_data(**kwargs)
         context['post_form'] = PostForm()
-        context['posts'] = Post.objects.filter(thread_id=context['object'])
+        context['posts'] = Post.objects.filter(thread_id=context['object']).order_by('pk')
         return context
 
 
@@ -92,7 +104,8 @@ class SingleThreadView(JsonMixin, DetailView):
 
     def render_to_response(self, context, **kwargs):
         context.update(thread_hide_answer=True)
-        data = super(SingleThreadView, self).render_to_response(context, **kwargs)
+        data = super(SingleThreadView,
+                     self).render_to_response(context, **kwargs)
         response = dict(answer=data.rendered_content)
         return self.render_json_answer(response)
 
@@ -111,14 +124,15 @@ class ThreadUpdateView(JsonMixin, ListView):
     def get_queryset(self):
         thread_id = self.kwargs['thread_id']
         count = int(self.kwargs['posts_numb'])
-        posts = Post.objects.filter(thread_id__id=thread_id)[count:]
+        posts = Post.objects.filter(thread_id__id=thread_id).order_by('date')[count:]
         return posts
 
     def render_to_response(self, context, **kwargs):
         is_new = True if context[self.context_object_name] else False
         response = dict(is_new=is_new)
         if is_new:
-            posts = super(ThreadUpdateView, self).render_to_response(context, **kwargs)
+            posts = super(ThreadUpdateView,
+                          self).render_to_response(context, **kwargs)
             response.update(new_threads=posts.rendered_content)
         return self.render_json_answer(response)
 
@@ -143,7 +157,10 @@ class Register(View):
                 'register.html',
                 {'user_form': user_form}, context)
         else:
-            return render_to_response('404.html', {'text': 'Invite is outdated or already in use.'}, context)
+            return render_to_response(
+                '404.html',
+                {'text': 'Invite is outdated or already in use.'},
+                context)
 
     @staticmethod
     def post(request):
@@ -157,34 +174,24 @@ class Register(View):
             login(request, user)
             return HttpResponseRedirect("/")
 
-        return render_to_response('404.html',
-                                  {'text': "Sorry, but you have an errors in registration form."}, {})
+        return render_to_response(
+            '404.html',
+            {'text': "Sorry, but you have an errors in registration form."},
+            {})
 
 
 class Profile(View):
     @staticmethod
-    def get_user(key):
-        session = Session.objects.get(session_key=key)
-        uid = session.get_decoded().get('_auth_user_id')
-        return User.objects.get(pk=uid)
-
-    def get(self, request):
+    def get(request):
         context = RequestContext(request)
-        session_key = request.session.session_key
-        user = self.get_user(session_key)
-
+        user = return_user(request)
         context['user'] = user
         return render_to_response("profile.html", {}, context)
 
     def post(self, request):
         context = RequestContext(request)
-        session_key = request.session.session_key
-        user = self.get_user(session_key)
-        user.name = request.POST.get('name', None)
+        user = return_user(request)
         user.theme = request.POST.get('theme', None)
-        user.liked_threads = request.POST.get('liked_threads', None)
-        user.thread_per_page = request.POST.get('thread_per_page', None)
-
         user.save()
         context['user'] = user
         return render_to_response("profile.html", {}, context)
@@ -196,18 +203,13 @@ class Login(View):
         email = request.POST['email']
         password = request.POST['password']
         user = authenticate(email=email, password=password)
-
         if user:
             if user.is_active:
                 login(request, user)
                 return HttpResponseRedirect('/')
-
             else:
-                messages.error(request,
-                               """You are banned.
-                               If you want to use imageboard - please, contact administrator.""")
+                messages.error(request, 'You are banned.')
                 return HttpResponseRedirect("/login/")
-
         else:
             messages.error(request, "Data is wrong. Are you registered?")
             return HttpResponseRedirect("/login/")
@@ -258,91 +260,61 @@ class ThreadCreating(View):
             return HttpResponseRedirect(addr)
 
 
-def post_adding(request, **kwargs):
-    board_id = request.POST.get('board_id')
-    board_name = Board.objects.get(id=board_id)
-    thread_id = request.POST.get('thread_id')
-    addr = ''.join([str(board_name), "thread/", str(thread_id)])
-
-    if request.method == 'POST':
-        text = request.POST.get('text')
-        topic = request.POST.get('topic')
-        image1 = request.FILES.get('image1')
-
+class PostCreating(View):
+    @staticmethod
+    def post(request, **kwargs):
         post_form = PostForm(request.POST, request.FILES)
-
         if post_form.is_valid():
-            if text or topic or image1:  # We do not save empty posts.
-                post = post_form.save()
-
-                # Update thread attributes.
-                current_thread = get_object_or_404(Thread.objects, id=thread_id)
-                current_board = get_object_or_404(Board.objects, id=board_id)
-                if current_thread.post_count < current_board.thread_max_post:
-                    current_thread.update_time = post_form.instance.date
-
-                current_thread.post_count += 1
-
-                # Save thread.
-                current_thread.save()
-                # Save post.
-                post.save()
-
-                return HttpResponseRedirect(addr)
-            else:
-                messages.error(request,
-                               "Message should have image or text or topic.")
-                return HttpResponseRedirect(addr)
-
+            post = post_form.save()
+            PostCreating.update_thread_attrs(
+                kwargs['thread_id'], post_form.instance.date)
+            post.save()
+            return HttpResponse("OK")
         else:
-            messages.error(request, post_form.errors)
-            return HttpResponseRedirect(addr)
+            html = post_form.errors.as_ul()
+            return HttpResponseBadRequest(html)
 
-    else:
-        return HttpResponseRedirect(addr)
+    @staticmethod
+    def update_thread_attrs(t_id, date):
+        cur_th = Thread.objects.select_related('board_id').get(pk=t_id)
+        # Because we sort threads on board by update_time.
+        if cur_th.post_count < cur_th.board_id.thread_max_post:
+            cur_th.update_time = date
+        cur_th.post_count += 1
+        cur_th.save()
 
 
-def post_deleting(request, p_id):
-    post = Post.objects.get(pk=p_id)
-    board_name = str(post.board_id)
-    thread = Thread.objects.get(pk=post.get_id())
-    addr = ''.join([str(board_name), "thread/", str(post.get_id())])
+class PostDeleting(View):
+    @staticmethod
+    def post(request, p_id):
+        try:
+            post = Post.objects.get(pk=p_id)
+        except:
+            return HttpResponseBadRequest()
+        thread = Thread.objects.get(pk=post.get_thread_id())
+        user = return_user(request)
 
-    if request.method == 'GET':
-        session_key = request.session.session_key
-
-        session = Session.objects.get(session_key=session_key)
-        uid = session.get_decoded().get('_auth_user_id')
-        user = User.objects.get(pk=uid)
-
-        post = get_obj_or_none(Post, id=p_id)
         if user == post.user_id or user.is_admin:
-            if post is not None:
-                post.delete()
-                thread.post_count -= 1
-                thread.save()
-                return HttpResponseRedirect(addr)
-            else:
-                messages.error(request,
-                               "<script>alert('Sorry, but this message doesn't exist.');</script>")
-                return HttpResponseRedirect(addr)
+            post.delete()
+            thread.post_count -= 1
+            thread.save()
+            return HttpResponse("OK")
         else:
-            messages.error(request,
-                           "<script>alert('Sorry, but you have not enough permissions.');</script>")
-            return HttpResponseRedirect(addr)
-    else:
-        return HttpResponseRedirect(addr)
+            return HttpResponseForbidden()
 
 
 class PostEditing(View):
     @staticmethod
     def get(request, p_id):
         context = RequestContext(request)
+        user = return_user(request)
         try:
-            post = Post.objects.get(pk=p_id)
+            post = Post.objects.select_related('user_id').get(pk=p_id)
+            if post.user_id.pk is not user.pk:
+                return HttpResponseRedirect("/")
             context['raw_text'] = Post.unmarkup(post.text)
             context['post'] = post
-            context['thread_id'] = post.get_id()
+            context['thread_id'] = post.get_thread_id()
             board = Board.objects.get(pk=post.board_id.pk)
             context['board_name'] = board.board_name
         except Post.DoesNotExist:
@@ -358,16 +330,17 @@ class PostEditing(View):
         post.text = Post.markup(request.POST['text'])
         post.topic = request.POST['topic']
         post.save()
-        addr = '/'.join(('', request.POST['board_name'], 'thread', request.POST['thread_id'], '#post_' + p_id))
+        addr = '/'.join(('',
+                         request.POST['board_name'],
+                         'thread',
+                         request.POST['thread_id'],
+                         '#post_' + p_id))
         return HttpResponseRedirect(addr)
 
 
 def invite(request):
     context = RequestContext(request)
-    session_key = request.session.session_key
-    session = Session.objects.get(session_key=session_key)
-    uid = session.get_decoded().get('_auth_user_id')
-    user = User.objects.get(pk=uid)
+    user = return_user(request)
 
     if user.invites_count > 0:
         i = Invite()
@@ -379,40 +352,12 @@ def invite(request):
         user.invites_count -= 1
         user.save()
     else:
-        context['invite_link'] = "Sorry, but you don't have any invites right now."
+        context['invite_link'] = \
+                                 "Sorry, you don't have any invites right now."
 
     return render_to_response("profile.html", {}, context)
-
-
-def liked(request):
-    context = RequestContext(request)
-    session_key = request.session.session_key
-    session = Session.objects.get(session_key=session_key)
-    uid = session.get_decoded().get('_auth_user_id')
-    user = User.objects.get(pk=uid)
-
-    threads = user.liked_threads
-    ids = threads.split(";")
-    context['liked'] = []
-
-    for th in ids:
-        thread = get_obj_or_none(Thread, id=th)
-        if thread is not None:
-            context['liked'].append(thread)
-    return render_to_response("liked.html", {}, context)
 
 
 def closed(request):
     context = RequestContext(request)
     return render_to_response("closed.html", {}, context)
-
-
-def other(request):
-    context = RequestContext(request)
-    return render_to_response("other.html", {}, context)
-
-
-def last(request):
-    context = RequestContext(request)
-    context['posts'] = Post.objects.all().order_by('-date')[:5]
-    return render_to_response("parts/last_posts.html", {}, context)

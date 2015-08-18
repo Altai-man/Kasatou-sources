@@ -11,7 +11,7 @@ body {
 
 textarea, .edit, .dropdown select, input[type="number"] {
     background: #2E2E2E;
-} 
+}
 
 
 
@@ -34,7 +34,7 @@ textarea, .edit, .dropdown select, input[type="number"] {
 }
 
 
-#send-post, textarea, .edit, .button, .dropdown select, input[type="number"] { 
+#send-post, textarea, .edit, .button, .dropdown select, input[type="number"] {
     border: 1px solid #595959;
 }
 
@@ -47,8 +47,8 @@ textarea, .edit, .dropdown select, input[type="number"] {
 }
 
 .spoiler {
-        background-color: black;
-        color: black;
+    background-color: black;
+    color: black;
 }
 
 .spoiler:hover {
@@ -83,8 +83,8 @@ a:hover {
 }
 
 hr {
-    color: #595959; /*для IE */ 
-    background-color:#595959; /*для Firefox, Opera, Safari*/ 
+    color: #595959; /*для IE */
+    background-color:#595959; /*для Firefox, Opera, Safari*/
 
 }
 
@@ -137,7 +137,7 @@ input[type="number"]:focus {
 #loginform {
     background: #272727;
     background: linear-gradient(to top, #1E1E1E 0%, #272727  15%);
-    box-shadow: 0px 3px 5px #272727; 
+    box-shadow: 0px 3px 5px #272727;
     border: 1px solid #404040;
 }
 
@@ -157,13 +157,22 @@ input[type="number"]:focus {
     background: linear-gradient(to top, #272727 0%, #404040 75%);
 }
 
+/* New main style */
+
+.joy-thread {
+    background: #272727;
+    border: 1px solid #404040;
+    border-top: 2px solid #404040;
+    box-shadow: 0px 3px 5px #272727;
+}
+
 
 
 /* Board style */
 
 #content {
     background: #272727;
-    border: 1px solid #404040;    
+    border: 1px solid #404040;
     border-top: 2px solid #404040;
     box-shadow: 0px 3px 5px #272727;
 }
@@ -194,7 +203,7 @@ input[type="number"]:focus {
 .indexbox, .search-box {
     background: #272727;
     border: 1px solid #353535;
-    box-shadow: 0px 2px 3px #272727; 
+    box-shadow: 0px 2px 3px #272727;
     background: linear-gradient(to top, #1E1E1E 0%, #272727 50%);
     border-bottom: none;
 }
