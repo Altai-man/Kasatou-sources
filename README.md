@@ -35,4 +35,4 @@ Installation
 Other
 ===============
 
- I'm greatly thankful to [@Ktan32][https://github.com/Ktan32] for his Kataba engine - it was help me to get on with web-development. Also I really appreciate [@Ordy's][https://github.com/Ordy] help - his default design for Kasatou engine is simple yet really pleasurable.
+ I'm greatly thankful to [@Ktan32](http://github.com/Ktan32) for his Kataba engine - it was help me to get on with web-development. Also I really appreciate [@Ordy's](https://github.com/Ordy) help - his default design for Kasatou engine is simple yet really pleasurable.
